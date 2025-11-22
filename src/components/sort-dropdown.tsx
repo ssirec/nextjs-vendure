@@ -8,8 +8,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import {usePathname, useRouter} from "@/i18n/navigation";
-import {useSearchParams} from "next/navigation";
+import {usePathname, useRouter, useSearchParams} from "next/navigation";
 
 const sortOptions = [
     {value: 'name-asc', label: 'Name: A to Z'},

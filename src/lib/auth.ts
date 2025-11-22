@@ -1,16 +1,10 @@
-import { cookies } from 'next/headers';
+import {cookies} from 'next/headers';
 
 const AUTH_TOKEN_COOKIE = 'vendure-auth-token';
 
 export async function setAuthToken(token: string) {
     const cookieStore = await cookies();
-    cookieStore.set(AUTH_TOKEN_COOKIE, token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        maxAge: 60 * 60 * 24 * 7, // 7 days
-        path: '/',
-    });
+    cookieStore.set(AUTH_TOKEN_COOKIE, token);
 }
 
 export async function getAuthToken(): Promise<string | undefined> {

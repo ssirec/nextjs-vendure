@@ -1,14 +1,15 @@
 'use client';
 
-import { ShoppingCart } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/navigation";
+import {ShoppingCart} from "lucide-react";
+import {Button} from "@/components/ui/button";
+import Link from "next/link";
+
 
 interface CartIconProps {
     cartItemCount: number;
 }
 
-export function CartIcon({ cartItemCount }: CartIconProps) {
+export function CartIcon({cartItemCount}: CartIconProps) {
     return (
         <Button variant="ghost" size="icon" asChild className="relative">
             <Link href="/cart">

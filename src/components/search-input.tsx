@@ -1,10 +1,9 @@
 'use client';
 
 import {useState, useTransition} from 'react';
-import {useSearchParams} from 'next/navigation';
+import {useRouter, useSearchParams} from 'next/navigation';
 import {Search} from 'lucide-react';
 import {Input} from '@/components/ui/input';
-import {useRouter} from "@/i18n/navigation";
 
 export function SearchInput() {
     const router = useRouter();
@@ -15,10 +14,7 @@ export function SearchInput() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!searchValue.trim()) return;
-
-        startTransition(() => {
-            router.push(`/search?q=${encodeURIComponent(searchValue.trim())}`);
-        });
+        router.push(`/search?q=${encodeURIComponent(searchValue.trim())}`);
     };
 
     return (

@@ -1,8 +1,8 @@
+import {getTopCollections} from '@/lib/collections';
+import Link from "next/link";
 
-import { getTopCollections } from '@/lib/collections';
-import {Link} from "@/i18n/navigation";
 
-async function Copyright(){
+async function Copyright() {
     'use cache'
 
     return (
@@ -13,6 +13,8 @@ async function Copyright(){
 }
 
 export async function Footer() {
+    'use cache'
+
     const collections = await getTopCollections();
 
     return (
@@ -80,7 +82,8 @@ export async function Footer() {
                 </div>
 
                 {/* Bottom Section */}
-                <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
+                <div
+                    className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
                     <Copyright/>
                     <div className="flex items-center gap-2">
                         <span>Powered by</span>

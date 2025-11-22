@@ -1,5 +1,5 @@
 import { graphql } from '@/graphql';
-import { ProductCardFragment } from './fragments';
+import { ActiveCustomerFragment, ProductCardFragment } from './fragments';
 
 export const GetTopCollectionsQuery = graphql(`
     query GetTopCollections {
@@ -16,13 +16,10 @@ export const GetTopCollectionsQuery = graphql(`
 export const GetActiveCustomerQuery = graphql(`
     query GetActiveCustomer {
         activeCustomer {
-            id
-            firstName
-            lastName
-            emailAddress
+            ...ActiveCustomer
         }
     }
-`);
+`, [ActiveCustomerFragment]);
 
 export const SearchProductsQuery = graphql(`
     query SearchProducts($input: SearchInput!) {

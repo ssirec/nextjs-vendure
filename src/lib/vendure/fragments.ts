@@ -22,3 +22,12 @@ export const ProductCardFragment = graphql(`
         currencyCode
     }
 `);
+
+export const ActiveCustomerFragment = graphql(`
+    fragment ActiveCustomer on Customer {
+        id
+        firstName
+        lastName
+        emailAddress
+    }
+`);

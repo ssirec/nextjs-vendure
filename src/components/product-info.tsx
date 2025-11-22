@@ -1,15 +1,14 @@
 'use client';
 
 import {useState, useMemo, useTransition} from 'react';
-import {useSearchParams} from 'next/navigation';
+import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 import {Button} from '@/components/ui/button';
 import {Label} from '@/components/ui/label';
 import {RadioGroup, RadioGroupItem} from '@/components/ui/radio-group';
 import {ShoppingCart, CheckCircle2} from 'lucide-react';
-import {addToCart} from '@/app/[locale]/product/[slug]/actions';
+import {addToCart} from '@/app/product/[slug]/actions';
 import {toast} from 'sonner';
-import {formatPrice} from '@/lib/format';
-import {usePathname, useRouter} from "@/i18n/navigation";
+import {Price} from '@/components/price';
 
 interface ProductInfoProps {
     product: {
@@ -46,10 +45,9 @@ interface ProductInfoProps {
         }>;
     };
     searchParams: { [key: string]: string | string[] | undefined };
-    currencyCode: string;
 }
 
-export function ProductInfo({product, searchParams, currencyCode}: ProductInfoProps) {
+export function ProductInfo({product, searchParams}: ProductInfoProps) {
     const pathname = usePathname();
     const router = useRouter();
     const currentSearchParams = useSearchParams();
@@ -144,7 +142,7 @@ export function ProductInfo({product, searchParams, currencyCode}: ProductInfoPr
                 <h1 className="text-3xl font-bold">{product.name}</h1>
                 {selectedVariant && (
                     <p className="text-2xl font-bold mt-2">
-                        {formatPrice(selectedVariant.priceWithTax, currencyCode)}
+                        <Price value={selectedVariant.priceWithTax}/>
                     </p>
                 )}
             </div>

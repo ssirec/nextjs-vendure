@@ -3,7 +3,6 @@ import {ProductCard} from './product-card';
 import {Pagination} from './pagination';
 import {SortDropdown} from './sort-dropdown';
 import {SearchProductsQuery} from "@/lib/vendure/queries";
-import {getCurrencyCode} from '@/lib/settings';
 import {getActiveChannel} from '@/lib/vendure/actions';
 
 interface ProductGridProps {
@@ -16,15 +15,13 @@ interface ProductGridProps {
 }
 
 export async function ProductGrid({productDataPromise, currentPage, take}: ProductGridProps) {
-    const [result, channel, currencyCodeFromCookie] = await Promise.all([
+    const [result, channel] = await Promise.all([
         productDataPromise,
         getActiveChannel(),
-        getCurrencyCode(),
     ]);
 
     const searchResult = result.data.search;
     const totalPages = Math.ceil(searchResult.totalItems / take);
-    const currencyCode = currencyCodeFromCookie || channel?.defaultCurrencyCode || 'USD';
 
     if (!searchResult.items.length) {
         return (
@@ -45,7 +42,7 @@ export async function ProductGrid({productDataPromise, currentPage, take}: Produ
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {searchResult.items.map((product, i) => (
-                    <ProductCard key={'product-grid-item' + i} product={product} currencyCode={currencyCode}/>
+                    <ProductCard key={'product-grid-item' + i} product={product}/>
                 ))}
             </div>
 

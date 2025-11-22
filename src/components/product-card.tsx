@@ -1,15 +1,15 @@
 import Image from 'next/image';
-import {formatPrice} from '@/lib/format';
-import {Link} from "@/i18n/navigation";
 import {FragmentOf, readFragment} from '@/graphql';
 import {ProductCardFragment} from '@/lib/vendure/fragments';
+import {Price} from '@/components/price';
+import {Suspense} from "react";
+import Link from "next/link";
 
 interface ProductCardProps {
     product: FragmentOf<typeof ProductCardFragment>;
-    currencyCode: string;
 }
 
-export function ProductCard({product: productProp, currencyCode}: ProductCardProps) {
+export function ProductCard({product: productProp}: ProductCardProps) {
     const product = readFragment(ProductCardFragment, productProp);
 
     return (
@@ -36,15 +36,17 @@ export function ProductCard({product: productProp, currencyCode}: ProductCardPro
                 <h3 className="font-medium line-clamp-2 group-hover:text-primary transition-colors">
                     {product.productName}
                 </h3>
-                <p className="text-lg font-bold">
-                    {product.priceWithTax.__typename === 'PriceRange' ? (
-                        <>
-                            from {formatPrice(product.priceWithTax.min, currencyCode)}
-                        </>
-                    ) : product.priceWithTax.__typename === 'SinglePrice' ? (
-                        formatPrice(product.priceWithTax.value, currencyCode)
-                    ) : null}
-                </p>
+                <Suspense fallback={<div className="h-8 w-36 rounded bg-muted"></div>}>
+                    <p className="text-lg font-bold">
+                        {product.priceWithTax.__typename === 'PriceRange' ? (
+                            <>
+                                from <Price value={product.priceWithTax.min}/>
+                            </>
+                        ) : product.priceWithTax.__typename === 'SinglePrice' ? (
+                            <Price value={product.priceWithTax.value}/>
+                        ) : null}
+                    </p>
+                </Suspense>
             </div>
         </Link>
     );

@@ -135,6 +135,37 @@ export const CreateCustomerAddressMutation = graphql(`
     }
 `);
 
+export const UpdateCustomerAddressMutation = graphql(`
+    mutation UpdateCustomerAddress($input: UpdateAddressInput!) {
+        updateCustomerAddress(input: $input) {
+            id
+            fullName
+            company
+            streetLine1
+            streetLine2
+            city
+            province
+            postalCode
+            country {
+                id
+                code
+                name
+            }
+            phoneNumber
+            defaultShippingAddress
+            defaultBillingAddress
+        }
+    }
+`);
+
+export const DeleteCustomerAddressMutation = graphql(`
+    mutation DeleteCustomerAddress($id: ID!) {
+        deleteCustomerAddress(id: $id) {
+            success
+        }
+    }
+`);
+
 export const SetOrderShippingAddressMutation = graphql(`
     mutation SetOrderShippingAddress($input: CreateAddressInput!) {
         setOrderShippingAddress(input: $input) {
@@ -253,6 +284,94 @@ export const AddPaymentToOrderMutation = graphql(`
             ... on ErrorResult {
                 errorCode
                 message
+            }
+        }
+    }
+`);
+
+export const RegisterCustomerAccountMutation = graphql(`
+    mutation RegisterCustomerAccount($input: RegisterCustomerInput!) {
+        registerCustomerAccount(input: $input) {
+            __typename
+            ... on Success {
+                success
+            }
+            ... on ErrorResult {
+                errorCode
+                message
+            }
+        }
+    }
+`);
+
+export const VerifyCustomerAccountMutation = graphql(`
+    mutation VerifyCustomerAccount($token: String!, $password: String) {
+        verifyCustomerAccount(token: $token, password: $password) {
+            __typename
+            ... on CurrentUser {
+                id
+                identifier
+            }
+            ... on ErrorResult {
+                errorCode
+                message
+            }
+        }
+    }
+`);
+
+export const RequestPasswordResetMutation = graphql(`
+    mutation RequestPasswordReset($emailAddress: String!) {
+        requestPasswordReset(emailAddress: $emailAddress) {
+            __typename
+            ... on Success {
+                success
+            }
+            ... on ErrorResult {
+                errorCode
+                message
+            }
+        }
+    }
+`);
+
+export const ResetPasswordMutation = graphql(`
+    mutation ResetPassword($token: String!, $password: String!) {
+        resetPassword(token: $token, password: $password) {
+            __typename
+            ... on CurrentUser {
+                id
+                identifier
+            }
+            ... on ErrorResult {
+                errorCode
+                message
+            }
+        }
+    }
+`);
+
+export const UpdateCustomerPasswordMutation = graphql(`
+    mutation UpdateCustomerPassword($currentPassword: String!, $newPassword: String!) {
+        updateCustomerPassword(currentPassword: $currentPassword, newPassword: $newPassword) {
+            __typename
+            ... on Success {
+                success
+            }
+            ... on ErrorResult {
+                errorCode
+                message
+            }
+        }
+    }
+`);
+
+export const LogoutMutation = graphql(`
+    mutation Logout {
+        logout {
+            __typename
+            ... on Success {
+                success
             }
         }
     }

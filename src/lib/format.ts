@@ -1,12 +1,10 @@
 /**
- * Format a price value in the specified currency
+ * Format a price value in USD
  * @param price Price in cents (smallest currency unit)
- * @param currencyCode Currency code (e.g., 'USD', 'EUR')
- * @param locale Optional locale for formatting (defaults to 'en-US')
  */
-export function formatPrice(price: number, currencyCode: string, locale: string = 'en-US'): string {
-    return new Intl.NumberFormat(locale, {
+export function formatPrice(price: number): string {
+    return new Intl.NumberFormat('en-US', {
         style: 'currency',
-        currency: currencyCode,
+        currency: 'USD',
     }).format(price / 100);
 }

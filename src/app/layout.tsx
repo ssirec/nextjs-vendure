@@ -2,10 +2,10 @@ import type {Metadata} from "next";
 import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
 import {Toaster} from "@/components/ui/sonner";
-import {ChannelProvider} from "@/providers/channel-provider";
-import {getActiveChannel} from "@/lib/vendure/actions";
-import {NextIntlClientProvider} from 'next-intl';
-import {AppProviders} from "@/app/providers";
+import {Navbar} from "@/components/navbar";
+import {Footer} from "@/components/footer";
+import {AuthProvider} from "@/contexts/auth-context";
+import {getActiveCustomer} from "@/lib/vendure/actions";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -23,20 +23,24 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({
-                                             children,
-                                         }: Readonly<{
+    children,
+}: Readonly<{
     children: React.ReactNode;
 }>) {
+    const activeCustomer = getActiveCustomer();
+
     return (
         <html lang="en">
-        <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
-        >
-        <AppProviders>
-            {children}
-            <Toaster/>
-        </AppProviders>
-        </body>
+            <body
+                className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
+            >
+                <AuthProvider initialActiveCustomerPromise={activeCustomer}>
+                    <Navbar />
+                    {children}
+                    <Footer />
+                    <Toaster />
+                </AuthProvider>
+            </body>
         </html>
     );
 }
