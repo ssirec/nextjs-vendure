@@ -3,10 +3,10 @@
 import {mutate} from '@/lib/vendure/api';
 import {LoginMutation, LogoutMutation} from '@/lib/vendure/mutations';
 import {removeAuthToken, setAuthToken} from '@/lib/auth';
-import {redirect, unauthorized} from "next/navigation";
+import {redirect} from "next/navigation";
 import {revalidatePath} from "next/cache";
 
-export async function loginAction(formData: FormData) {
+export async function loginAction(prevState: { error?: string } | undefined, formData: FormData) {
     const username = formData.get('username') as string;
     const password = formData.get('password') as string;
 
@@ -18,18 +18,18 @@ export async function loginAction(formData: FormData) {
     const loginResult = result.data.login;
 
     if (loginResult.__typename !== 'CurrentUser') {
-        const isNotVerified = loginResult.__typename === 'NotVerifiedError';
-
-        unauthorized();
+        if (loginResult.__typename === 'NotVerifiedError') {
+            return { error: 'Please verify your email address before signing in.' };
+        }
+        return { error: 'Invalid email or password.' };
     }
-
 
     // Store the token in a cookie if returned
     if (result.token) {
         await setAuthToken(result.token);
     }
 
-    revalidatePath('/[locale]', 'layout')
+    revalidatePath('/[locale]', 'layout');
 
     redirect('/');
 

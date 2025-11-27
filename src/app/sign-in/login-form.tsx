@@ -1,57 +1,127 @@
-import {loginAction} from './actions';
-import {Button} from '@/components/ui/button';
-import {Input} from '@/components/ui/input';
-import {Label} from '@/components/ui/label';
-import {Card, CardContent, CardFooter} from '@/components/ui/card';
+'use client';
+
+import { useState, useTransition } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { loginAction } from './actions';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from '@/components/ui/form';
 import Link from 'next/link';
 
+const loginSchema = z.object({
+    username: z.email('Please enter a valid email address'),
+    password: z.string().min(1, 'Password is required'),
+});
+
+type LoginFormData = z.infer<typeof loginSchema>;
+
 export function LoginForm() {
+    const [isPending, startTransition] = useTransition();
+    const [serverError, setServerError] = useState<string | null>(null);
+
+    const form = useForm<LoginFormData>({
+        resolver: zodResolver(loginSchema),
+        defaultValues: {
+            username: '',
+            password: '',
+        },
+    });
+
+    const onSubmit = (data: LoginFormData) => {
+        setServerError(null);
+
+        startTransition(async () => {
+            const formData = new FormData();
+            formData.append('username', data.username);
+            formData.append('password', data.password);
+
+            const result = await loginAction(undefined, formData);
+            if (result?.error) {
+                setServerError(result.error);
+            }
+        });
+    };
+
     return (
         <Card>
-            <form action={loginAction}>
-                <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                        <Label htmlFor="username">Email</Label>
-                        <Input
-                            id="username"
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)}>
+                    <CardContent className="space-y-4">
+                        <FormField
+                            control={form.control}
                             name="username"
-                            type="email"
-                            placeholder="you@example.com"
-                            required
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Email</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            type="email"
+                                            placeholder="you@example.com"
+                                            disabled={isPending}
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
 
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="password">Password</Label>
-                        <Input
-                            id="password"
+                        <FormField
+                            control={form.control}
                             name="password"
-                            type="password"
-                            placeholder="••••••••"
-                            required
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Password</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            type="password"
+                                            placeholder="••••••••"
+                                            disabled={isPending}
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
                         />
-                    </div>
-                </CardContent>
-                <CardFooter className="flex flex-col space-y-4 mt-2">
-                    <Button type="submit" className="w-full">
-                        Sign In
-                    </Button>
-                    <div className="text-sm text-center space-y-2">
-                        <Link
-                            href="/forgot-password"
-                            className="text-muted-foreground hover:text-primary"
-                        >
-                            Forgot password?
-                        </Link>
-                        <div className="text-muted-foreground">
-                            Don&apos;t have an account?{' '}
-                            <Link href="/register" className="hover:text-primary">
-                                Register
+
+                        {serverError && (
+                            <div className="text-sm text-destructive">
+                                {serverError}
+                            </div>
+                        )}
+                    </CardContent>
+                    <CardFooter className="flex flex-col space-y-4 mt-2">
+                        <Button type="submit" className="w-full" disabled={isPending}>
+                            {isPending ? 'Signing in...' : 'Sign In'}
+                        </Button>
+                        <div className="text-sm text-center space-y-2">
+                            <Link
+                                href="/forgot-password"
+                                className="text-muted-foreground hover:text-primary"
+                            >
+                                Forgot password?
                             </Link>
+                            <div className="text-muted-foreground">
+                                Don&apos;t have an account?{' '}
+                                <Link href="/register" className="hover:text-primary">
+                                    Register
+                                </Link>
+                            </div>
                         </div>
-                    </div>
-                </CardFooter>
-            </form>
+                    </CardFooter>
+                </form>
+            </Form>
         </Card>
     );
 }
