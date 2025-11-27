@@ -1,9 +1,7 @@
 import {Suspense} from 'react';
-import {notFound} from 'next/navigation';
 import {Card, CardContent} from '@/components/ui/card';
 import {Loader2} from 'lucide-react';
-import {verifyAccountAction} from './actions';
-import {VerifyResult} from './verify-result';
+import {VerifyContent} from './verify-content';
 
 function VerifyLoading() {
     return (
@@ -23,20 +21,12 @@ function VerifyLoading() {
     );
 }
 
-export default async function VerifyPage({searchParams}: { searchParams: Promise<{ token?: string }> }) {
-    const {token} = await searchParams;
-
-    if (!token) {
-        notFound();
-    }
-
-    const verifyPromise = verifyAccountAction(token);
-
+export default function VerifyPage({searchParams}: { searchParams: Promise<{ token?: string }> }) {
     return (
         <div className="flex min-h-screen items-center justify-center px-4">
             <div className="w-full max-w-md space-y-6">
                 <Suspense fallback={<VerifyLoading/>}>
-                    <VerifyResult resultPromise={verifyPromise}/>
+                    <VerifyContent searchParams={searchParams}/>
                 </Suspense>
             </div>
         </div>
