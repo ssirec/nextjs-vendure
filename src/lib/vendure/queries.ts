@@ -83,6 +83,14 @@ export const GetProductDetailQuery = graphql(`
                     name
                 }
             }
+            collections {
+                id
+                name
+                slug
+                parent {
+                    id
+                }
+            }
         }
     }
 `);
