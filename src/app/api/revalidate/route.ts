@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
             }
 
             try {
-                revalidateTag(tag);
+                revalidateTag(tag, {expire: 0});
                 results.push({tag, success: true});
             } catch {
                 results.push({tag, success: false, error: 'Revalidation failed'});
