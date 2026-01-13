@@ -1,10 +1,13 @@
+// next.config.ts
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  /* Remove or update the experimental.turbo section */
   experimental: {
-    turbo: false, // REQUIRED for Cloudflare
+    cacheComponents: true, // Add this for use cache directives
+    // Remove or comment out: turbo: { ... }
   },
-  output: "standalone",
+  // ... rest of your config
 };
 
 export default nextConfig;
