@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
-  swcMinify: false, // Try disabling SWC
+  // Remove swcMinify - it's not valid in Next.js 16
 };
 
 export default nextConfig;
