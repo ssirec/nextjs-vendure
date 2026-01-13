@@ -2,8 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
+  // Remove the experimental.turbo property
   experimental: {
-    turbo: false, // Disable Turbopack to avoid LightningCSS issue
+    // Other experimental features if any
   },
 };
 
