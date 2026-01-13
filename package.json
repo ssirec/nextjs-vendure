@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "next dev --port 3001",
     "build": "next build",
-    "postinstall": "npm rebuild --platform=linux --arch=x64 --libc=glibc sharp && node -e \"try { const { install } = require('lightningcss/install'); install({ targets: ['linux-x64-gnu'] }); } catch(e) { console.log('LightningCSS install skipped:', e.message) }\"",
+    "postinstall": "echo 'Skipping native module installation for Cloudflare"",
     "start": "next start",
     "lint": "next lint",
     "check-types": "tsc --noEmit"
