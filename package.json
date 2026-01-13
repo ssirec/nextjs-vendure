@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "next dev --port 3001",
     "build": "next build",
-    "postinstall": "echo 'Skipping native module installation for Cloudflare"",
+    "postinstall": "echo 'Skipping native module installation for Cloudflare'",
     "start": "next start",
     "lint": "next lint",
     "check-types": "tsc --noEmit"
