@@ -2,10 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
-  // Remove the experimental.turbo property
-  experimental: {
-    // Other experimental features if any
-  },
+  swcMinify: false, // Try disabling SWC
 };
 
 export default nextConfig;
