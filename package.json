@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "next dev --port 3001",
     "build": "next build",
+    "postinstall": "node -e \"try { require('lightningcss/install') } catch(e) {}\""
     "start": "next start",
     "lint": "next lint",
     "check-types": "tsc --noEmit"
