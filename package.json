@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "next dev --port 3001",
     "build": "next build",
-    "postinstall": "echo 'Skipping native module installation for Cloudflare'",
+    "postinstall": "rm -rf node_modules/lightningcss/node 2>/dev/null || true && echo 'Disabled native LightningCSS module'",
     "start": "next start",
     "lint": "next lint",
     "check-types": "tsc --noEmit"
