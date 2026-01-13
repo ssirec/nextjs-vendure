@@ -1,10 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  cacheComponents: true, // Moved from experimental.cacheComponents
-  // Remove the eslint and typescript config if you have them
-  // eslint: { ... } // Remove this
-  // typescript: { ... } // Remove this
+  cacheComponents: true,
+  experimental: {
+    turbo: false, // Disable Turbopack to avoid LightningCSS issue
+  }
 };
 
 export default nextConfig;
