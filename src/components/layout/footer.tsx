@@ -20,7 +20,6 @@ export async function Footer() {
     cacheLife('days');
 
     const collections = await getTopCollections();
-
     return (
         <footer className="border-t border-border mt-auto">
             <div className="container mx-auto px-4 py-12">
@@ -83,6 +82,12 @@ export async function Footer() {
                         </ul>
                     </div>
                 </div>
+
+                {/* Bottom Section */}
+                <div
+                    className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground"
+                >
+                    <Copyright/>
                 </div>
             </div>
         </footer>
