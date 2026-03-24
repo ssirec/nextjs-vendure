@@ -59,7 +59,7 @@ export default async function OrderDetailPage(props: PageProps<'/[locale]/accoun
                     <div>
                         <h1 className="text-3xl font-bold">{t('order', {code: order.code})}</h1>
                         <p className="text-muted-foreground mt-1">
-                            {t('placedOn', {date: formatDate(order.createdAt, 'long')})}
+                            {t('placedOn', {date: formatDate(order.createdAt, 'long', locale)})}
                         </p>
                     </div>
                     <OrderStatusBadge state={order.state}/>

@@ -12,7 +12,8 @@
     "signIn": "Sign in",
     "signOut": "Sign out",
     "greeting": "Hi, {name}",
-    "shoppingCart": "Shopping Cart"
+    "shoppingCart": "Shopping Cart",
+    "switchLanguage": "Switch language"
   },
   "Hero": {
     "title": "Discover Quality",

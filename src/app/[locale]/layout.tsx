@@ -5,6 +5,7 @@ import {hasLocale, NextIntlClientProvider} from "next-intl";
 import {getMessages, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
 import {routing} from "@/i18n/routing";
+import {toOgLocale} from "@/i18n/locale-utils";
 import {Toaster} from "@/components/ui/sonner";
 import {Navbar} from "@/components/layout/navbar";
 import {Footer} from "@/components/layout/footer";
@@ -28,7 +29,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata(): Promise<Metadata> {
     const locale = (await rootLocale()) as string;
-    const ogLocale = locale === 'de' ? 'de_DE' : 'en_US';
+    const ogLocale = toOgLocale(locale);
 
     return {
         metadataBase: new URL(SITE_URL),

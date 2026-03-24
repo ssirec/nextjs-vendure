@@ -24,6 +24,8 @@ import {
     buildCanonicalUrl,
     buildOgImages,
 } from '@/lib/metadata';
+import {toOgLocale} from '@/i18n/locale-utils';
+import {getTranslations} from 'next-intl/server';
 
 async function getCollectionProducts(slug: string, searchParams: { [key: string]: string | string[] | undefined }) {
     'use cache';
@@ -70,7 +72,7 @@ export async function generateMetadata({
     const description =
         truncateDescription(collection.description) ||
         `Browse our ${collection.name} collection at ${SITE_NAME}`;
-    const ogLocale = locale === 'de' ? 'de_DE' : 'en_US';
+    const ogLocale = toOgLocale(locale);
     const collectionPath = `/collection/${collection.slug}`;
 
     return {

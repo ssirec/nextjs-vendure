@@ -6,6 +6,8 @@ import { Link } from '@/i18n/navigation';
 import {getTranslations} from 'next-intl/server';
 
 
+const COPYRIGHT_YEAR = 2026;
+
 async function Copyright() {
     'use cache'
     cacheLife('days');
@@ -15,7 +17,7 @@ async function Copyright() {
 
     return (
         <div>
-            &copy; {new Date().getFullYear()} {t('copyright')}
+            &copy; {COPYRIGHT_YEAR} {t('copyright')}
         </div>
     )
 }

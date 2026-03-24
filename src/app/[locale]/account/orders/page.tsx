@@ -81,7 +81,7 @@ export default async function OrdersPage(props: PageProps<'/[locale]/account/ord
                                     <OrderStatusBadge state={order.state}/>
                                 </div>
                                 <div className="flex items-center justify-between text-sm">
-                                    <span className="text-muted-foreground">{formatDate(order.createdAt)}</span>
+                                    <span className="text-muted-foreground">{formatDate(order.createdAt, 'short', locale)}</span>
                                     <span className="font-medium text-base">
                                         <Price value={order.totalWithTax} currencyCode={order.currencyCode}/>
                                     </span>
@@ -117,7 +117,7 @@ export default async function OrdersPage(props: PageProps<'/[locale]/account/ord
                                             </Button>
                                         </TableCell>
                                         <TableCell>
-                                            {formatDate(order.createdAt)}
+                                            {formatDate(order.createdAt, 'short', locale)}
                                         </TableCell>
                                         <TableCell>
                                             <OrderStatusBadge state={order.state}/>

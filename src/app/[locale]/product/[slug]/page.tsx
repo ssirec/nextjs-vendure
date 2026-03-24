@@ -31,6 +31,7 @@ import {
     buildOgImages,
 } from '@/lib/metadata';
 import {getTranslations} from 'next-intl/server';
+import {toOgLocale} from '@/i18n/locale-utils';
 
 async function getProductData(slug: string) {
     'use cache';
@@ -58,7 +59,7 @@ export async function generateMetadata({
 
     const description = truncateDescription(product.description);
     const ogImage = product.assets?.[0]?.preview;
-    const ogLocale = locale === 'de' ? 'de_DE' : 'en_US';
+    const ogLocale = toOgLocale(locale);
     const productPath = `/product/${product.slug}`;
 
     return {

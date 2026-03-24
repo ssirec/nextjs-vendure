@@ -1,8 +1,8 @@
 'use client';
 
-import {useLocale} from 'next-intl';
+import {useLocale, useTranslations} from 'next-intl';
 import {useRouter, usePathname} from '@/i18n/navigation';
-import {routing} from '@/i18n/routing';
+import {routing, localeNames} from '@/i18n/routing';
 import {Globe} from 'lucide-react';
 import {Button} from '@/components/ui/button';
 import {
@@ -12,12 +12,8 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-const localeNames: Record<string, string> = {
-    en: 'English',
-    de: 'Deutsch',
-};
-
 export function LanguagePicker() {
+    const t = useTranslations('Navigation');
     const locale = useLocale();
     const router = useRouter();
     const pathname = usePathname();
@@ -30,7 +26,7 @@ export function LanguagePicker() {
         <DropdownMenu>
             <DropdownMenuTrigger render={<Button variant="ghost" size="icon" />}>
                 <Globe className="size-5" />
-                <span className="sr-only">Switch language</span>
+                <span className="sr-only">{t('switchLanguage')}</span>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
                 {routing.locales.map((loc) => (

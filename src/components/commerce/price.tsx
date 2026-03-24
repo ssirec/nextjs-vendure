@@ -1,6 +1,7 @@
 'use client';
 
 import {useLocale} from 'next-intl';
+import {toIntlLocale} from '@/i18n/locale-utils';
 
 interface PriceProps {
     value: number;
@@ -9,7 +10,7 @@ interface PriceProps {
 
 export function Price({value, currencyCode = 'USD'}: PriceProps) {
     const locale = useLocale();
-    const intlLocale = locale === 'de' ? 'de-DE' : 'en-US';
+    const intlLocale = toIntlLocale(locale);
     return (
         <>
             {new Intl.NumberFormat(intlLocale, {

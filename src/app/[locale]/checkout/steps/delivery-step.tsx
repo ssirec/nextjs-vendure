@@ -10,6 +10,7 @@ import { useRouter } from '@/i18n/navigation';
 import { useCheckout } from '../checkout-provider';
 import { setShippingMethod as setShippingMethodAction } from '../actions';
 import {useTranslations, useLocale} from 'next-intl';
+import {toIntlLocale} from '@/i18n/locale-utils';
 
 interface DeliveryStepProps {
   onComplete: () => void;
@@ -18,7 +19,7 @@ interface DeliveryStepProps {
 export default function DeliveryStep({ onComplete }: DeliveryStepProps) {
   const t = useTranslations('Checkout');
   const locale = useLocale();
-  const intlLocale = locale === 'de' ? 'de-DE' : 'en-US';
+  const intlLocale = toIntlLocale(locale);
   const router = useRouter();
   const { shippingMethods, order } = useCheckout();
   const [selectedMethodId, setSelectedMethodId] = useState<string | null>(() => {
