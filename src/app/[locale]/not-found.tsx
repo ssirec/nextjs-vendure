@@ -1,4 +1,4 @@
-import { locale as rootLocale } from 'next/root-params';
+import { getRouteLocale } from '@/i18n/server';
 import { Button } from '@/components/ui/button';
 import { SearchX, Home, ShoppingBag } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
@@ -6,7 +6,7 @@ import { getTranslations } from 'next-intl/server';
 import { getTopCollections } from '@/lib/vendure/cached';
 
 export default async function NotFound() {
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'NotFound'});
     let collections: { id: string; name: string; slug: string }[] = [];
     try {

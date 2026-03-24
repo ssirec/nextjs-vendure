@@ -5,9 +5,10 @@ import {LoginMutation, LogoutMutation} from '@/lib/vendure/mutations';
 import {removeAuthToken, setAuthToken} from '@/lib/auth';
 import {redirect} from '@/i18n/navigation';
 import {revalidatePath} from "next/cache";
-import {getLocale} from 'next-intl/server';
+import {getLocale, getTranslations} from 'next-intl/server';
 
 export async function loginAction(prevState: { error?: string } | undefined, formData: FormData) {
+    const t = await getTranslations('Errors');
     const username = formData.get('username') as string;
     const password = formData.get('password') as string;
     const redirectTo = formData.get('redirectTo') as string | null;
@@ -21,9 +22,9 @@ export async function loginAction(prevState: { error?: string } | undefined, for
 
     if (loginResult.__typename !== 'CurrentUser') {
         if (loginResult.__typename === 'NotVerifiedError') {
-            return { error: 'Please verify your email address before signing in.' };
+            return { error: t('verifyEmailFirst') };
         }
-        return { error: 'Invalid email or password.' };
+        return { error: t('invalidCredentials') };
     }
 
     // Store the token in a cookie if returned

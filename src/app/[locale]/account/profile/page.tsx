@@ -3,20 +3,20 @@ import { getActiveCustomer } from '@/lib/vendure/actions';
 import { ChangePasswordForm } from './change-password-form';
 import { EditProfileForm } from './edit-profile-form';
 import { EditEmailForm } from './edit-email-form';
-import {locale as rootLocale} from 'next/root-params';
+import {getRouteLocale} from '@/i18n/server';
 import {getTranslations} from 'next-intl/server';
 
 export async function generateMetadata(): Promise<Metadata> {
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Account'});
     return {
         title: t('profilePageTitle'),
     };
 }
 
-export default async function ProfilePage(_props: PageProps<'/[locale]/account/profile'>) {
+export default async function ProfilePage() {
     const customer = await getActiveCustomer();
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Account'});
 
     return (

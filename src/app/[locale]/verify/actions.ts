@@ -3,10 +3,13 @@
 import {mutate} from '@/lib/vendure/api';
 import {VerifyCustomerAccountMutation} from '@/lib/vendure/mutations';
 import {setAuthToken} from '@/lib/auth';
+import {getTranslations} from 'next-intl/server';
 
 export async function verifyAccountAction(token: string, password?: string) {
+    const t = await getTranslations('Errors');
+
     if (!token) {
-        return {error: 'Verification token is required'};
+        return {error: t('verificationTokenRequired')};
     }
 
     try {
@@ -27,7 +30,7 @@ export async function verifyAccountAction(token: string, password?: string) {
         }
 
         return {success: true};
-    } catch (error: unknown) {
-        return {error: 'An unexpected error occurred. Please try again.'};
+    } catch {
+        return {error: t('unexpectedError')};
     }
 }

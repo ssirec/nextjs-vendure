@@ -1,5 +1,5 @@
 import {Suspense} from "react";
-import {locale as rootLocale} from "next/root-params";
+import {getRouteLocale} from "@/i18n/server";
 import {FacetFilters} from "@/components/commerce/facet-filters";
 import {ProductGridSkeleton} from "@/components/shared/product-grid-skeleton";
 import {ProductGrid} from "@/components/commerce/product-grid";
@@ -15,7 +15,7 @@ interface SearchResultsProps {
 
 export async function SearchResults({searchParams}: SearchResultsProps) {
     const searchParamsResolved = await searchParams;
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const page = getCurrentPage(searchParamsResolved);
 
     const productDataPromise = query(SearchProductsQuery, {

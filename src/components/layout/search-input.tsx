@@ -21,7 +21,9 @@ export function SearchInput() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!searchValue.trim()) return;
-        router.push(`/search?q=${encodeURIComponent(searchValue.trim())}`);
+        startTransition(() => {
+            router.push(`/search?q=${encodeURIComponent(searchValue.trim())}`);
+        });
     };
 
     return (

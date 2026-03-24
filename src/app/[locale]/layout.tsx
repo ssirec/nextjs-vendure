@@ -1,11 +1,12 @@
 import type {Metadata, Viewport} from "next";
 import {locale as rootLocale} from "next/root-params";
-import {Geist, Geist_Mono} from "next/font/google";
 import {hasLocale, NextIntlClientProvider} from "next-intl";
-import {getMessages, setRequestLocale} from "next-intl/server";
+import {Geist, Geist_Mono} from "next/font/google";
+import {getMessages, getTranslations, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
 import {routing} from "@/i18n/routing";
 import {toOgLocale} from "@/i18n/locale-utils";
+import {getRouteLocale} from "@/i18n/server";
 import {Toaster} from "@/components/ui/sonner";
 import {Navbar} from "@/components/layout/navbar";
 import {Footer} from "@/components/layout/footer";
@@ -28,8 +29,9 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const ogLocale = toOgLocale(locale);
+    const t = await getTranslations({locale, namespace: 'Common'});
 
     return {
         metadataBase: new URL(SITE_URL),
@@ -37,8 +39,7 @@ export async function generateMetadata(): Promise<Metadata> {
             default: SITE_NAME,
             template: `%s | ${SITE_NAME}`,
         },
-        description:
-            "Shop the best products at Vendure Store. Quality products, competitive prices, and fast delivery.",
+        description: t('siteDescription', {siteName: SITE_NAME}),
         openGraph: {
             type: "website",
             siteName: SITE_NAME,

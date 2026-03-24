@@ -1,5 +1,5 @@
 import {ProductCarousel} from "@/components/commerce/product-carousel";
-import {locale as rootLocale} from "next/root-params";
+import {getRouteLocale} from "@/i18n/server";
 import {cacheLife, cacheTag} from "next/cache";
 import {query} from "@/lib/vendure/api";
 import {GetCollectionProductsQuery} from "@/lib/vendure/queries";
@@ -11,7 +11,7 @@ async function getFeaturedCollectionProducts() {
     'use cache'
     cacheLife('days')
 
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     cacheTag(`featured-${locale}`);
 
     // Fetch featured products from a specific collection
@@ -31,7 +31,7 @@ async function getFeaturedCollectionProducts() {
 
 
 export async function FeaturedProducts() {
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Product'});
     const products = await getFeaturedCollectionProducts();
 

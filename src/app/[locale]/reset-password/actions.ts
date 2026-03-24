@@ -4,19 +4,20 @@ import {mutate} from '@/lib/vendure/api';
 import {ResetPasswordMutation} from '@/lib/vendure/mutations';
 import {setAuthToken} from '@/lib/auth';
 import {redirect} from '@/i18n/navigation';
-import {getLocale} from 'next-intl/server';
+import {getLocale, getTranslations} from 'next-intl/server';
 
 export async function resetPasswordAction(prevState: { error?: string } | undefined, formData: FormData) {
+    const t = await getTranslations('Errors');
     const token = formData.get('token') as string;
     const password = formData.get('password') as string;
     const confirmPassword = formData.get('confirmPassword') as string;
 
     if (!token || !password || !confirmPassword) {
-        return {error: 'All fields are required'};
+        return {error: t('fieldsRequired')};
     }
 
     if (password !== confirmPassword) {
-        return {error: 'Passwords do not match'};
+        return {error: t('passwordsMismatch')};
     }
 
 

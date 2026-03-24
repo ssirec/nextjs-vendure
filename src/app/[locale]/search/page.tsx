@@ -1,7 +1,7 @@
 import type {Metadata} from 'next';
 import {Suspense} from 'react';
-import {locale as rootLocale} from 'next/root-params';
 import {getTranslations} from 'next-intl/server';
+import {getRouteLocale} from '@/i18n/server';
 import {SearchResults} from "@/app/[locale]/search/search-results";
 import {SearchTerm, SearchTermSkeleton} from "@/app/[locale]/search/search-term";
 import {SearchResultsSkeleton} from "@/components/shared/skeletons/search-results-skeleton";
@@ -11,7 +11,7 @@ export async function generateMetadata({
     searchParams,
 }: PageProps<'/[locale]/search'>): Promise<Metadata> {
     const resolvedParams = await searchParams;
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Search'});
     const searchQuery = resolvedParams.q as string | undefined;
 
@@ -22,8 +22,8 @@ export async function generateMetadata({
     return {
         title,
         description: searchQuery
-            ? `Find products matching "${searchQuery}" at ${SITE_NAME}`
-            : `Search our product catalog at ${SITE_NAME}`,
+            ? t('metaDescription', {query: searchQuery, siteName: SITE_NAME})
+            : t('metaCatalogDescription', {siteName: SITE_NAME}),
         robots: noIndexRobots(),
     };
 }

@@ -62,6 +62,9 @@
     "notFound": "Product Not Found",
     "home": "Home",
     "noProductsFound": "No products found",
+    "shopProductAt": "Shop {name} at {siteName}",
+    "collectionNotFound": "Collection Not Found",
+    "browseCollectionAt": "Browse our {name} collection at {siteName}",
     "productCount": "{count, plural, one {# product} other {# products}}",
     "trustBadges": {
       "fastShipping": "Fast Shipping",
@@ -270,7 +273,9 @@
     "title": "Search",
     "pageTitle": "Search Products",
     "resultsFor": "Search results for \"{query}\"",
-    "resultsTitle": "Search results for \"{query}\""
+    "resultsTitle": "Search results for \"{query}\"",
+    "metaDescription": "Find products matching \"{query}\" at {siteName}",
+    "metaCatalogDescription": "Search our product catalog at {siteName}"
   },
   "Verify": {
     "invalidLink": "Invalid Verification Link",
@@ -435,6 +440,24 @@
   "Common": {
     "loading": "Loading...",
     "sending": "Sending...",
-    "sku": "SKU"
+    "sku": "SKU",
+    "siteDescription": "Shop the best products at {siteName}. Quality products, competitive prices, and fast delivery."
+  },
+  "Errors": {
+    "fieldsRequired": "All fields are required",
+    "passwordsMismatch": "Passwords do not match",
+    "unexpectedError": "An unexpected error occurred. Please try again.",
+    "emailPasswordRequired": "Email address and password are required",
+    "verifyEmailFirst": "Please verify your email address before signing in.",
+    "invalidCredentials": "Invalid email or password.",
+    "emailRequired": "Email address is required",
+    "firstLastNameRequired": "First name and last name are required",
+    "passwordEmailRequired": "Password and new email address are required",
+    "invalidEmail": "Please enter a valid email address",
+    "failedUpdateCustomer": "Failed to update customer information",
+    "newPasswordMustDiffer": "New password must be different from current password",
+    "failedPasswordReset": "Failed to request password reset",
+    "verificationTokenRequired": "Verification token is required",
+    "failedAddToCart": "Failed to add item to cart"
   }
 }

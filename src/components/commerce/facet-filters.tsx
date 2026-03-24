@@ -26,22 +26,21 @@ function FilterContent({
     toggleFacet,
     clearFilters,
     hasActiveFilters,
-    translations,
 }: {
     facetGroups: Record<string, { id: string; name: string; values: Array<{ id: string; name: string; count: number }> }>;
     selectedFacets: string[];
     toggleFacet: (facetId: string) => void;
     clearFilters: () => void;
     hasActiveFilters: boolean;
-    translations: { title: string; clearAll: string };
 }) {
+    const t = useTranslations('Filters');
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between">
-                <h2 className="font-semibold text-lg">{translations.title}</h2>
+                <h2 className="font-semibold text-lg">{t('title')}</h2>
                 {hasActiveFilters && (
                     <Button variant="ghost" size="sm" onClick={clearFilters}>
-                        {translations.clearAll}
+                        {t('clearAll')}
                     </Button>
                 )}
             </div>
@@ -158,7 +157,6 @@ export function FacetFilters({ productDataPromise }: FacetFiltersProps) {
         toggleFacet,
         clearFilters,
         hasActiveFilters,
-        translations: { title: t('title'), clearAll: t('clearAll') },
     };
 
     return (

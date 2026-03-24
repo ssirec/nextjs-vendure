@@ -20,7 +20,6 @@ import {
     BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { notFound } from 'next/navigation';
-import { locale as rootLocale } from 'next/root-params';
 import { cacheLife, cacheTag } from 'next/cache';
 import { Truck, RotateCcw, ShieldCheck, Clock } from 'lucide-react';
 import { routing } from '@/i18n/routing';
@@ -32,12 +31,13 @@ import {
 } from '@/lib/metadata';
 import {getTranslations} from 'next-intl/server';
 import {toOgLocale} from '@/i18n/locale-utils';
+import {getRouteLocale} from '@/i18n/server';
 
 async function getProductData(slug: string) {
     'use cache';
     cacheLife('hours');
 
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     cacheTag(`product-${slug}-${locale}`);
 
     return await query(GetProductDetailQuery, {slug}, {languageCode: locale});
@@ -47,24 +47,27 @@ export async function generateMetadata({
     params,
 }: PageProps<'/[locale]/product/[slug]'>): Promise<Metadata> {
     const { slug } = await params;
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const result = await getProductData(slug);
     const product = result.data.product;
 
+    const t = await getTranslations({locale, namespace: 'Product'});
+
     if (!product) {
         return {
-            title: 'Product Not Found',
+            title: t('notFound'),
         };
     }
 
     const description = truncateDescription(product.description);
+    const fallbackDescription = t('shopProductAt', {name: product.name, siteName: SITE_NAME});
     const ogImage = product.assets?.[0]?.preview;
     const ogLocale = toOgLocale(locale);
     const productPath = `/product/${product.slug}`;
 
     return {
         title: product.name,
-        description: description || `Shop ${product.name} at ${SITE_NAME}`,
+        description: description || fallbackDescription,
         alternates: {
             canonical: buildCanonicalUrl(`/${locale}${productPath}`),
             languages: Object.fromEntries(
@@ -73,7 +76,7 @@ export async function generateMetadata({
         },
         openGraph: {
             title: product.name,
-            description: description || `Shop ${product.name} at ${SITE_NAME}`,
+            description: description || fallbackDescription,
             type: 'website',
             locale: ogLocale,
             url: buildCanonicalUrl(`/${locale}${productPath}`),
@@ -82,7 +85,7 @@ export async function generateMetadata({
         twitter: {
             card: 'summary_large_image',
             title: product.name,
-            description: description || `Shop ${product.name} at ${SITE_NAME}`,
+            description: description || fallbackDescription,
             images: ogImage ? [ogImage] : undefined,
         },
     };
@@ -91,7 +94,7 @@ export async function generateMetadata({
 export default async function ProductDetailPage({params, searchParams}: PageProps<'/[locale]/product/[slug]'>) {
     const { slug } = await params;
     const searchParamsResolved = await searchParams;
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Product'});
 
     const result = await getProductData(slug);

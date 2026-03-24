@@ -1,6 +1,6 @@
 import type {Metadata} from 'next';
 import {Suspense} from 'react';
-import {locale as rootLocale} from 'next/root-params';
+import {getRouteLocale} from '@/i18n/server';
 import {getTranslations} from 'next-intl/server';
 import {LoginForm} from "./login-form";
 import {Card, CardContent, CardFooter} from "@/components/ui/card";
@@ -8,7 +8,7 @@ import {Skeleton} from "@/components/ui/skeleton";
 import {SITE_NAME} from "@/lib/metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Auth'});
     return {
         title: t('pageTitle'),
@@ -47,7 +47,7 @@ async function SignInContent({searchParams}: { searchParams: Promise<Record<stri
 }
 
 export default async function SignInPage({searchParams}: PageProps<'/[locale]/sign-in'>) {
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Auth'});
 
     return (
