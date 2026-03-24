@@ -425,6 +425,9 @@ export default function ShippingAddressStep({ onComplete }: ShippingAddressStepP
 
       {addresses.length === 0 && (
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+          <DialogTrigger render={<Button type="button" className="w-full" />}>
+            Add shipping address
+          </DialogTrigger>
           <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
             <form onSubmit={handleSubmit(onSaveNewAddress)}>
               <DialogHeader>
