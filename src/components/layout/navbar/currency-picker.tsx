@@ -1,7 +1,7 @@
 'use client';
 
 import {useTranslations} from 'next-intl';
-import {DollarSign} from 'lucide-react';
+import {Coins} from 'lucide-react';
 import {Button} from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -36,8 +36,8 @@ export function CurrencyPicker({availableCurrencyCodes, activeCurrencyCode}: Cur
 
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger render={<Button variant="ghost" size="sm" className="gap-1.5" />}>
-                <DollarSign className="size-4" />
+            <DropdownMenuTrigger render={<Button variant="ghost" size="sm" className="gap-1.5" aria-label={t('switchCurrency')} />}>
+                <Coins className="size-4" />
                 <span>{activeCurrencyCode}</span>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
