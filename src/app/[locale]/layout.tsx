@@ -26,29 +26,44 @@ export function generateStaticParams() {
     return routing.locales.map((locale) => ({locale}));
 }
 
-export const metadata: Metadata = {
-    metadataBase: new URL(SITE_URL),
-    title: {
-        default: SITE_NAME,
-        template: `%s | ${SITE_NAME}`,
-    },
-    description:
-        "Shop the best products at Vendure Store. Quality products, competitive prices, and fast delivery.",
-    twitter: {
-        card: "summary_large_image",
-    },
-    robots: {
-        index: true,
-        follow: true,
-        googleBot: {
+export async function generateMetadata(): Promise<Metadata> {
+    const locale = (await rootLocale()) as string;
+    const ogLocale = locale === 'de' ? 'de_DE' : 'en_US';
+
+    return {
+        metadataBase: new URL(SITE_URL),
+        title: {
+            default: SITE_NAME,
+            template: `%s | ${SITE_NAME}`,
+        },
+        description:
+            "Shop the best products at Vendure Store. Quality products, competitive prices, and fast delivery.",
+        openGraph: {
+            type: "website",
+            siteName: SITE_NAME,
+            locale: ogLocale,
+        },
+        twitter: {
+            card: "summary_large_image",
+        },
+        robots: {
             index: true,
             follow: true,
-            "max-video-preview": -1,
-            "max-image-preview": "large",
-            "max-snippet": -1,
+            googleBot: {
+                index: true,
+                follow: true,
+                "max-video-preview": -1,
+                "max-image-preview": "large",
+                "max-snippet": -1,
+            },
         },
-    },
-};
+        alternates: {
+            languages: Object.fromEntries(
+                routing.locales.map((l) => [l, `/${l}`])
+            ),
+        },
+    };
+}
 
 export const viewport: Viewport = {
     width: "device-width",

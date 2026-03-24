@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { query } from '@/lib/vendure/api';
 import { SearchProductsQuery, GetCollectionProductsQuery } from '@/lib/vendure/queries';
 import { ProductGrid } from '@/components/commerce/product-grid';
@@ -17,6 +17,7 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { routing } from '@/i18n/routing';
 import {
     SITE_NAME,
     truncateDescription,
@@ -56,6 +57,7 @@ export async function generateMetadata({
     params,
 }: PageProps<'/[locale]/collection/[slug]'>): Promise<Metadata> {
     const { slug } = await params;
+    const locale = (await rootLocale()) as string;
     const result = await getCollectionMetadata(slug);
     const collection = result.data.collection;
 
@@ -68,18 +70,24 @@ export async function generateMetadata({
     const description =
         truncateDescription(collection.description) ||
         `Browse our ${collection.name} collection at ${SITE_NAME}`;
+    const ogLocale = locale === 'de' ? 'de_DE' : 'en_US';
+    const collectionPath = `/collection/${collection.slug}`;
 
     return {
         title: collection.name,
         description,
         alternates: {
-            canonical: buildCanonicalUrl(`/collection/${collection.slug}`),
+            canonical: buildCanonicalUrl(`/${locale}${collectionPath}`),
+            languages: Object.fromEntries(
+                routing.locales.map((l) => [l, buildCanonicalUrl(`/${l}${collectionPath}`)])
+            ),
         },
         openGraph: {
             title: collection.name,
             description,
             type: 'website',
-            url: buildCanonicalUrl(`/collection/${collection.slug}`),
+            locale: ogLocale,
+            url: buildCanonicalUrl(`/${locale}${collectionPath}`),
             images: buildOgImages(collection.featuredAsset?.preview, collection.name),
         },
         twitter: {

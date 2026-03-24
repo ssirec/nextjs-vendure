@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { query } from '@/lib/vendure/api';
 import { GetProductDetailQuery } from '@/lib/vendure/queries';
 import { ProductImageCarousel } from '@/components/commerce/product-image-carousel';
@@ -23,6 +23,7 @@ import { notFound } from 'next/navigation';
 import { locale as rootLocale } from 'next/root-params';
 import { cacheLife, cacheTag } from 'next/cache';
 import { Truck, RotateCcw, ShieldCheck, Clock } from 'lucide-react';
+import { routing } from '@/i18n/routing';
 import {
     SITE_NAME,
     truncateDescription,
@@ -44,6 +45,7 @@ export async function generateMetadata({
     params,
 }: PageProps<'/[locale]/product/[slug]'>): Promise<Metadata> {
     const { slug } = await params;
+    const locale = (await rootLocale()) as string;
     const result = await getProductData(slug);
     const product = result.data.product;
 
@@ -55,18 +57,24 @@ export async function generateMetadata({
 
     const description = truncateDescription(product.description);
     const ogImage = product.assets?.[0]?.preview;
+    const ogLocale = locale === 'de' ? 'de_DE' : 'en_US';
+    const productPath = `/product/${product.slug}`;
 
     return {
         title: product.name,
         description: description || `Shop ${product.name} at ${SITE_NAME}`,
         alternates: {
-            canonical: buildCanonicalUrl(`/product/${product.slug}`),
+            canonical: buildCanonicalUrl(`/${locale}${productPath}`),
+            languages: Object.fromEntries(
+                routing.locales.map((l) => [l, buildCanonicalUrl(`/${l}${productPath}`)])
+            ),
         },
         openGraph: {
             title: product.name,
             description: description || `Shop ${product.name} at ${SITE_NAME}`,
             type: 'website',
-            url: buildCanonicalUrl(`/product/${product.slug}`),
+            locale: ogLocale,
+            url: buildCanonicalUrl(`/${locale}${productPath}`),
             images: buildOgImages(ogImage, product.name),
         },
         twitter: {
