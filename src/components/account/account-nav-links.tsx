@@ -3,12 +3,19 @@
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import {cn} from '@/lib/utils';
+import {Package, User, MapPin} from 'lucide-react';
 import type {LucideIcon} from 'lucide-react';
+
+const iconMap: Record<string, LucideIcon> = {
+    Package,
+    MapPin,
+    User,
+};
 
 interface NavItem {
     href: string;
     label: string;
-    icon: LucideIcon;
+    icon: string;
 }
 
 interface AccountNavLinksProps {
@@ -24,6 +31,7 @@ export function AccountNavLinks({items, layout}: AccountNavLinksProps) {
             <nav className="flex gap-1 overflow-x-auto border-b border-border pb-px">
                 {items.map((item) => {
                     const isActive = pathname.startsWith(item.href);
+                    const Icon = iconMap[item.icon];
                     return (
                         <Link
                             key={item.href}
@@ -35,7 +43,7 @@ export function AccountNavLinks({items, layout}: AccountNavLinksProps) {
                                     : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
                             )}
                         >
-                            <item.icon className="h-4 w-4" />
+                            {Icon && <Icon className="h-4 w-4" />}
                             {item.label}
                         </Link>
                     );
@@ -48,6 +56,7 @@ export function AccountNavLinks({items, layout}: AccountNavLinksProps) {
         <nav className="space-y-1">
             {items.map((item) => {
                 const isActive = pathname.startsWith(item.href);
+                const Icon = iconMap[item.icon];
                 return (
                     <Link
                         key={item.href}
@@ -59,7 +68,7 @@ export function AccountNavLinks({items, layout}: AccountNavLinksProps) {
                                 : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
                         )}
                     >
-                        <item.icon className="h-5 w-5" />
+                        {Icon && <Icon className="h-5 w-5" />}
                         {item.label}
                     </Link>
                 );
