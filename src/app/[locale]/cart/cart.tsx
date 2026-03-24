@@ -2,16 +2,20 @@ import {CartItems} from "@/app/[locale]/cart/cart-items";
 import {OrderSummary} from "@/app/[locale]/cart/order-summary";
 import {PromotionCode} from "@/app/[locale]/cart/promotion-code";
 import {getRouteLocale} from "@/i18n/server";
+import {getCurrencyCookie} from "@/lib/currency";
 import {query} from "@/lib/vendure/api";
+import {getActiveChannelCached} from "@/lib/vendure/cached";
 import {GetActiveOrderQuery} from "@/lib/vendure/queries";
 
 export async function Cart() {
     "use cache: private"
 
     const locale = await getRouteLocale();
+    const currency = (await getCurrencyCookie()) ?? (await getActiveChannelCached()).defaultCurrencyCode;
     const {data} = await query(GetActiveOrderQuery, {}, {
         useAuthToken: true,
         languageCode: locale,
+        currencyCode: currency,
     });
 
     const activeOrder = data.activeOrder;
