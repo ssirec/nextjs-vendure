@@ -15,13 +15,11 @@ export function NavbarLink({href, ...rest}: ComponentProps<typeof Link>) {
     const isActive = pathname === href;
 
     return (
-        <NavigationMenuLink asChild active={isActive}>
-            <Link
+        <NavigationMenuLink render={<Link
                 aria-current={isActive ? 'page' : undefined}
-                className={cn(navigationMenuTriggerStyle())}
+                className={cn(navigationMenuTriggerStyle(), 'bg-transparent')}
                 href={href}
                 {...rest}
-            />
-        </NavigationMenuLink>
+            />} active={isActive} />
     );
 }
