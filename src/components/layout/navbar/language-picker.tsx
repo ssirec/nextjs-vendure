@@ -24,9 +24,9 @@ export function LanguagePicker() {
 
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger render={<Button variant="ghost" size="icon" />}>
-                <Globe className="size-5" />
-                <span className="sr-only">{t('switchLanguage')}</span>
+            <DropdownMenuTrigger render={<Button variant="ghost" size="sm" className="gap-1.5" />}>
+                <Globe className="size-4" />
+                <span>{localeNames[locale] ?? locale.toUpperCase()}</span>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
                 {routing.locales.map((loc) => (
