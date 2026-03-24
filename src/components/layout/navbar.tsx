@@ -35,8 +35,12 @@ export function Navbar() {
                                 <SearchInput/>
                             </Suspense>
                         </div>
-                        <LanguagePicker />
-                        <ThemeSwitcher />
+                        <Suspense>
+                            <LanguagePicker />
+                        </Suspense>
+                        <Suspense>
+                            <ThemeSwitcher />
+                        </Suspense>
                         <Suspense>
                             <NavbarCart/>
                         </Suspense>
