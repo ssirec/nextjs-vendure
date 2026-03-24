@@ -3,7 +3,8 @@ import {ProductCard} from './product-card';
 import {Pagination} from '@/components/shared/pagination';
 import {SortDropdown} from './sort-dropdown';
 import {SearchProductsQuery} from "@/lib/vendure/queries";
-import {getActiveChannel} from '@/lib/vendure/actions';
+import {getRouteLocale} from '@/i18n/server';
+import {getTranslations} from 'next-intl/server';
 
 interface ProductGridProps {
     productDataPromise: Promise<{
@@ -15,10 +16,9 @@ interface ProductGridProps {
 }
 
 export async function ProductGrid({productDataPromise, currentPage, take}: ProductGridProps) {
-    const [result, channel] = await Promise.all([
-        productDataPromise,
-        getActiveChannel(),
-    ]);
+    const locale = await getRouteLocale();
+    const t = await getTranslations({locale, namespace: 'Product'});
+    const result = await productDataPromise;
 
     const searchResult = result.data.search;
     const totalPages = Math.ceil(searchResult.totalItems / take);
@@ -26,7 +26,7 @@ export async function ProductGrid({productDataPromise, currentPage, take}: Produ
     if (!searchResult.items.length) {
         return (
             <div className="text-center py-12">
-                <p className="text-muted-foreground">No products found</p>
+                <p className="text-muted-foreground">{t('noProductsFound')}</p>
             </div>
         );
     }
@@ -35,7 +35,7 @@ export async function ProductGrid({productDataPromise, currentPage, take}: Produ
         <div className="space-y-8">
             <div className="flex items-center justify-between">
                 <p className="text-sm text-muted-foreground">
-                    {searchResult.totalItems} {searchResult.totalItems === 1 ? 'product' : 'products'}
+                    {t('productCount', {count: searchResult.totalItems})}
                 </p>
                 <SortDropdown/>
             </div>

@@ -1,9 +1,10 @@
 import Image from "next/image";
-import Link from "next/link";
+import {NavigationLink} from '@/components/shared/navigation-link';
 import {NavbarCollections} from '@/components/layout/navbar/navbar-collections';
 import {NavbarCart} from '@/components/layout/navbar/navbar-cart';
 import {NavbarUser} from '@/components/layout/navbar/navbar-user';
 import {ThemeSwitcher} from '@/components/layout/navbar/theme-switcher';
+import {LanguagePicker} from '@/components/layout/navbar/language-picker';
 import {MobileNavWrapper} from '@/components/layout/navbar/mobile-nav-wrapper';
 import {Suspense} from "react";
 import {SearchInput} from '@/components/layout/search-input';
@@ -19,9 +20,9 @@ export function Navbar() {
                         <Suspense>
                             <MobileNavWrapper />
                         </Suspense>
-                        <Link href="/" className="text-xl font-bold">
+                        <NavigationLink href="/" className="text-xl font-bold">
                             <Image src="/vendure.svg" alt="Vendure" width={40} height={27} className="h-6 w-auto dark:invert" />
-                        </Link>
+                        </NavigationLink>
                         <nav className="hidden md:flex items-center gap-6">
                             <Suspense>
                                 <NavbarCollections/>
@@ -34,7 +35,12 @@ export function Navbar() {
                                 <SearchInput/>
                             </Suspense>
                         </div>
-                        <ThemeSwitcher />
+                        <Suspense>
+                            <LanguagePicker />
+                        </Suspense>
+                        <Suspense>
+                            <ThemeSwitcher />
+                        </Suspense>
                         <Suspense>
                             <NavbarCart/>
                         </Suspense>

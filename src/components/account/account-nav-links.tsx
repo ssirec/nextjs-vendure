@@ -1,10 +1,10 @@
 'use client';
 
-import Link from 'next/link';
-import {usePathname} from 'next/navigation';
+import { Link, usePathname } from '@/i18n/navigation';
 import {cn} from '@/lib/utils';
 import {Package, User, MapPin} from 'lucide-react';
 import type {LucideIcon} from 'lucide-react';
+import {useTranslations} from 'next-intl';
 
 const iconMap: Record<string, LucideIcon> = {
     Package,
@@ -14,7 +14,7 @@ const iconMap: Record<string, LucideIcon> = {
 
 interface NavItem {
     href: string;
-    label: string;
+    labelKey: string;
     icon: string;
 }
 
@@ -25,6 +25,7 @@ interface AccountNavLinksProps {
 
 export function AccountNavLinks({items, layout}: AccountNavLinksProps) {
     const pathname = usePathname();
+    const t = useTranslations('Navigation');
 
     if (layout === 'horizontal') {
         return (
@@ -44,7 +45,7 @@ export function AccountNavLinks({items, layout}: AccountNavLinksProps) {
                             )}
                         >
                             {Icon && <Icon className="h-4 w-4" />}
-                            {item.label}
+                            {t(item.labelKey)}
                         </Link>
                     );
                 })}
@@ -69,7 +70,7 @@ export function AccountNavLinks({items, layout}: AccountNavLinksProps) {
                         )}
                     >
                         {Icon && <Icon className="h-5 w-5" />}
-                        {item.label}
+                        {t(item.labelKey)}
                     </Link>
                 );
             })}

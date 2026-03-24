@@ -1,9 +1,11 @@
 import { ProductCarousel } from "@/components/commerce/product-carousel";
+import { getRouteLocale } from "@/i18n/server";
 import { cacheLife, cacheTag } from "next/cache";
 import { query } from "@/lib/vendure/api";
 import { GetCollectionProductsQuery } from "@/lib/vendure/queries";
 import { readFragment } from "@/graphql";
 import { ProductCardFragment } from "@/lib/vendure/fragments";
+import {getTranslations} from 'next-intl/server';
 
 interface RelatedProductsProps {
     collectionSlug: string;
@@ -13,7 +15,9 @@ interface RelatedProductsProps {
 async function getRelatedProducts(collectionSlug: string, currentProductId: string) {
     'use cache'
     cacheLife('hours')
-    cacheTag(`related-products-${collectionSlug}`)
+
+    const locale = await getRouteLocale();
+    cacheTag(`related-products-${collectionSlug}-${locale}`)
 
     const result = await query(GetCollectionProductsQuery, {
         slug: collectionSlug,
@@ -23,7 +27,7 @@ async function getRelatedProducts(collectionSlug: string, currentProductId: stri
             skip: 0,
             groupByProduct: true
         }
-    });
+    }, {languageCode: locale});
 
     // Filter out the current product and limit to 12
     return result.data.search.items
@@ -35,6 +39,8 @@ async function getRelatedProducts(collectionSlug: string, currentProductId: stri
 }
 
 export async function RelatedProducts({ collectionSlug, currentProductId }: RelatedProductsProps) {
+    const locale = await getRouteLocale();
+    const t = await getTranslations({locale, namespace: 'Product'});
     const products = await getRelatedProducts(collectionSlug, currentProductId);
 
     if (products.length === 0) {
@@ -43,7 +49,7 @@ export async function RelatedProducts({ collectionSlug, currentProductId }: Rela
 
     return (
         <ProductCarousel
-            title="Related Products"
+            title={t('relatedProducts')}
             products={products}
         />
     );

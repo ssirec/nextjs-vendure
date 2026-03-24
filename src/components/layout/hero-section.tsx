@@ -1,7 +1,11 @@
 import {Button} from "@/components/ui/button";
-import Link from "next/link";
+import { Link } from '@/i18n/navigation';
+import {getTranslations} from 'next-intl/server';
+import {getRouteLocale} from '@/i18n/server';
 
-export function HeroSection() {
+export async function HeroSection() {
+    const locale = await getRouteLocale();
+    const t = await getTranslations({locale, namespace: 'Hero'});
     return (
         <section className="relative overflow-hidden bg-gradient-to-br from-background via-muted/50 to-muted">
             {/* Subtle decorative grid pattern */}
@@ -14,22 +18,22 @@ export function HeroSection() {
                     <h1
                         className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight animate-in fade-in slide-in-from-top-4 duration-700 fill-mode-backwards"
                     >
-                        Discover Quality{" "}
-                        <span className="text-primary">Products</span>
+                        {t('title')}{" "}
+                        <span className="text-primary">{t('titleHighlight')}</span>
                     </h1>
                     <p
                         className="text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150 fill-mode-backwards"
                     >
-                        Premium products, exceptional prices. Free shipping on orders over $50.
+                        {t('subtitle')}
                     </p>
                     <div
                         className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 fill-mode-backwards"
                     >
                         <Button render={<Link href="/search" />} nativeButton={false} size="lg" className="min-w-[200px] text-base">
-                            Shop Now
+                            {t('shopNow')}
                         </Button>
                         <Button render={<Link href="/search" />} nativeButton={false} variant="outline" size="lg" className="min-w-[200px] text-base">
-                            View Collections
+                            {t('viewCollections')}
                         </Button>
                     </div>
                 </div>

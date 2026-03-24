@@ -1,7 +1,8 @@
 'use client';
 
 import { use, useState } from 'react';
-import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from '@/i18n/navigation';
 import { ResultOf } from '@/graphql';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
@@ -10,6 +11,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/co
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
 import { SlidersHorizontal, ChevronDown } from 'lucide-react';
 import { SearchProductsQuery } from "@/lib/vendure/queries";
+import {useTranslations} from 'next-intl';
 
 interface FacetFiltersProps {
     productDataPromise: Promise<{
@@ -31,13 +33,14 @@ function FilterContent({
     clearFilters: () => void;
     hasActiveFilters: boolean;
 }) {
+    const t = useTranslations('Filters');
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between">
-                <h2 className="font-semibold text-lg">Filters</h2>
+                <h2 className="font-semibold text-lg">{t('title')}</h2>
                 {hasActiveFilters && (
                     <Button variant="ghost" size="sm" onClick={clearFilters}>
-                        Clear all
+                        {t('clearAll')}
                     </Button>
                 )}
             </div>
@@ -82,6 +85,7 @@ function FilterContent({
 }
 
 export function FacetFilters({ productDataPromise }: FacetFiltersProps) {
+    const t = useTranslations('Filters');
     const result = use(productDataPromise);
     const searchResult = result.data.search;
     const pathname = usePathname();
@@ -164,7 +168,7 @@ export function FacetFilters({ productDataPromise }: FacetFiltersProps) {
                         render={
                             <Button variant="outline" className="w-full">
                                 <SlidersHorizontal className="mr-2 h-4 w-4" />
-                                Filters
+                                {t('filtersButton')}
                                 {hasActiveFilters && (
                                     <span className="ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
                                         {selectedFacets.length}
@@ -175,7 +179,7 @@ export function FacetFilters({ productDataPromise }: FacetFiltersProps) {
                     />
                     <SheetContent side="left" className="overflow-y-auto p-6">
                         <SheetHeader>
-                            <SheetTitle>Filters</SheetTitle>
+                            <SheetTitle>{t('title')}</SheetTitle>
                         </SheetHeader>
                         <div className="mt-4">
                             <FilterContent {...filterContentProps} />

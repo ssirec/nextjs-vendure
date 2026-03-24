@@ -1,9 +1,9 @@
 'use client';
 
-import {usePathname, useSearchParams} from 'next/navigation';
+import {useSearchParams} from 'next/navigation';
+import {usePathname, Link} from '@/i18n/navigation';
 import {ChevronLeft, ChevronRight} from 'lucide-react';
 import {Button} from '@/components/ui/button';
-import Link from "next/link";
 
 interface PaginationProps {
     currentPage: number;
