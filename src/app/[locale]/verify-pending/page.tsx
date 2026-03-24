@@ -4,6 +4,7 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
 import { CheckCircle } from 'lucide-react';
+import {locale as rootLocale} from 'next/root-params';
 import {getTranslations} from 'next-intl/server';
 
 export const metadata: Metadata = {
@@ -12,7 +13,8 @@ export const metadata: Metadata = {
 };
 
 async function VerifyPendingContent({searchParams}: {searchParams: Promise<Record<string, string | string[] | undefined>>}) {
-    const t = await getTranslations('Verify');
+    const locale = (await rootLocale()) as string;
+    const t = await getTranslations({locale, namespace: 'Verify'});
     const resolvedParams = await searchParams;
     const redirectTo = resolvedParams?.redirectTo as string | undefined;
 
@@ -50,7 +52,8 @@ async function VerifyPendingContent({searchParams}: {searchParams: Promise<Recor
 }
 
 export default async function VerifyPendingPage({searchParams}: PageProps<'/[locale]/verify-pending'>) {
-    const t = await getTranslations('Verify');
+    const locale = (await rootLocale()) as string;
+    const t = await getTranslations({locale, namespace: 'Verify'});
     return (
         <div className="flex min-h-screen items-center justify-center px-4">
             <div className="w-full max-w-md space-y-6">

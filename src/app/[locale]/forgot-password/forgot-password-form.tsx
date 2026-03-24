@@ -19,11 +19,13 @@ import {
 import { Link } from '@/i18n/navigation';
 import {useTranslations} from 'next-intl';
 
-const forgotPasswordSchema = z.object({
-    emailAddress: z.email('Please enter a valid email address'),
-});
+function createForgotPasswordSchema(t: ReturnType<typeof useTranslations<'Auth'>>) {
+    return z.object({
+        emailAddress: z.email(t('emailValidation')),
+    });
+}
 
-type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
+type ForgotPasswordFormData = z.infer<ReturnType<typeof createForgotPasswordSchema>>;
 
 export function ForgotPasswordForm() {
     const t = useTranslations('Auth');
@@ -31,6 +33,7 @@ export function ForgotPasswordForm() {
     const [serverError, setServerError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
 
+    const forgotPasswordSchema = createForgotPasswordSchema(t);
     const form = useForm<ForgotPasswordFormData>({
         resolver: zodResolver(forgotPasswordSchema),
         defaultValues: {

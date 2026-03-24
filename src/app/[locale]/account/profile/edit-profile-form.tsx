@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {useTranslations} from 'next-intl';
 
 interface EditProfileFormProps {
     customer: {
@@ -15,6 +16,7 @@ interface EditProfileFormProps {
 }
 
 export function EditProfileForm({ customer }: EditProfileFormProps) {
+    const t = useTranslations('Account');
     const [state, formAction, isPending] = useActionState(updateCustomerAction, undefined);
 
     useEffect(() => {
@@ -27,15 +29,15 @@ export function EditProfileForm({ customer }: EditProfileFormProps) {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Personal Information</CardTitle>
+                <CardTitle>{t('personalInformation')}</CardTitle>
                 <CardDescription>
-                    Update your personal details.
+                    {t('updatePersonalDetails')}
                 </CardDescription>
             </CardHeader>
             <form id="edit-profile-form" action={formAction}>
                 <CardContent className="space-y-4">
                     <div className="space-y-2">
-                        <Label htmlFor="firstName">First Name</Label>
+                        <Label htmlFor="firstName">{t('firstName')}</Label>
                         <Input
                             id="firstName"
                             name="firstName"
@@ -47,7 +49,7 @@ export function EditProfileForm({ customer }: EditProfileFormProps) {
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="lastName">Last Name</Label>
+                        <Label htmlFor="lastName">{t('lastName')}</Label>
                         <Input
                             id="lastName"
                             name="lastName"
@@ -65,11 +67,11 @@ export function EditProfileForm({ customer }: EditProfileFormProps) {
                     )}
                     {state?.success && (
                         <div className="text-sm text-green-600">
-                            Profile updated successfully!
+                            {t('profileUpdated')}
                         </div>
                     )}
                     <Button type="submit" disabled={isPending}>
-                        {isPending ? 'Updating...' : 'Update Profile'}
+                        {isPending ? t('updating') : t('updateProfile')}
                     </Button>
                 </CardContent>
             </form>

@@ -6,8 +6,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {useTranslations} from 'next-intl';
 
 export function ChangePasswordForm() {
+    const t = useTranslations('Account');
     const [state, formAction, isPending] = useActionState(updatePasswordAction, undefined);
 
     useEffect(() => {
@@ -20,15 +22,15 @@ export function ChangePasswordForm() {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Change Password</CardTitle>
+                <CardTitle>{t('changePassword')}</CardTitle>
                 <CardDescription>
-                    Update your password to keep your account secure.
+                    {t('changePasswordDescription')}
                 </CardDescription>
             </CardHeader>
             <form id="change-password-form" action={formAction}>
                 <CardContent className="space-y-4">
                     <div className="space-y-2">
-                        <Label htmlFor="currentPassword">Current Password</Label>
+                        <Label htmlFor="currentPassword">{t('currentPassword')}</Label>
                         <Input
                             id="currentPassword"
                             name="currentPassword"
@@ -39,7 +41,7 @@ export function ChangePasswordForm() {
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="newPassword">New Password</Label>
+                        <Label htmlFor="newPassword">{t('newPassword')}</Label>
                         <Input
                             id="newPassword"
                             name="newPassword"
@@ -50,7 +52,7 @@ export function ChangePasswordForm() {
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="confirmPassword">Confirm New Password</Label>
+                        <Label htmlFor="confirmPassword">{t('confirmNewPassword')}</Label>
                         <Input
                             id="confirmPassword"
                             name="confirmPassword"
@@ -67,11 +69,11 @@ export function ChangePasswordForm() {
                     )}
                     {state?.success && (
                         <div className="text-sm text-green-600">
-                            Password updated successfully!
+                            {t('passwordUpdated')}
                         </div>
                     )}
                     <Button type="submit" disabled={isPending}>
-                        {isPending ? 'Updating...' : 'Update Password'}
+                        {isPending ? t('updating') : t('updatePassword')}
                     </Button>
                 </CardContent>
             </form>

@@ -13,6 +13,8 @@ import {redirect, Link} from '@/i18n/navigation';
 import {Price} from '@/components/commerce/price';
 import {OrderStatusBadge} from '@/components/commerce/order-status-badge';
 import {formatDate} from '@/lib/format';
+import {locale as rootLocale} from 'next/root-params';
+import {getTranslations} from 'next-intl/server';
 
 type OrderDetailPageProps = PageProps<'/[locale]/account/orders/[code]'>;
 
@@ -44,18 +46,21 @@ export default async function OrderDetailPage(props: PageProps<'/[locale]/accoun
 
     const order = data.orderByCode;
 
+    const locale = (await rootLocale()) as string;
+    const t = await getTranslations({locale, namespace: 'Account'});
+
     return (
         <div>
             <div className="mb-6">
                 <Button render={<Link href="/account/orders" />} nativeButton={false} variant="ghost" size="sm" className="mb-4">
                         <ChevronLeft className="h-4 w-4 mr-2"/>
-                        Back to Orders
+                        {t('backToOrders')}
                 </Button>
                 <div className="flex items-center justify-between">
                     <div>
-                        <h1 className="text-3xl font-bold">Order {order.code}</h1>
+                        <h1 className="text-3xl font-bold">{t('order', {code: order.code})}</h1>
                         <p className="text-muted-foreground mt-1">
-                            Placed on {formatDate(order.createdAt, 'long')}
+                            {t('placedOn', {date: formatDate(order.createdAt, 'long')})}
                         </p>
                     </div>
                     <OrderStatusBadge state={order.state}/>
@@ -68,7 +73,7 @@ export default async function OrderDetailPage(props: PageProps<'/[locale]/accoun
                     {/* Order Items */}
                     <Card>
                         <CardHeader>
-                            <CardTitle>Order Items</CardTitle>
+                            <CardTitle>{t('orderItems')}</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div className="space-y-4">
@@ -96,7 +101,7 @@ export default async function OrderDetailPage(props: PageProps<'/[locale]/accoun
                                                 {line.productVariant.name}
                                             </p>
                                             <p className="text-sm text-muted-foreground">
-                                                SKU: {line.productVariant.sku}
+                                                {t('skuLabel', {sku: line.productVariant.sku})}
                                             </p>
                                         </div>
                                         <div className="text-right">
@@ -104,7 +109,7 @@ export default async function OrderDetailPage(props: PageProps<'/[locale]/accoun
                                                 <Price value={line.linePriceWithTax} currencyCode={order.currencyCode}/>
                                             </p>
                                             <p className="text-sm text-muted-foreground">
-                                                Qty: {line.quantity} × <Price value={line.unitPriceWithTax}
+                                                {t('qty', {quantity: line.quantity})} × <Price value={line.unitPriceWithTax}
                                                                               currencyCode={order.currencyCode}/>
                                             </p>
                                         </div>
@@ -117,17 +122,17 @@ export default async function OrderDetailPage(props: PageProps<'/[locale]/accoun
                     {/* Order Totals */}
                     <Card>
                         <CardHeader>
-                            <CardTitle>Order Summary</CardTitle>
+                            <CardTitle>{t('orderSummary')}</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div className="space-y-2">
                                 <div className="flex justify-between text-sm">
-                                    <span className="text-muted-foreground">Subtotal</span>
+                                    <span className="text-muted-foreground">{t('subtotal')}</span>
                                     <span><Price value={order.subTotalWithTax}
                                                  currencyCode={order.currencyCode}/></span>
                                 </div>
                                 <div className="flex justify-between text-sm">
-                                    <span className="text-muted-foreground">Shipping</span>
+                                    <span className="text-muted-foreground">{t('shipping')}</span>
                                     <span><Price value={order.shippingWithTax}
                                                  currencyCode={order.currencyCode}/></span>
                                 </div>
@@ -148,7 +153,7 @@ export default async function OrderDetailPage(props: PageProps<'/[locale]/accoun
                                 )}
                                 <Separator className="my-2"/>
                                 <div className="flex justify-between font-bold text-lg">
-                                    <span>Total</span>
+                                    <span>{t('total')}</span>
                                     <span><Price value={order.totalWithTax} currencyCode={order.currencyCode}/></span>
                                 </div>
                             </div>
@@ -162,7 +167,7 @@ export default async function OrderDetailPage(props: PageProps<'/[locale]/accoun
                     {order.shippingAddress && (
                         <Card>
                             <CardHeader>
-                                <CardTitle>Shipping Address</CardTitle>
+                                <CardTitle>{t('shippingAddress')}</CardTitle>
                             </CardHeader>
                             <CardContent className="text-sm">
                                 <p className="font-medium">{order.shippingAddress.fullName}</p>
@@ -189,7 +194,7 @@ export default async function OrderDetailPage(props: PageProps<'/[locale]/accoun
                     {order.billingAddress && (
                         <Card>
                             <CardHeader>
-                                <CardTitle>Billing Address</CardTitle>
+                                <CardTitle>{t('billingAddress')}</CardTitle>
                             </CardHeader>
                             <CardContent className="text-sm">
                                 <p className="font-medium">{order.billingAddress.fullName}</p>
@@ -216,29 +221,29 @@ export default async function OrderDetailPage(props: PageProps<'/[locale]/accoun
                     {order.payments && order.payments.length > 0 && (
                         <Card>
                             <CardHeader>
-                                <CardTitle>Payment</CardTitle>
+                                <CardTitle>{t('payment')}</CardTitle>
                             </CardHeader>
                             <CardContent>
                                 {order.payments.map((payment) => (
                                     <div key={payment.id} className="space-y-1 text-sm">
                                         <div className="flex justify-between">
-                                            <span className="text-muted-foreground">Method</span>
+                                            <span className="text-muted-foreground">{t('method')}</span>
                                             <span className="font-medium">{payment.method}</span>
                                         </div>
                                         <div className="flex justify-between">
-                                            <span className="text-muted-foreground">Amount</span>
+                                            <span className="text-muted-foreground">{t('amount')}</span>
                                             <span><Price value={payment.amount}
                                                          currencyCode={order.currencyCode}/></span>
                                         </div>
                                         <div className="flex justify-between">
-                                            <span className="text-muted-foreground">Status</span>
+                                            <span className="text-muted-foreground">{t('paymentStatus')}</span>
                                             <Badge variant="secondary" className="text-xs">
                                                 {payment.state}
                                             </Badge>
                                         </div>
                                         {payment.transactionId && (
                                             <div className="flex justify-between">
-                                                <span className="text-muted-foreground">Transaction ID</span>
+                                                <span className="text-muted-foreground">{t('transactionId')}</span>
                                                 <span className="font-mono text-xs">
                                                     {payment.transactionId}
                                                 </span>
@@ -254,7 +259,7 @@ export default async function OrderDetailPage(props: PageProps<'/[locale]/accoun
                     {order.shippingLines && order.shippingLines.length > 0 && (
                         <Card>
                             <CardHeader>
-                                <CardTitle>Shipping Method</CardTitle>
+                                <CardTitle>{t('shippingMethod')}</CardTitle>
                             </CardHeader>
                             <CardContent>
                                 {order.shippingLines.map((line, idx) => (
