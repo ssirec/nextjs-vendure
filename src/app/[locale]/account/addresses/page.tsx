@@ -7,9 +7,11 @@ export const metadata: Metadata = {
 };
 import { GetCustomerAddressesQuery, GetAvailableCountriesQuery } from '@/lib/vendure/queries';
 import { AddressesClient } from './addresses-client';
+import {getTranslations} from 'next-intl/server';
 
 export default async function AddressesPage(_props: PageProps<'/[locale]/account/addresses'>) {
     const locale = (await rootLocale()) as string;
+    const t = await getTranslations({locale, namespace: 'Account'});
     const [addressesResult, countriesResult] = await Promise.all([
         query(GetCustomerAddressesQuery, {}, { useAuthToken: true }),
         query(GetAvailableCountriesQuery, {}, { languageCode: locale }),
@@ -21,9 +23,9 @@ export default async function AddressesPage(_props: PageProps<'/[locale]/account
     return (
         <div className="space-y-6">
             <div>
-                <h1 className="text-3xl font-bold">Addresses</h1>
+                <h1 className="text-3xl font-bold">{t('addresses')}</h1>
                 <p className="text-muted-foreground mt-2">
-                    Manage your saved shipping and billing addresses
+                    {t('manageAddresses')}
                 </p>
             </div>
 

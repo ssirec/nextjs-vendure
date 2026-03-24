@@ -325,6 +325,7 @@
     "transactionId": "Transaction ID",
     "shippingMethod": "Shipping Method",
     "qty": "Qty: {quantity}",
+    "skuLabel": "SKU: {sku}",
     "addresses": "Addresses",
     "manageAddresses": "Manage your saved shipping and billing addresses",
     "addNewAddress": "Add new address",

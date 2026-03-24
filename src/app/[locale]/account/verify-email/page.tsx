@@ -5,8 +5,12 @@ import { UpdateCustomerEmailAddressMutation } from '@/lib/vendure/mutations';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
+import {locale as rootLocale} from 'next/root-params';
+import {getTranslations} from 'next-intl/server';
 
 async function VerifyEmailContent({searchParams}: {searchParams: Promise<Record<string, string | string[] | undefined>>}) {
+    const locale = (await rootLocale()) as string;
+    const t = await getTranslations({locale, namespace: 'Account'});
     const resolvedParams = await searchParams;
     const tokenParam = resolvedParams.token;
     const token = Array.isArray(tokenParam) ? tokenParam[0] : tokenParam;
@@ -15,16 +19,16 @@ async function VerifyEmailContent({searchParams}: {searchParams: Promise<Record<
         return (
             <Card className="max-w-md mx-auto">
                 <CardHeader>
-                    <CardTitle>Invalid Verification Link</CardTitle>
+                    <CardTitle>{t('verifyEmail.invalidLink')}</CardTitle>
                     <CardDescription>
-                        The verification link is missing or invalid.
+                        {t('verifyEmail.invalidLinkDesc')}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
                     <p className="text-sm text-muted-foreground mb-4">
-                        Please check your email for the correct verification link, or request a new one from your profile page.
+                        {t('verifyEmail.checkEmail')}
                     </p>
-                    <Button render={<Link href="/account/profile" />} nativeButton={false}>Go to Profile</Button>
+                    <Button render={<Link href="/account/profile" />} nativeButton={false}>{t('verifyEmail.goToProfile')}</Button>
                 </CardContent>
             </Card>
         );
@@ -38,16 +42,16 @@ async function VerifyEmailContent({searchParams}: {searchParams: Promise<Record<
             return (
                 <Card className="max-w-md mx-auto">
                     <CardHeader>
-                        <CardTitle>Email Verified!</CardTitle>
+                        <CardTitle>{t('verifyEmail.success')}</CardTitle>
                         <CardDescription>
-                            Your email address has been updated successfully.
+                            {t('verifyEmail.successDesc')}
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
                         <p className="text-sm text-muted-foreground mb-4">
-                            Your email address has been changed. You can now use your new email address to sign in.
+                            {t('verifyEmail.successMessage')}
                         </p>
-                        <Button render={<Link href="/account/profile" />} nativeButton={false}>Go to Profile</Button>
+                        <Button render={<Link href="/account/profile" />} nativeButton={false}>{t('verifyEmail.goToProfile')}</Button>
                     </CardContent>
                 </Card>
             );
@@ -56,16 +60,16 @@ async function VerifyEmailContent({searchParams}: {searchParams: Promise<Record<
         return (
             <Card className="max-w-md mx-auto">
                 <CardHeader>
-                    <CardTitle>Verification Failed</CardTitle>
+                    <CardTitle>{t('verifyEmail.failed')}</CardTitle>
                     <CardDescription>
-                        {updateResult.message || 'Unable to verify your email address.'}
+                        {updateResult.message || t('verifyEmail.failedDefault')}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
                     <p className="text-sm text-muted-foreground mb-4">
-                        The verification link may have expired or already been used. Please request a new verification email from your profile page.
+                        {t('verifyEmail.failedMessage')}
                     </p>
-                    <Button render={<Link href="/account/profile" />} nativeButton={false}>Go to Profile</Button>
+                    <Button render={<Link href="/account/profile" />} nativeButton={false}>{t('verifyEmail.goToProfile')}</Button>
                 </CardContent>
             </Card>
         );
@@ -73,16 +77,16 @@ async function VerifyEmailContent({searchParams}: {searchParams: Promise<Record<
         return (
             <Card className="max-w-md mx-auto">
                 <CardHeader>
-                    <CardTitle>Verification Error</CardTitle>
+                    <CardTitle>{t('verifyEmail.error')}</CardTitle>
                     <CardDescription>
-                        An unexpected error occurred during verification.
+                        {t('verifyEmail.errorDesc')}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
                     <p className="text-sm text-muted-foreground mb-4">
-                        Please try again later or contact support if the problem persists.
+                        {t('verifyEmail.errorMessage')}
                     </p>
-                    <Button render={<Link href="/account/profile" />} nativeButton={false}>Go to Profile</Button>
+                    <Button render={<Link href="/account/profile" />} nativeButton={false}>{t('verifyEmail.goToProfile')}</Button>
                 </CardContent>
             </Card>
         );
@@ -90,14 +94,17 @@ async function VerifyEmailContent({searchParams}: {searchParams: Promise<Record<
 }
 
 export default async function VerifyEmailPage({searchParams}: PageProps<'/[locale]/account/verify-email'>) {
+    const locale = (await rootLocale()) as string;
+    const t = await getTranslations({locale, namespace: 'Account'});
+
     return (
         <div className="container mx-auto px-4 py-8 mt-16">
             <Suspense fallback={
                 <Card className="max-w-md mx-auto">
                     <CardHeader>
-                        <CardTitle>Verifying Email...</CardTitle>
+                        <CardTitle>{t('verifyEmail.verifying')}</CardTitle>
                         <CardDescription>
-                            Please wait while we verify your email address.
+                            {t('verifyEmail.verifyingDesc')}
                         </CardDescription>
                     </CardHeader>
                 </Card>

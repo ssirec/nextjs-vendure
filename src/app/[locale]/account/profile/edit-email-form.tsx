@@ -6,12 +6,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {useTranslations} from 'next-intl';
 
 interface EditEmailFormProps {
     currentEmail: string;
 }
 
 export function EditEmailForm({ currentEmail }: EditEmailFormProps) {
+    const t = useTranslations('Account');
     const [state, formAction, isPending] = useActionState(requestEmailUpdateAction, undefined);
 
     useEffect(() => {
@@ -24,15 +26,15 @@ export function EditEmailForm({ currentEmail }: EditEmailFormProps) {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Email Address</CardTitle>
+                <CardTitle>{t('emailAddress')}</CardTitle>
                 <CardDescription>
-                    Update your email address. You'll need to verify the new email.
+                    {t('updateEmailDescription')}
                 </CardDescription>
             </CardHeader>
             <form id="edit-email-form" action={formAction}>
                 <CardContent className="space-y-4">
                     <div className="space-y-2">
-                        <Label htmlFor="currentEmail">Current Email</Label>
+                        <Label htmlFor="currentEmail">{t('currentEmail')}</Label>
                         <Input
                             id="currentEmail"
                             type="email"
@@ -42,7 +44,7 @@ export function EditEmailForm({ currentEmail }: EditEmailFormProps) {
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="newEmailAddress">New Email Address</Label>
+                        <Label htmlFor="newEmailAddress">{t('newEmailAddress')}</Label>
                         <Input
                             id="newEmailAddress"
                             name="newEmailAddress"
@@ -53,7 +55,7 @@ export function EditEmailForm({ currentEmail }: EditEmailFormProps) {
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="password">Current Password</Label>
+                        <Label htmlFor="password">{t('currentPassword')}</Label>
                         <Input
                             id="password"
                             name="password"
@@ -63,7 +65,7 @@ export function EditEmailForm({ currentEmail }: EditEmailFormProps) {
                             disabled={isPending}
                         />
                         <p className="text-xs text-muted-foreground">
-                            Enter your password to confirm this change.
+                            {t('confirmPasswordChange')}
                         </p>
                     </div>
                     {state?.error && (
@@ -73,11 +75,11 @@ export function EditEmailForm({ currentEmail }: EditEmailFormProps) {
                     )}
                     {state?.success && (
                         <div className="text-sm text-green-600">
-                            Verification email sent! Please check your inbox and click the link to confirm your new email address.
+                            {t('verificationEmailSent')}
                         </div>
                     )}
                     <Button type="submit" disabled={isPending}>
-                        {isPending ? 'Sending...' : 'Update Email'}
+                        {isPending ? t('updating') : t('updateEmail')}
                     </Button>
                 </CardContent>
             </form>

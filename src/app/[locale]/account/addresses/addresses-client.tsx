@@ -26,6 +26,7 @@ import { Plus, MoreVertical, Home, CreditCard, Edit2, Trash2 } from 'lucide-reac
 import { AddressForm } from './address-form';
 import { createAddress, updateAddress, deleteAddress, setDefaultShippingAddress, setDefaultBillingAddress } from './actions';
 import { useRouter } from '@/i18n/navigation';
+import {useTranslations} from 'next-intl';
 
 interface Country {
     id: string;
@@ -54,6 +55,7 @@ interface AddressesClientProps {
 }
 
 export function AddressesClient({ addresses, countries }: AddressesClientProps) {
+    const t = useTranslations('Account');
     const router = useRouter();
     const [dialogOpen, setDialogOpen] = useState(false);
     const [editingAddress, setEditingAddress] = useState<CustomerAddress | null>(null);
@@ -146,17 +148,17 @@ export function AddressesClient({ addresses, countries }: AddressesClientProps) 
                 <div></div>
                 <Button onClick={handleAddNew}>
                     <Plus className="mr-2 h-4 w-4" />
-                    Add new address
+                    {t('addNewAddress')}
                 </Button>
             </div>
 
             {addresses.length === 0 ? (
                 <Card>
                     <CardContent className="py-12 text-center">
-                        <p className="text-muted-foreground mb-4">No addresses saved yet</p>
+                        <p className="text-muted-foreground mb-4">{t('noAddressesSaved')}</p>
                         <Button onClick={handleAddNew}>
                             <Plus className="mr-2 h-4 w-4" />
-                            Add your first address
+                            {t('addFirstAddress')}
                         </Button>
                     </CardContent>
                 </Card>
@@ -171,10 +173,10 @@ export function AddressesClient({ addresses, countries }: AddressesClientProps) 
                                         {(address.defaultShippingAddress || address.defaultBillingAddress) && (
                                             <div className="flex gap-2">
                                                 {address.defaultShippingAddress && (
-                                                    <Badge variant="secondary">Default Shipping</Badge>
+                                                    <Badge variant="secondary">{t('defaultShipping')}</Badge>
                                                 )}
                                                 {address.defaultBillingAddress && (
-                                                    <Badge variant="secondary">Default Billing</Badge>
+                                                    <Badge variant="secondary">{t('defaultBilling')}</Badge>
                                                 )}
                                             </div>
                                         )}
@@ -186,7 +188,7 @@ export function AddressesClient({ addresses, countries }: AddressesClientProps) 
                                         <DropdownMenuContent align="end">
                                             <DropdownMenuItem onClick={() => handleEdit(address)}>
                                                 <Edit2 className="mr-2 h-4 w-4" />
-                                                Edit
+                                                {t('edit')}
                                             </DropdownMenuItem>
                                             <DropdownMenuSeparator />
                                             <DropdownMenuItem
@@ -197,7 +199,7 @@ export function AddressesClient({ addresses, countries }: AddressesClientProps) 
                                                 }
                                             >
                                                 <Home className="mr-2 h-4 w-4" />
-                                                {address.defaultShippingAddress ? 'Default Shipping' : 'Set as Shipping'}
+                                                {address.defaultShippingAddress ? t('defaultShipping') : t('setAsShipping')}
                                             </DropdownMenuItem>
                                             <DropdownMenuItem
                                                 onClick={() => handleSetDefaultBilling(address.id)}
@@ -207,7 +209,7 @@ export function AddressesClient({ addresses, countries }: AddressesClientProps) 
                                                 }
                                             >
                                                 <CreditCard className="mr-2 h-4 w-4" />
-                                                {address.defaultBillingAddress ? 'Default Billing' : 'Set as Billing'}
+                                                {address.defaultBillingAddress ? t('defaultBilling') : t('setAsBilling')}
                                             </DropdownMenuItem>
                                             <DropdownMenuSeparator />
                                             <DropdownMenuItem
@@ -215,7 +217,7 @@ export function AddressesClient({ addresses, countries }: AddressesClientProps) 
                                                 className="text-destructive focus:text-destructive"
                                             >
                                                 <Trash2 className="mr-2 h-4 w-4 text-destructive" />
-                                                Delete
+                                                {t('delete')}
                                             </DropdownMenuItem>
                                         </DropdownMenuContent>
                                     </DropdownMenu>
@@ -243,11 +245,11 @@ export function AddressesClient({ addresses, countries }: AddressesClientProps) 
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                 <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
-                        <DialogTitle>{editingAddress ? 'Edit address' : 'Add new address'}</DialogTitle>
+                        <DialogTitle>{editingAddress ? t('editAddress') : t('addNewAddressDialog')}</DialogTitle>
                         <DialogDescription>
                             {editingAddress
-                                ? 'Update the details of your address'
-                                : 'Fill in the form below to add a new address'}
+                                ? t('updateAddressDetails')
+                                : t('fillAddressForm')}
                         </DialogDescription>
                     </DialogHeader>
                     <AddressForm
@@ -266,15 +268,15 @@ export function AddressesClient({ addresses, countries }: AddressesClientProps) 
             <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
                 <AlertDialogContent>
                     <AlertDialogHeader>
-                        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                        <AlertDialogTitle>{t('deleteConfirmTitle')}</AlertDialogTitle>
                         <AlertDialogDescription>
-                            This action cannot be undone. This will permanently delete this address.
+                            {t('deleteConfirmDescription')}
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+                        <AlertDialogCancel disabled={isDeleting}>{t('cancel')}</AlertDialogCancel>
                         <AlertDialogAction onClick={confirmDelete} disabled={isDeleting}>
-                            {isDeleting ? 'Deleting...' : 'Delete'}
+                            {isDeleting ? t('deleting') : t('delete')}
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>

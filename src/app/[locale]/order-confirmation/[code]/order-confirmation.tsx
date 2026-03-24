@@ -9,6 +9,7 @@ import Image from 'next/image';
 import {Separator} from '@/components/ui/separator';
 import {Price} from '@/components/commerce/price';
 import {notFound} from "next/navigation";
+import {locale as rootLocale} from 'next/root-params';
 import {getTranslations} from 'next-intl/server';
 
 const GetOrderByCodeQuery = graphql(`
@@ -51,7 +52,8 @@ const GetOrderByCodeQuery = graphql(`
 `);
 
 export async function OrderConfirmation({params}: PageProps<'/[locale]/order-confirmation/[code]'>) {
-    const t = await getTranslations('OrderConfirmation');
+    const locale = (await rootLocale()) as string;
+    const t = await getTranslations({locale, namespace: 'OrderConfirmation'});
     const {code} = await params;
     let order;
 
@@ -125,7 +127,7 @@ export async function OrderConfirmation({params}: PageProps<'/[locale]/order-con
                         <Separator/>
 
                         <div className="flex justify-between items-baseline font-bold text-lg">
-                            <span>Total</span>
+                            <span>{t('total')}</span>
                             <span className="text-xl">
                                 <Price value={order.totalWithTax} currencyCode={order.currencyCode}/>
                             </span>
@@ -136,7 +138,7 @@ export async function OrderConfirmation({params}: PageProps<'/[locale]/order-con
                 {order.shippingAddress && (
                     <Card className="mb-8">
                         <CardHeader>
-                            <CardTitle>Shipping Address</CardTitle>
+                            <CardTitle>{t('shippingAddress')}</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <p className="font-medium">{order.shippingAddress.fullName}</p>
@@ -156,11 +158,11 @@ export async function OrderConfirmation({params}: PageProps<'/[locale]/order-con
                 <div className="flex flex-col sm:flex-row gap-3">
                     <Button nativeButton={false} render={<Link href="/" />} className="flex-1" size="lg">
                         <ShoppingBag className="mr-2 h-4 w-4" />
-                        Continue Shopping
+                        {t('continueShopping')}
                     </Button>
                     <Button nativeButton={false} render={<Link href="/account/orders" />} variant="outline" className="flex-1" size="lg">
                         <ClipboardList className="mr-2 h-4 w-4" />
-                        View Orders
+                        {t('viewOrders')}
                     </Button>
                 </div>
             </div>

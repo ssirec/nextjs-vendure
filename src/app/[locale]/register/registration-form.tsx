@@ -19,19 +19,21 @@ import {
 import { Link } from '@/i18n/navigation';
 import {useTranslations} from 'next-intl';
 
-const registrationSchema = z.object({
-    emailAddress: z.string().email('Please enter a valid email address'),
-    firstName: z.string().optional(),
-    lastName: z.string().optional(),
-    phoneNumber: z.string().optional(),
-    password: z.string().min(8, 'Password must be at least 8 characters'),
-    confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-});
+function createRegistrationSchema(t: ReturnType<typeof useTranslations<'Auth'>>) {
+    return z.object({
+        emailAddress: z.string().email(t('emailValidation')),
+        firstName: z.string().optional(),
+        lastName: z.string().optional(),
+        phoneNumber: z.string().optional(),
+        password: z.string().min(8, t('passwordMinLength')),
+        confirmPassword: z.string(),
+    }).refine((data) => data.password === data.confirmPassword, {
+        message: t('passwordsMismatch'),
+        path: ["confirmPassword"],
+    });
+}
 
-type RegistrationFormData = z.infer<typeof registrationSchema>;
+type RegistrationFormData = z.infer<ReturnType<typeof createRegistrationSchema>>;
 
 interface RegistrationFormProps {
     redirectTo?: string;
@@ -42,6 +44,7 @@ export function RegistrationForm({ redirectTo }: RegistrationFormProps) {
     const [isPending, startTransition] = useTransition();
     const [serverError, setServerError] = useState<string | null>(null);
 
+    const registrationSchema = createRegistrationSchema(t);
     const form = useForm<RegistrationFormData>({
         resolver: zodResolver(registrationSchema),
         defaultValues: {

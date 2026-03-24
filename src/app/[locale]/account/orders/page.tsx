@@ -21,6 +21,8 @@ import {Price} from '@/components/commerce/price';
 import {OrderStatusBadge} from '@/components/commerce/order-status-badge';
 import {formatDate} from '@/lib/format';
 import { Link, redirect } from '@/i18n/navigation';
+import {locale as rootLocale} from 'next/root-params';
+import {getTranslations} from 'next-intl/server';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -50,17 +52,20 @@ export default async function OrdersPage(props: PageProps<'/[locale]/account/ord
         return redirect('/sign-in');
     }
 
+    const locale = (await rootLocale()) as string;
+    const t = await getTranslations({locale, namespace: 'Account'});
+
     const orders = data.activeCustomer.orders.items;
     const totalItems = data.activeCustomer.orders.totalItems;
     const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
 
     return (
         <div>
-            <h1 className="text-3xl font-bold mb-6">My Orders</h1>
+            <h1 className="text-3xl font-bold mb-6">{t('myOrders')}</h1>
 
             {orders.length === 0 ? (
                 <div className="text-center py-12">
-                    <p className="text-gray-500">You haven&apos;t placed any orders yet.</p>
+                    <p className="text-gray-500">{t('noOrders')}</p>
                 </div>
             ) : (
                 <>
@@ -84,7 +89,7 @@ export default async function OrdersPage(props: PageProps<'/[locale]/account/ord
                                 </div>
                                 <div className="flex items-center justify-between mt-2">
                                     <span className="text-xs text-muted-foreground">
-                                        {order.lines.length} {order.lines.length === 1 ? 'item' : 'items'}
+                                        {order.lines.length} {order.lines.length === 1 ? t('item') : t('items')}
                                     </span>
                                     <ArrowRightIcon className="h-4 w-4 text-muted-foreground"/>
                                 </div>
@@ -97,11 +102,11 @@ export default async function OrdersPage(props: PageProps<'/[locale]/account/ord
                         <Table>
                             <TableHeader className="bg-muted">
                                 <TableRow>
-                                    <TableHead>Order Number</TableHead>
-                                    <TableHead>Date</TableHead>
-                                    <TableHead>Status</TableHead>
-                                    <TableHead>Items</TableHead>
-                                    <TableHead className="text-right">Total</TableHead>
+                                    <TableHead>{t('orderNumber')}</TableHead>
+                                    <TableHead>{t('date')}</TableHead>
+                                    <TableHead>{t('status')}</TableHead>
+                                    <TableHead>{t('itemsHeader')}</TableHead>
+                                    <TableHead className="text-right">{t('totalHeader')}</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -120,7 +125,7 @@ export default async function OrdersPage(props: PageProps<'/[locale]/account/ord
                                         </TableCell>
                                         <TableCell>
                                             {order.lines.length}{' '}
-                                            {order.lines.length === 1 ? 'item' : 'items'}
+                                            {order.lines.length === 1 ? t('item') : t('items')}
                                         </TableCell>
                                         <TableCell className="text-right">
                                             <Price value={order.totalWithTax} currencyCode={order.currencyCode}/>
