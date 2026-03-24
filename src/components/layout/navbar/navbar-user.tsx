@@ -1,3 +1,4 @@
+import {locale as rootLocale} from 'next/root-params';
 import {User} from 'lucide-react';
 import {Button} from '@/components/ui/button';
 import {
@@ -14,7 +15,8 @@ import {getTranslations} from 'next-intl/server';
 
 
 export async function NavbarUser() {
-    const t = await getTranslations('Navigation');
+    const locale = (await rootLocale()) as string;
+    const t = await getTranslations({locale, namespace: 'Navigation'});
     const customer = await getActiveCustomer()
 
     if (!customer) {

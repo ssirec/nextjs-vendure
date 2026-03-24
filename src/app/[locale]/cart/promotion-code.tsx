@@ -3,6 +3,7 @@ import {Input} from '@/components/ui/input';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {Tag} from 'lucide-react';
 import {applyPromotionCode, removePromotionCode} from './actions';
+import {getTranslations} from 'next-intl/server';
 
 type ActiveOrder = {
     id: string;
@@ -10,15 +11,16 @@ type ActiveOrder = {
 };
 
 export async function PromotionCode({activeOrder}: { activeOrder: ActiveOrder }) {
+    const t = await getTranslations('Cart');
     return (
         <Card className="mt-4">
             <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
                     <Tag className="h-5 w-5"/>
-                    Promotion Code
+                    {t('promotionCode')}
                 </CardTitle>
                 <CardDescription>
-                    Enter your discount code below
+                    {t('enterDiscountCode')}
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -39,7 +41,7 @@ export async function PromotionCode({activeOrder}: { activeOrder: ActiveOrder })
                                         size="sm"
                                         className="h-8 text-destructive hover:text-destructive hover:bg-destructive/10"
                                     >
-                                        Remove
+                                        {t('remove')}
                                     </Button>
                                 </form>
                             </div>
@@ -50,11 +52,11 @@ export async function PromotionCode({activeOrder}: { activeOrder: ActiveOrder })
                         <Input
                             type="text"
                             name="code"
-                            placeholder="Enter code"
+                            placeholder={t('enterCode')}
                             className="flex-1"
                             required
                         />
-                        <Button type="submit">Apply</Button>
+                        <Button type="submit">{t('apply')}</Button>
                     </form>
                 )}
             </CardContent>

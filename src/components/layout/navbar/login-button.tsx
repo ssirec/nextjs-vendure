@@ -3,12 +3,14 @@
 import {ComponentProps, useTransition} from "react";
 import {logoutAction} from "@/app/[locale]/sign-in/actions";
 import {useRouter} from '@/i18n/navigation';
+import {useTranslations} from 'next-intl';
 
 interface LoginButtonProps extends ComponentProps<'button'> {
     isLoggedIn: boolean;
 }
 
 export function LoginButton({isLoggedIn, ...props}: LoginButtonProps) {
+    const t = useTranslations('Navigation');
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
 
@@ -23,7 +25,7 @@ export function LoginButton({isLoggedIn, ...props}: LoginButtonProps) {
                         router.push('/sign-in')
                     }
                 }}>
-            {isLoggedIn ? 'Sign out' : 'Sign in'}
+            {isLoggedIn ? t('signOut') : t('signIn')}
         </button>
     )
 }

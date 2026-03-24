@@ -6,12 +6,14 @@ import { Loader2, MapPin, Truck, CreditCard, Edit, Mail } from 'lucide-react';
 import { useCheckout } from '../checkout-provider';
 import { placeOrder as placeOrderAction } from '../actions';
 import { Price } from '@/components/commerce/price';
+import {useTranslations} from 'next-intl';
 
 interface ReviewStepProps {
   onEditStep: (step: 'contact' | 'shipping' | 'delivery' | 'payment') => void;
 }
 
 export default function ReviewStep({ onEditStep }: ReviewStepProps) {
+  const t = useTranslations('Checkout');
   const { order, paymentMethods, selectedPaymentMethodCode, isGuest } = useCheckout();
   const [loading, setLoading] = useState(false);
 
@@ -36,14 +38,14 @@ export default function ReviewStep({ onEditStep }: ReviewStepProps) {
 
   return (
     <div className="space-y-6">
-      <h3 className="font-semibold text-lg">Review your order</h3>
+      <h3 className="font-semibold text-lg">{t('reviewYourOrder')}</h3>
 
       <div className={`grid grid-cols-1 gap-6 ${isGuest ? 'md:grid-cols-2 lg:grid-cols-4' : 'md:grid-cols-3'}`}>
         {isGuest && order.customer && (
           <div className="space-y-3">
             <div className="flex items-center gap-2">
               <Mail className="h-5 w-5 text-muted-foreground" />
-              <h4 className="font-medium">Contact</h4>
+              <h4 className="font-medium">{t('contact')}</h4>
             </div>
             <div className="text-sm space-y-3">
               <div>
@@ -58,7 +60,7 @@ export default function ReviewStep({ onEditStep }: ReviewStepProps) {
                 onClick={() => onEditStep('contact')}
               >
                 <Edit className="h-4 w-4 mr-1" />
-                Edit
+                {t('edit')}
               </Button>
             </div>
           </div>
@@ -68,7 +70,7 @@ export default function ReviewStep({ onEditStep }: ReviewStepProps) {
         <div className="space-y-3">
           <div className="flex items-center gap-2">
             <MapPin className="h-5 w-5 text-muted-foreground" />
-            <h4 className="font-medium">Shipping Address</h4>
+            <h4 className="font-medium">{t('shippingAddress')}</h4>
           </div>
           {order.shippingAddress ? (
             <div className="text-sm space-y-3">
@@ -90,11 +92,11 @@ export default function ReviewStep({ onEditStep }: ReviewStepProps) {
                 onClick={() => onEditStep('shipping')}
               >
                 <Edit className="h-4 w-4 mr-1" />
-                Edit
+                {t('edit')}
               </Button>
             </div>
           ) : (
-            <p className="text-sm text-muted-foreground">No shipping address set</p>
+            <p className="text-sm text-muted-foreground">{t('noShippingAddress')}</p>
           )}
         </div>
 
@@ -102,7 +104,7 @@ export default function ReviewStep({ onEditStep }: ReviewStepProps) {
         <div className="space-y-3">
           <div className="flex items-center gap-2">
             <Truck className="h-5 w-5 text-muted-foreground" />
-            <h4 className="font-medium">Delivery Method</h4>
+            <h4 className="font-medium">{t('deliveryMethod')}</h4>
           </div>
           {order.shippingLines && order.shippingLines.length > 0 ? (
             <div className="text-sm space-y-3">
@@ -110,7 +112,7 @@ export default function ReviewStep({ onEditStep }: ReviewStepProps) {
                 <p className="font-medium">{order.shippingLines[0].shippingMethod.name}</p>
                 <p className="text-muted-foreground">
                   {order.shippingLines[0].priceWithTax === 0
-                    ? 'FREE'
+                    ? t('free')
                     : <Price value={order.shippingLines[0].priceWithTax} currencyCode={order.currencyCode} />}
                 </p>
               </div>
@@ -120,11 +122,11 @@ export default function ReviewStep({ onEditStep }: ReviewStepProps) {
                 onClick={() => onEditStep('delivery')}
               >
                 <Edit className="h-4 w-4 mr-1" />
-                Edit
+                {t('edit')}
               </Button>
             </div>
           ) : (
-            <p className="text-sm text-muted-foreground">No delivery method selected</p>
+            <p className="text-sm text-muted-foreground">{t('noDeliveryMethod')}</p>
           )}
         </div>
 
@@ -132,7 +134,7 @@ export default function ReviewStep({ onEditStep }: ReviewStepProps) {
         <div className="space-y-3">
           <div className="flex items-center gap-2">
             <CreditCard className="h-5 w-5 text-muted-foreground" />
-            <h4 className="font-medium">Payment Method</h4>
+            <h4 className="font-medium">{t('paymentMethod')}</h4>
           </div>
           {selectedPaymentMethod ? (
             <div className="text-sm space-y-3">
@@ -150,11 +152,11 @@ export default function ReviewStep({ onEditStep }: ReviewStepProps) {
                 onClick={() => onEditStep('payment')}
               >
                 <Edit className="h-4 w-4 mr-1" />
-                Edit
+                {t('edit')}
               </Button>
             </div>
           ) : (
-            <p className="text-sm text-muted-foreground">No payment method selected</p>
+            <p className="text-sm text-muted-foreground">{t('noPaymentMethod')}</p>
           )}
         </div>
       </div>
@@ -166,12 +168,12 @@ export default function ReviewStep({ onEditStep }: ReviewStepProps) {
         className="w-full"
       >
         {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-        Place Order
+        {t('placeOrder')}
       </Button>
 
       {(!order.shippingAddress || !order.shippingLines?.length || !selectedPaymentMethodCode) && (
         <p className="text-sm text-destructive text-center">
-          Please complete all previous steps before placing your order
+          {t('completeAllSteps')}
         </p>
       )}
     </div>

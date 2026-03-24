@@ -11,6 +11,7 @@ import {ShoppingCart, CheckCircle2} from 'lucide-react';
 import {addToCart} from '@/app/[locale]/product/[slug]/actions';
 import {toast} from 'sonner';
 import {Price} from '@/components/commerce/price';
+import {useTranslations} from 'next-intl';
 
 interface ProductInfoProps {
     product: {
@@ -50,6 +51,7 @@ interface ProductInfoProps {
 }
 
 export function ProductInfo({product, searchParams}: ProductInfoProps) {
+    const t = useTranslations('Product');
     const pathname = usePathname();
     const router = useRouter();
     const currentSearchParams = useSearchParams();
@@ -120,15 +122,15 @@ export function ProductInfo({product, searchParams}: ProductInfoProps) {
 
             if (result.success) {
                 setIsAdded(true);
-                toast.success('Added to cart', {
-                    description: `${product.name} has been added to your cart`,
+                toast.success(t('addedToCartMessage'), {
+                    description: t('addedToCartDescription', {name: product.name}),
                 });
 
                 // Reset the added state after 2 seconds
                 setTimeout(() => setIsAdded(false), 2000);
             } else {
-                toast.error('Error', {
-                    description: result.error || 'Failed to add item to cart',
+                toast.error(t('errorTitle'), {
+                    description: result.error || t('errorAddToCart'),
                 });
             }
         });
@@ -197,12 +199,12 @@ export function ProductInfo({product, searchParams}: ProductInfoProps) {
                     {isInStock ? (
                         <span className="inline-flex items-center gap-1.5 text-green-600 font-medium">
                             <span className="h-2 w-2 rounded-full bg-green-600" />
-                            In Stock
+                            {t('inStock')}
                         </span>
                     ) : (
                         <span className="inline-flex items-center gap-1.5 text-destructive font-medium">
                             <span className="h-2 w-2 rounded-full bg-destructive" />
-                            Out of Stock
+                            {t('outOfStock')}
                         </span>
                     )}
                 </div>
@@ -219,18 +221,18 @@ export function ProductInfo({product, searchParams}: ProductInfoProps) {
                     {isAdded ? (
                         <>
                             <CheckCircle2 className="mr-2 h-5 w-5"/>
-                            Added to Cart
+                            {t('addedToCart')}
                         </>
                     ) : (
                         <>
                             <ShoppingCart className="mr-2 h-5 w-5"/>
                             {isPending
-                                ? 'Adding...'
+                                ? t('adding')
                                 : !selectedVariant && product.optionGroups.length > 0
-                                    ? 'Select Options'
+                                    ? t('selectOptions')
                                     : !isInStock
-                                        ? 'Out of Stock'
-                                        : 'Add to Cart'}
+                                        ? t('outOfStock')
+                                        : t('addToCart')}
                         </>
                     )}
                 </Button>
@@ -239,7 +241,7 @@ export function ProductInfo({product, searchParams}: ProductInfoProps) {
             {/* SKU */}
             {selectedVariant && (
                 <div className="text-xs text-muted-foreground">
-                    SKU: {selectedVariant.sku}
+                    {t('sku', {sku: selectedVariant.sku})}
                 </div>
             )}
         </div>

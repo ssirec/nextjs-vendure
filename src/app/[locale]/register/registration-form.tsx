@@ -17,6 +17,7 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Link } from '@/i18n/navigation';
+import {useTranslations} from 'next-intl';
 
 const registrationSchema = z.object({
     emailAddress: z.string().email('Please enter a valid email address'),
@@ -37,6 +38,7 @@ interface RegistrationFormProps {
 }
 
 export function RegistrationForm({ redirectTo }: RegistrationFormProps) {
+    const t = useTranslations('Auth');
     const [isPending, startTransition] = useTransition();
     const [serverError, setServerError] = useState<string | null>(null);
 
@@ -87,7 +89,7 @@ export function RegistrationForm({ redirectTo }: RegistrationFormProps) {
                             name="emailAddress"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Email Address</FormLabel>
+                                    <FormLabel>{t('emailAddressLabel')}</FormLabel>
                                     <FormControl>
                                         <Input
                                             type="email"
@@ -107,7 +109,7 @@ export function RegistrationForm({ redirectTo }: RegistrationFormProps) {
                                 name="firstName"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>First Name</FormLabel>
+                                        <FormLabel>{t('firstNameLabel')}</FormLabel>
                                         <FormControl>
                                             <Input
                                                 type="text"
@@ -126,7 +128,7 @@ export function RegistrationForm({ redirectTo }: RegistrationFormProps) {
                                 name="lastName"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Last Name</FormLabel>
+                                        <FormLabel>{t('lastNameLabel')}</FormLabel>
                                         <FormControl>
                                             <Input
                                                 type="text"
@@ -146,7 +148,7 @@ export function RegistrationForm({ redirectTo }: RegistrationFormProps) {
                             name="phoneNumber"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Phone Number (Optional)</FormLabel>
+                                    <FormLabel>{t('phoneNumberLabel')}</FormLabel>
                                     <FormControl>
                                         <Input
                                             type="tel"
@@ -165,7 +167,7 @@ export function RegistrationForm({ redirectTo }: RegistrationFormProps) {
                             name="password"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Password</FormLabel>
+                                    <FormLabel>{t('passwordLabel')}</FormLabel>
                                     <FormControl>
                                         <Input
                                             type="password"
@@ -184,7 +186,7 @@ export function RegistrationForm({ redirectTo }: RegistrationFormProps) {
                             name="confirmPassword"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Confirm Password</FormLabel>
+                                    <FormLabel>{t('confirmPasswordLabel')}</FormLabel>
                                     <FormControl>
                                         <Input
                                             type="password"
@@ -205,15 +207,15 @@ export function RegistrationForm({ redirectTo }: RegistrationFormProps) {
                         )}
 
                         <Button type="submit" className="w-full" disabled={isPending}>
-                            {isPending ? 'Creating account...' : 'Create Account'}
+                            {isPending ? t('creatingAccount') : t('createAccount')}
                         </Button>
                     </CardContent>
                     <CardFooter className="flex flex-col space-y-4 mt-4">
 
                         <div className="text-sm text-center text-muted-foreground">
-                            Already have an account?{' '}
+                            {t('alreadyHaveAccount')}{' '}
                             <Link href={signInHref} className="hover:text-primary underline">
-                                Sign in
+                                {t('signInLink')}
                             </Link>
                         </div>
                     </CardFooter>

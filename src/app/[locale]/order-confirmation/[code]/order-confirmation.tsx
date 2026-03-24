@@ -9,6 +9,7 @@ import Image from 'next/image';
 import {Separator} from '@/components/ui/separator';
 import {Price} from '@/components/commerce/price';
 import {notFound} from "next/navigation";
+import {getTranslations} from 'next-intl/server';
 
 const GetOrderByCodeQuery = graphql(`
     query GetOrderByCode($code: String!) {
@@ -50,6 +51,7 @@ const GetOrderByCodeQuery = graphql(`
 `);
 
 export async function OrderConfirmation({params}: PageProps<'/[locale]/order-confirmation/[code]'>) {
+    const t = await getTranslations('OrderConfirmation');
     const {code} = await params;
     let order;
 
@@ -75,19 +77,19 @@ export async function OrderConfirmation({params}: PageProps<'/[locale]/order-con
                             <Check className="h-10 w-10 text-primary-foreground" strokeWidth={3} />
                         </div>
                     </div>
-                    <h1 className="text-3xl font-bold mb-2">Order Confirmed!</h1>
+                    <h1 className="text-3xl font-bold mb-2">{t('orderConfirmed')}</h1>
                     <p className="text-muted-foreground">
-                        Thank you for your order. Your order number is{' '}
+                        {t('thankYou')}{' '}
                         <span className="font-semibold text-foreground">{order.code}</span>
                     </p>
                     <p className="text-sm text-muted-foreground mt-1">
-                        We&apos;ll send you an email with your order details and tracking information.
+                        {t('emailConfirmation')}
                     </p>
                 </div>
 
                 <Card className="mb-6">
                     <CardHeader>
-                        <CardTitle>Order Summary</CardTitle>
+                        <CardTitle>{t('orderSummary')}</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         {order.lines.map((line) => (
@@ -110,7 +112,7 @@ export async function OrderConfirmation({params}: PageProps<'/[locale]/order-con
                                             {line.productVariant.name}
                                         </p>
                                     )}
-                                    <p className="text-xs text-muted-foreground mt-0.5">Qty: {line.quantity}</p>
+                                    <p className="text-xs text-muted-foreground mt-0.5">{t('qty', {quantity: line.quantity})}</p>
                                 </div>
                                 <div className="text-right">
                                     <p className="font-semibold">

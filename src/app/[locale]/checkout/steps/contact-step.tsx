@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { Loader2, AlertCircle } from 'lucide-react';
 import { Link, useRouter } from '@/i18n/navigation';
 import { setCustomerForOrder, SetCustomerForOrderResult } from '../actions';
+import {useTranslations} from 'next-intl';
 
 interface ContactStepProps {
   onComplete: () => void;
@@ -20,37 +21,8 @@ interface ContactFormData {
   lastName: string;
 }
 
-function getErrorMessage(error: SetCustomerForOrderResult) {
-  if (error.success) return null;
-
-  switch (error.errorCode) {
-    case 'EMAIL_CONFLICT':
-      return (
-        <>
-          An account already exists with this email.{' '}
-          <Link href="/sign-in?redirectTo=/checkout" className="underline hover:no-underline">
-            Sign in
-          </Link>{' '}
-          to continue.
-        </>
-      );
-    case 'GUEST_CHECKOUT_DISABLED':
-      return 'Guest checkout is not enabled. Please sign in or create an account.';
-    case 'NO_ACTIVE_ORDER':
-      return (
-        <>
-          Your cart is empty.{' '}
-          <Link href="/" className="underline hover:no-underline">
-            Continue shopping
-          </Link>
-        </>
-      );
-    default:
-      return error.message;
-  }
-}
-
 export default function ContactStep({ onComplete }: ContactStepProps) {
+  const t = useTranslations('Checkout');
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<SetCustomerForOrderResult | null>(null);
@@ -60,6 +32,36 @@ export default function ContactStep({ onComplete }: ContactStepProps) {
     handleSubmit,
     formState: { errors },
   } = useForm<ContactFormData>();
+
+  function getErrorMessage(error: SetCustomerForOrderResult) {
+    if (error.success) return null;
+
+    switch (error.errorCode) {
+      case 'EMAIL_CONFLICT':
+        return (
+          <>
+            {t('emailConflict')}{' '}
+            <Link href="/sign-in?redirectTo=/checkout" className="underline hover:no-underline">
+              {t('emailConflictSignIn')}
+            </Link>{' '}
+            {t('emailConflictSuffix')}
+          </>
+        );
+      case 'GUEST_CHECKOUT_DISABLED':
+        return t('guestCheckoutDisabled');
+      case 'NO_ACTIVE_ORDER':
+        return (
+          <>
+            {t('cartEmpty')}{' '}
+            <Link href="/" className="underline hover:no-underline">
+              {t('cartEmptyShop')}
+            </Link>
+          </>
+        );
+      default:
+        return error.message;
+    }
+  }
 
   const onSubmit = async (data: ContactFormData) => {
     setLoading(true);
@@ -76,7 +78,7 @@ export default function ContactStep({ onComplete }: ContactStepProps) {
       }
     } catch (err) {
       console.error('Error setting customer:', err);
-      setError({ success: false, errorCode: 'UNKNOWN', message: 'An unexpected error occurred' });
+      setError({ success: false, errorCode: 'UNKNOWN', message: t('unexpectedError') });
     } finally {
       setLoading(false);
     }
@@ -85,9 +87,9 @@ export default function ContactStep({ onComplete }: ContactStepProps) {
   return (
     <div className="space-y-6">
       <p className="text-sm text-muted-foreground">
-        Already have an account?{' '}
+        {t('alreadyHaveAccount')}{' '}
         <Link href="/sign-in?redirectTo=/checkout" className="text-primary underline hover:no-underline">
-          Sign in
+          {t('signInLink')}
         </Link>
       </p>
 
@@ -102,15 +104,15 @@ export default function ContactStep({ onComplete }: ContactStepProps) {
         <FieldGroup>
           <div className="grid grid-cols-2 gap-4">
             <Field className="col-span-2">
-              <FieldLabel htmlFor="emailAddress">Email Address *</FieldLabel>
+              <FieldLabel htmlFor="emailAddress">{t('emailAddress')}</FieldLabel>
               <Input
                 id="emailAddress"
                 type="email"
                 {...register('emailAddress', {
-                  required: 'Email is required',
+                  required: t('emailRequired'),
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: 'Invalid email address',
+                    message: t('invalidEmail'),
                   },
                 })}
               />
@@ -118,19 +120,19 @@ export default function ContactStep({ onComplete }: ContactStepProps) {
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="firstName">First Name *</FieldLabel>
+              <FieldLabel htmlFor="firstName">{t('firstName')}</FieldLabel>
               <Input
                 id="firstName"
-                {...register('firstName', { required: 'First name is required' })}
+                {...register('firstName', { required: t('firstNameRequired') })}
               />
               <FieldError>{errors.firstName?.message}</FieldError>
             </Field>
 
             <Field>
-              <FieldLabel htmlFor="lastName">Last Name *</FieldLabel>
+              <FieldLabel htmlFor="lastName">{t('lastName')}</FieldLabel>
               <Input
                 id="lastName"
-                {...register('lastName', { required: 'Last name is required' })}
+                {...register('lastName', { required: t('lastNameRequired') })}
               />
               <FieldError>{errors.lastName?.message}</FieldError>
             </Field>
@@ -138,7 +140,7 @@ export default function ContactStep({ onComplete }: ContactStepProps) {
 
           <Button type="submit" disabled={loading} className="w-full mt-4">
             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Continue
+            {t('continue')}
           </Button>
         </FieldGroup>
       </form>

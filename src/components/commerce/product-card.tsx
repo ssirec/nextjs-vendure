@@ -4,12 +4,14 @@ import {ProductCardFragment} from '@/lib/vendure/fragments';
 import {Price} from '@/components/commerce/price';
 import {Suspense} from "react";
 import { Link } from '@/i18n/navigation';
+import {useTranslations} from 'next-intl';
 
 interface ProductCardProps {
     product: FragmentOf<typeof ProductCardFragment>;
 }
 
 export function ProductCard({product: productProp}: ProductCardProps) {
+    const t = useTranslations('Product');
     const product = readFragment(ProductCardFragment, productProp);
 
     return (
@@ -28,7 +30,7 @@ export function ProductCard({product: productProp}: ProductCardProps) {
                     />
                 ) : (
                     <div className="w-full h-full flex items-center justify-center text-muted-foreground">
-                        No image
+                        {t('noImage')}
                     </div>
                 )}
             </div>
@@ -41,7 +43,7 @@ export function ProductCard({product: productProp}: ProductCardProps) {
                         {product.priceWithTax.__typename === 'PriceRange' ? (
                             product.priceWithTax.min !== product.priceWithTax.max ? (
                                 <>
-                                    <span className="text-xs font-normal text-muted-foreground mr-1">From</span>
+                                    <span className="text-xs font-normal text-muted-foreground mr-1">{t('from')}</span>
                                     <Price value={product.priceWithTax.min}/>
                                 </>
                             ) : (

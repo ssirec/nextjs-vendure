@@ -5,6 +5,7 @@ import { query } from "@/lib/vendure/api";
 import { GetCollectionProductsQuery } from "@/lib/vendure/queries";
 import { readFragment } from "@/graphql";
 import { ProductCardFragment } from "@/lib/vendure/fragments";
+import {getTranslations} from 'next-intl/server';
 
 interface RelatedProductsProps {
     collectionSlug: string;
@@ -38,6 +39,8 @@ async function getRelatedProducts(collectionSlug: string, currentProductId: stri
 }
 
 export async function RelatedProducts({ collectionSlug, currentProductId }: RelatedProductsProps) {
+    const locale = (await rootLocale()) as string;
+    const t = await getTranslations({locale, namespace: 'Product'});
     const products = await getRelatedProducts(collectionSlug, currentProductId);
 
     if (products.length === 0) {
@@ -46,7 +49,7 @@ export async function RelatedProducts({ collectionSlug, currentProductId }: Rela
 
     return (
         <ProductCarousel
-            title="Related Products"
+            title={t('relatedProducts')}
             products={products}
         />
     );

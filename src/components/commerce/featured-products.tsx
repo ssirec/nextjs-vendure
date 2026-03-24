@@ -5,6 +5,7 @@ import {query} from "@/lib/vendure/api";
 import {GetCollectionProductsQuery} from "@/lib/vendure/queries";
 import { Link } from '@/i18n/navigation';
 import {ArrowRight} from "lucide-react";
+import {getTranslations} from 'next-intl/server';
 
 async function getFeaturedCollectionProducts() {
     'use cache'
@@ -30,12 +31,14 @@ async function getFeaturedCollectionProducts() {
 
 
 export async function FeaturedProducts() {
+    const locale = (await rootLocale()) as string;
+    const t = await getTranslations({locale, namespace: 'Product'});
     const products = await getFeaturedCollectionProducts();
 
     return (
         <div>
             <ProductCarousel
-                title="Featured Products"
+                title={t('featuredProducts')}
                 products={products}
             />
             <div className="container mx-auto px-4 -mt-6 mb-8">
@@ -44,7 +47,7 @@ export async function FeaturedProducts() {
                         href="/search"
                         className="group inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline underline-offset-4 transition-colors"
                     >
-                        View All Products
+                        {t('viewAllProducts')}
                         <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
                     </Link>
                 </div>

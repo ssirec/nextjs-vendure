@@ -23,12 +23,20 @@
   },
   "Home": {
     "whyShopWithUs": "Warum bei uns einkaufen",
-    "features.highQuality.title": "Hohe Qualität",
-    "features.highQuality.description": "Sorgfältig ausgewählte Premiumprodukte für Sie",
-    "features.bestPrices.title": "Beste Preise",
-    "features.bestPrices.description": "Wettbewerbsfähige Preise für alle unsere Produkte",
-    "features.fastDelivery.title": "Schnelle Lieferung",
-    "features.fastDelivery.description": "Schneller und zuverlässiger Versand weltweit"
+    "features": {
+      "highQuality": {
+        "title": "Hohe Qualität",
+        "description": "Sorgfältig ausgewählte Premiumprodukte für Sie"
+      },
+      "bestPrices": {
+        "title": "Beste Preise",
+        "description": "Wettbewerbsfähige Preise für alle unsere Produkte"
+      },
+      "fastDelivery": {
+        "title": "Schnelle Lieferung",
+        "description": "Schneller und zuverlässiger Versand weltweit"
+      }
+    }
   },
   "Product": {
     "inStock": "Auf Lager",
@@ -49,19 +57,31 @@
     "viewAllProducts": "Alle Produkte anzeigen",
     "notFound": "Produkt nicht gefunden",
     "home": "Startseite",
-    "trustBadges.fastShipping": "Schneller Versand",
-    "trustBadges.freeReturns": "Kostenlose Rücksendung",
-    "trustBadges.secureCheckout": "Sicherer Checkout",
-    "trustBadges.guarantee": "30-Tage-Garantie",
-    "faq.title": "Häufig gestellte Fragen",
-    "faq.shipping.question": "Welche Versandoptionen bieten Sie an?",
-    "faq.shipping.answer": "Wir bieten Standardversand (5–7 Werktage), Expressversand (2–3 Werktage) und Lieferung am nächsten Tag für ausgewählte Gebiete an. Kostenloser Standardversand ist ab einem Bestellwert von 50 € verfügbar.",
-    "faq.returns.question": "Wie ist Ihre Rückgaberichtlinie?",
-    "faq.returns.answer": "Wir akzeptieren Rücksendungen innerhalb von 30 Tagen nach dem Kauf. Die Artikel müssen unbenutzt und in der Originalverpackung sein. Kontaktieren Sie einfach unser Support-Team, um eine Rücksendung einzuleiten und ein vorfrankiertes Versandetikett zu erhalten.",
-    "faq.tracking.question": "Wie kann ich meine Bestellung verfolgen?",
-    "faq.tracking.answer": "Sobald Ihre Bestellung versendet wurde, erhalten Sie eine E-Mail mit einer Sendungsverfolgungsnummer. Sie können den Status Ihrer Bestellung auch jederzeit einsehen, indem Sie sich in Ihr Konto einloggen und den Bestellverlauf aufrufen.",
-    "faq.international.question": "Bieten Sie internationalen Versand an?",
-    "faq.international.answer": "Ja! Wir versenden in über 50 Länder weltweit. Die internationalen Versandkosten und Lieferzeiten variieren je nach Standort. Die genauen Kosten sehen Sie an der Kasse, bevor Sie Ihren Einkauf abschließen."
+    "trustBadges": {
+      "fastShipping": "Schneller Versand",
+      "freeReturns": "Kostenlose Rücksendung",
+      "secureCheckout": "Sicherer Checkout",
+      "guarantee": "30-Tage-Garantie"
+    },
+    "faq": {
+      "title": "Häufig gestellte Fragen",
+      "shipping": {
+        "question": "Welche Versandoptionen bieten Sie an?",
+        "answer": "Wir bieten Standardversand (5–7 Werktage), Expressversand (2–3 Werktage) und Lieferung am nächsten Tag für ausgewählte Gebiete an. Kostenloser Standardversand ist ab einem Bestellwert von 50 € verfügbar."
+      },
+      "returns": {
+        "question": "Wie ist Ihre Rückgaberichtlinie?",
+        "answer": "Wir akzeptieren Rücksendungen innerhalb von 30 Tagen nach dem Kauf. Die Artikel müssen unbenutzt und in der Originalverpackung sein. Kontaktieren Sie einfach unser Support-Team, um eine Rücksendung einzuleiten und ein vorfrankiertes Versandetikett zu erhalten."
+      },
+      "tracking": {
+        "question": "Wie kann ich meine Bestellung verfolgen?",
+        "answer": "Sobald Ihre Bestellung versendet wurde, erhalten Sie eine E-Mail mit einer Sendungsverfolgungsnummer. Sie können den Status Ihrer Bestellung auch jederzeit einsehen, indem Sie sich in Ihr Konto einloggen und den Bestellverlauf aufrufen."
+      },
+      "international": {
+        "question": "Bieten Sie internationalen Versand an?",
+        "answer": "Ja! Wir versenden in über 50 Länder weltweit. Die internationalen Versandkosten und Lieferzeiten variieren je nach Standort. Die genauen Kosten sehen Sie an der Kasse, bevor Sie Ihren Einkauf abschließen."
+      }
+    }
   },
   "Sort": {
     "nameAsc": "Name: A bis Z",
@@ -92,14 +112,17 @@
     "enterDiscountCode": "Geben Sie Ihren Rabattcode unten ein",
     "remove": "Entfernen",
     "enterCode": "Code eingeben",
-    "apply": "Einlösen"
+    "apply": "Einlösen",
+    "sku": "Art.-Nr.: {sku}"
   },
   "Checkout": {
-    "steps.contact": "Kontakt",
-    "steps.address": "Adresse",
-    "steps.delivery": "Lieferung",
-    "steps.payment": "Zahlung",
-    "steps.review": "Prüfung",
+    "steps": {
+      "contact": "Kontakt",
+      "address": "Adresse",
+      "delivery": "Lieferung",
+      "payment": "Zahlung",
+      "review": "Prüfung"
+    },
     "contactInformation": "Kontaktinformationen",
     "shippingAddress": "Lieferadresse",
     "deliveryMethod": "Liefermethode",
@@ -233,10 +256,12 @@
     "accountVerifiedMessage": "Ihre E-Mail-Adresse wurde erfolgreich bestätigt. Sie können sich jetzt in Ihr Konto einloggen.",
     "verificationFailed": "Bestätigung fehlgeschlagen",
     "verificationFailedMessage": "Ihr Konto konnte nicht bestätigt werden. Der Bestätigungslink ist möglicherweise abgelaufen.",
-    "pending.title": "Überprüfen Sie Ihre E-Mails",
-    "pending.message": "Wir haben einen Bestätigungslink an Ihre E-Mail-Adresse gesendet. Bitte überprüfen Sie Ihren Posteingang und klicken Sie auf den Link, um Ihr Konto zu bestätigen.",
-    "pending.spamNote": "Keine E-Mail erhalten? Überprüfen Sie Ihren Spam-Ordner oder fordern Sie einen neuen Bestätigungslink an.",
-    "pending.goToSignIn": "Zur Anmeldung",
+    "pending": {
+      "title": "Überprüfen Sie Ihre E-Mails",
+      "message": "Wir haben einen Bestätigungslink an Ihre E-Mail-Adresse gesendet. Bitte überprüfen Sie Ihren Posteingang und klicken Sie auf den Link, um Ihr Konto zu bestätigen.",
+      "spamNote": "Keine E-Mail erhalten? Überprüfen Sie Ihren Spam-Ordner oder fordern Sie einen neuen Bestätigungslink an.",
+      "goToSignIn": "Zur Anmeldung"
+    },
     "loading": "Wird geladen..."
   },
   "OrderConfirmation": {
@@ -337,21 +362,23 @@
     "postalCodeRequired": "Postleitzahl ist erforderlich",
     "countryRequired": "Land ist erforderlich",
     "phoneRequired": "Telefonnummer ist erforderlich",
-    "verifyEmail.invalidLink": "Ungültiger Bestätigungslink",
-    "verifyEmail.invalidLinkDesc": "Der Bestätigungslink fehlt oder ist ungültig.",
-    "verifyEmail.checkEmail": "Bitte überprüfen Sie Ihre E-Mail auf den korrekten Bestätigungslink oder fordern Sie einen neuen über Ihre Profilseite an.",
-    "verifyEmail.goToProfile": "Zum Profil",
-    "verifyEmail.success": "E-Mail bestätigt!",
-    "verifyEmail.successDesc": "Ihre E-Mail-Adresse wurde erfolgreich aktualisiert.",
-    "verifyEmail.successMessage": "Ihre E-Mail-Adresse wurde geändert. Sie können sich jetzt mit Ihrer neuen E-Mail-Adresse anmelden.",
-    "verifyEmail.failed": "Bestätigung fehlgeschlagen",
-    "verifyEmail.failedDefault": "Ihre E-Mail-Adresse konnte nicht bestätigt werden.",
-    "verifyEmail.failedMessage": "Der Bestätigungslink ist möglicherweise abgelaufen oder wurde bereits verwendet. Bitte fordern Sie eine neue Bestätigungs-E-Mail über Ihre Profilseite an.",
-    "verifyEmail.error": "Bestätigungsfehler",
-    "verifyEmail.errorDesc": "Ein unerwarteter Fehler ist bei der Bestätigung aufgetreten.",
-    "verifyEmail.errorMessage": "Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support, wenn das Problem weiterhin besteht.",
-    "verifyEmail.verifying": "E-Mail wird bestätigt...",
-    "verifyEmail.verifyingDesc": "Bitte warten Sie, während wir Ihre E-Mail-Adresse bestätigen."
+    "verifyEmail": {
+      "invalidLink": "Ungültiger Bestätigungslink",
+      "invalidLinkDesc": "Der Bestätigungslink fehlt oder ist ungültig.",
+      "checkEmail": "Bitte überprüfen Sie Ihre E-Mail auf den korrekten Bestätigungslink oder fordern Sie einen neuen über Ihre Profilseite an.",
+      "goToProfile": "Zum Profil",
+      "success": "E-Mail bestätigt!",
+      "successDesc": "Ihre E-Mail-Adresse wurde erfolgreich aktualisiert.",
+      "successMessage": "Ihre E-Mail-Adresse wurde geändert. Sie können sich jetzt mit Ihrer neuen E-Mail-Adresse anmelden.",
+      "failed": "Bestätigung fehlgeschlagen",
+      "failedDefault": "Ihre E-Mail-Adresse konnte nicht bestätigt werden.",
+      "failedMessage": "Der Bestätigungslink ist möglicherweise abgelaufen oder wurde bereits verwendet. Bitte fordern Sie eine neue Bestätigungs-E-Mail über Ihre Profilseite an.",
+      "error": "Bestätigungsfehler",
+      "errorDesc": "Ein unerwarteter Fehler ist bei der Bestätigung aufgetreten.",
+      "errorMessage": "Bitte versuchen Sie es später erneut oder kontaktieren Sie den Support, wenn das Problem weiterhin besteht.",
+      "verifying": "E-Mail wird bestätigt...",
+      "verifyingDesc": "Bitte warten Sie, während wir Ihre E-Mail-Adresse bestätigen."
+    }
   },
   "NotFound": {
     "title": "Seite nicht gefunden",

@@ -6,12 +6,14 @@ import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
 import { CreditCard } from 'lucide-react';
 import { useCheckout } from '../checkout-provider';
+import {useTranslations} from 'next-intl';
 
 interface PaymentStepProps {
   onComplete: () => void;
 }
 
 export default function PaymentStep({ onComplete }: PaymentStepProps) {
+  const t = useTranslations('Checkout');
   const { paymentMethods, selectedPaymentMethodCode, setSelectedPaymentMethodCode } = useCheckout();
 
   const handleContinue = () => {
@@ -22,14 +24,14 @@ export default function PaymentStep({ onComplete }: PaymentStepProps) {
   if (paymentMethods.length === 0) {
     return (
       <div className="text-center py-8">
-        <p className="text-muted-foreground">No payment methods available.</p>
+        <p className="text-muted-foreground">{t('noPaymentMethods')}</p>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      <h3 className="font-semibold">Select payment method</h3>
+      <h3 className="font-semibold">{t('selectPaymentMethod')}</h3>
 
       <RadioGroup value={selectedPaymentMethodCode || ''} onValueChange={setSelectedPaymentMethodCode}>
         {paymentMethods.map((method) => (
@@ -57,7 +59,7 @@ export default function PaymentStep({ onComplete }: PaymentStepProps) {
         disabled={!selectedPaymentMethodCode}
         className="w-full"
       >
-        Continue to review
+        {t('continueToReview')}
       </Button>
     </div>
   );

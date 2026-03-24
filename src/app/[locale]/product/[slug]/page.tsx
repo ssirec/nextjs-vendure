@@ -30,6 +30,7 @@ import {
     buildCanonicalUrl,
     buildOgImages,
 } from '@/lib/metadata';
+import {getTranslations} from 'next-intl/server';
 
 async function getProductData(slug: string) {
     'use cache';
@@ -89,6 +90,8 @@ export async function generateMetadata({
 export default async function ProductDetailPage({params, searchParams}: PageProps<'/[locale]/product/[slug]'>) {
     const { slug } = await params;
     const searchParamsResolved = await searchParams;
+    const locale = (await rootLocale()) as string;
+    const t = await getTranslations({locale, namespace: 'Product'});
 
     const result = await getProductData(slug);
 
@@ -108,7 +111,7 @@ export default async function ProductDetailPage({params, searchParams}: PageProp
                 <Breadcrumb className="mb-6">
                     <BreadcrumbList>
                         <BreadcrumbItem>
-                            <BreadcrumbLink render={<Link href="/" />}>Home</BreadcrumbLink>
+                            <BreadcrumbLink render={<Link href="/" />}>{t('home')}</BreadcrumbLink>
                         </BreadcrumbItem>
                         {primaryCollection && (
                             <>
@@ -146,19 +149,19 @@ export default async function ProductDetailPage({params, searchParams}: PageProp
                     <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
                         <div className="inline-flex items-center gap-2 rounded-full bg-muted/60 px-4 py-2 text-sm font-medium text-muted-foreground">
                             <Truck className="h-4 w-4 text-primary" />
-                            Fast Shipping
+                            {t('trustBadges.fastShipping')}
                         </div>
                         <div className="inline-flex items-center gap-2 rounded-full bg-muted/60 px-4 py-2 text-sm font-medium text-muted-foreground">
                             <RotateCcw className="h-4 w-4 text-primary" />
-                            Free Returns
+                            {t('trustBadges.freeReturns')}
                         </div>
                         <div className="inline-flex items-center gap-2 rounded-full bg-muted/60 px-4 py-2 text-sm font-medium text-muted-foreground">
                             <ShieldCheck className="h-4 w-4 text-primary" />
-                            Secure Checkout
+                            {t('trustBadges.secureCheckout')}
                         </div>
                         <div className="inline-flex items-center gap-2 rounded-full bg-muted/60 px-4 py-2 text-sm font-medium text-muted-foreground">
                             <Clock className="h-4 w-4 text-primary" />
-                            30-Day Guarantee
+                            {t('trustBadges.guarantee')}
                         </div>
                     </div>
                 </div>
@@ -167,30 +170,30 @@ export default async function ProductDetailPage({params, searchParams}: PageProp
             {/* Store FAQ Section */}
             <section className="py-16 bg-muted/30">
                 <div className="container mx-auto px-4 max-w-2xl">
-                    <h2 className="text-2xl font-bold text-center mb-8">Frequently Asked Questions</h2>
+                    <h2 className="text-2xl font-bold text-center mb-8">{t('faq.title')}</h2>
                     <Accordion className="w-full">
                         <AccordionItem value="shipping">
-                            <AccordionTrigger>What are your shipping options?</AccordionTrigger>
+                            <AccordionTrigger>{t('faq.shipping.question')}</AccordionTrigger>
                             <AccordionContent>
-                                We offer standard shipping (5-7 business days), express shipping (2-3 business days), and next-day delivery for select areas. Free standard shipping is available on orders over $50.
+                                {t('faq.shipping.answer')}
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="returns">
-                            <AccordionTrigger>What is your return policy?</AccordionTrigger>
+                            <AccordionTrigger>{t('faq.returns.question')}</AccordionTrigger>
                             <AccordionContent>
-                                We accept returns within 30 days of purchase. Items must be unused and in their original packaging. Simply contact our support team to initiate a return and receive a prepaid shipping label.
+                                {t('faq.returns.answer')}
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="tracking">
-                            <AccordionTrigger>How can I track my order?</AccordionTrigger>
+                            <AccordionTrigger>{t('faq.tracking.question')}</AccordionTrigger>
                             <AccordionContent>
-                                Once your order ships, you&apos;ll receive an email with a tracking number. You can also view your order status anytime by logging into your account and visiting the order history section.
+                                {t('faq.tracking.answer')}
                             </AccordionContent>
                         </AccordionItem>
                         <AccordionItem value="international">
-                            <AccordionTrigger>Do you offer international shipping?</AccordionTrigger>
+                            <AccordionTrigger>{t('faq.international.question')}</AccordionTrigger>
                             <AccordionContent>
-                                Yes! We ship to over 50 countries worldwide. International shipping rates and delivery times vary by location. You can see the exact cost at checkout before completing your purchase.
+                                {t('faq.international.answer')}
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>

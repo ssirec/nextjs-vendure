@@ -10,10 +10,12 @@ import PaymentStep from './steps/payment-step';
 import ReviewStep from './steps/review-step';
 import OrderSummary from './order-summary';
 import { useCheckout } from './checkout-provider';
+import {useTranslations} from 'next-intl';
 
 type CheckoutStep = 'contact' | 'shipping' | 'delivery' | 'payment' | 'review';
 
 export default function CheckoutFlow() {
+  const t = useTranslations('Checkout');
   const { order, isGuest } = useCheckout();
 
   const getStepOrder = (): CheckoutStep[] => {
@@ -80,11 +82,11 @@ export default function CheckoutFlow() {
   };
 
   const stepLabels: Record<CheckoutStep, string> = {
-    contact: 'Contact',
-    shipping: 'Address',
-    delivery: 'Delivery',
-    payment: 'Payment',
-    review: 'Review',
+    contact: t('steps.contact'),
+    shipping: t('steps.address'),
+    delivery: t('steps.delivery'),
+    payment: t('steps.payment'),
+    review: t('steps.review'),
   };
 
   return (
@@ -154,7 +156,7 @@ export default function CheckoutFlow() {
                   }`}>
                     {completedSteps.has('contact') ? '✓' : getStepNumber('contact')}
                   </div>
-                  <span className="text-lg font-semibold">Contact Information</span>
+                  <span className="text-lg font-semibold">{t('contactInformation')}</span>
                 </div>
               </AccordionTrigger>
               <AccordionContent className="pt-4">
@@ -184,7 +186,7 @@ export default function CheckoutFlow() {
                 }`}>
                   {completedSteps.has('shipping') ? '✓' : getStepNumber('shipping')}
                 </div>
-                <span className="text-lg font-semibold">Shipping Address</span>
+                <span className="text-lg font-semibold">{t('shippingAddress')}</span>
               </div>
             </AccordionTrigger>
             <AccordionContent className="pt-4">
@@ -213,7 +215,7 @@ export default function CheckoutFlow() {
                 }`}>
                   {completedSteps.has('delivery') ? '✓' : getStepNumber('delivery')}
                 </div>
-                <span className="text-lg font-semibold">Delivery Method</span>
+                <span className="text-lg font-semibold">{t('deliveryMethod')}</span>
               </div>
             </AccordionTrigger>
             <AccordionContent className="pt-4">
@@ -242,7 +244,7 @@ export default function CheckoutFlow() {
                 }`}>
                   {completedSteps.has('payment') ? '✓' : getStepNumber('payment')}
                 </div>
-                <span className="text-lg font-semibold">Payment Method</span>
+                <span className="text-lg font-semibold">{t('paymentMethod')}</span>
               </div>
             </AccordionTrigger>
             <AccordionContent className="pt-4">
@@ -269,7 +271,7 @@ export default function CheckoutFlow() {
                 }`}>
                   {getStepNumber('review')}
                 </div>
-                <span className="text-lg font-semibold">Review & Place Order</span>
+                <span className="text-lg font-semibold">{t('reviewAndPlaceOrder')}</span>
               </div>
             </AccordionTrigger>
             <AccordionContent className="pt-4">
