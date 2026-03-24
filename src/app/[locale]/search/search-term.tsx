@@ -1,4 +1,4 @@
-import {locale as rootLocale} from 'next/root-params';
+import {getRouteLocale} from '@/i18n/server';
 import {getTranslations} from 'next-intl/server';
 
 interface SearchTermProps {
@@ -10,7 +10,7 @@ interface SearchTermProps {
 export async function SearchTerm({searchParams}: SearchTermProps) {
     const searchParamsResolved = await searchParams;
     const searchTerm = (searchParamsResolved.q as string) || '';
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Search'});
 
     return (

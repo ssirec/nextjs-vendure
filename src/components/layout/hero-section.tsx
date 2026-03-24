@@ -1,9 +1,11 @@
 import {Button} from "@/components/ui/button";
 import { Link } from '@/i18n/navigation';
-import {useTranslations} from 'next-intl';
+import {getTranslations} from 'next-intl/server';
+import {getRouteLocale} from '@/i18n/server';
 
-export function HeroSection() {
-    const t = useTranslations('Hero');
+export async function HeroSection() {
+    const locale = await getRouteLocale();
+    const t = await getTranslations({locale, namespace: 'Hero'});
     return (
         <section className="relative overflow-hidden bg-gradient-to-br from-background via-muted/50 to-muted">
             {/* Subtle decorative grid pattern */}

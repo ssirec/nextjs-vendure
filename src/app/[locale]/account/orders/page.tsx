@@ -17,11 +17,11 @@ import {Price} from '@/components/commerce/price';
 import {OrderStatusBadge} from '@/components/commerce/order-status-badge';
 import {formatDate} from '@/lib/format';
 import { Link, redirect } from '@/i18n/navigation';
-import {locale as rootLocale} from 'next/root-params';
+import {getRouteLocale} from '@/i18n/server';
 import {getTranslations} from 'next-intl/server';
 
 export async function generateMetadata(): Promise<Metadata> {
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Account'});
     return {
         title: t('ordersPageTitle'),
@@ -32,7 +32,7 @@ const ITEMS_PER_PAGE = 10;
 
 export default async function OrdersPage(props: PageProps<'/[locale]/account/orders'>) {
     const searchParams = await props.searchParams;
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const pageParam = searchParams.page;
     const currentPage = parseInt(Array.isArray(pageParam) ? pageParam[0] : pageParam || '1', 10);
     const skip = (currentPage - 1) * ITEMS_PER_PAGE;

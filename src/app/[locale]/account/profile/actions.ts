@@ -7,23 +7,24 @@ import {
     RequestUpdateCustomerEmailAddressMutation,
 } from '@/lib/vendure/mutations';
 import {revalidatePath} from 'next/cache';
-import {getLocale} from 'next-intl/server';
+import {getLocale, getTranslations} from 'next-intl/server';
 
 export async function updatePasswordAction(prevState: { error?: string; success?: boolean } | undefined, formData: FormData) {
+    const t = await getTranslations('Errors');
     const currentPassword = formData.get('currentPassword') as string;
     const newPassword = formData.get('newPassword') as string;
     const confirmPassword = formData.get('confirmPassword') as string;
 
     if (!currentPassword || !newPassword || !confirmPassword) {
-        return {error: 'All fields are required'};
+        return {error: t('fieldsRequired')};
     }
 
     if (newPassword !== confirmPassword) {
-        return {error: 'New passwords do not match'};
+        return {error: t('passwordsMismatch')};
     }
 
     if (currentPassword === newPassword) {
-        return {error: 'New password must be different from current password'};
+        return {error: t('newPasswordMustDiffer')};
     }
 
     try {
@@ -39,17 +40,18 @@ export async function updatePasswordAction(prevState: { error?: string; success?
         }
 
         return {success: true};
-    } catch (error: unknown) {
-        return {error: 'An unexpected error occurred. Please try again.'};
+    } catch {
+        return {error: t('unexpectedError')};
     }
 }
 
 export async function updateCustomerAction(prevState: { error?: string; success?: boolean } | undefined, formData: FormData) {
+    const t = await getTranslations('Errors');
     const firstName = formData.get('firstName') as string;
     const lastName = formData.get('lastName') as string;
 
     if (!firstName || !lastName) {
-        return {error: 'First name and last name are required'};
+        return {error: t('firstLastNameRequired')};
     }
 
     try {
@@ -63,29 +65,30 @@ export async function updateCustomerAction(prevState: { error?: string; success?
         const updateResult = result.data.updateCustomer;
 
         if (!updateResult || !updateResult.id) {
-            return {error: 'Failed to update customer information'};
+            return {error: t('failedUpdateCustomer')};
         }
 
         const locale = await getLocale();
         revalidatePath(`/${locale}/account/profile`);
         return {success: true};
-    } catch (error: unknown) {
-        return {error: 'An unexpected error occurred. Please try again.'};
+    } catch {
+        return {error: t('unexpectedError')};
     }
 }
 
 export async function requestEmailUpdateAction(prevState: { error?: string; success?: boolean } | undefined, formData: FormData) {
+    const t = await getTranslations('Errors');
     const password = formData.get('password') as string;
     const newEmailAddress = formData.get('newEmailAddress') as string;
 
     if (!password || !newEmailAddress) {
-        return {error: 'Password and new email address are required'};
+        return {error: t('passwordEmailRequired')};
     }
 
     // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(newEmailAddress)) {
-        return {error: 'Please enter a valid email address'};
+        return {error: t('invalidEmail')};
     }
 
     try {
@@ -101,7 +104,7 @@ export async function requestEmailUpdateAction(prevState: { error?: string; succ
         }
 
         return {success: true};
-    } catch (error: unknown) {
-        return {error: 'An unexpected error occurred. Please try again.'};
+    } catch {
+        return {error: t('unexpectedError')};
     }
 }

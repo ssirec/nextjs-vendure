@@ -1,5 +1,5 @@
 import { ProductCarousel } from "@/components/commerce/product-carousel";
-import { locale as rootLocale } from "next/root-params";
+import { getRouteLocale } from "@/i18n/server";
 import { cacheLife, cacheTag } from "next/cache";
 import { query } from "@/lib/vendure/api";
 import { GetCollectionProductsQuery } from "@/lib/vendure/queries";
@@ -16,7 +16,7 @@ async function getRelatedProducts(collectionSlug: string, currentProductId: stri
     'use cache'
     cacheLife('hours')
 
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     cacheTag(`related-products-${collectionSlug}-${locale}`)
 
     const result = await query(GetCollectionProductsQuery, {
@@ -39,7 +39,7 @@ async function getRelatedProducts(collectionSlug: string, currentProductId: stri
 }
 
 export async function RelatedProducts({ collectionSlug, currentProductId }: RelatedProductsProps) {
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Product'});
     const products = await getRelatedProducts(collectionSlug, currentProductId);
 

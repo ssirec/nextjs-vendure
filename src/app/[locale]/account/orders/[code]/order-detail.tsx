@@ -12,9 +12,17 @@ import {Price} from '@/components/commerce/price';
 import {OrderStatusBadge} from '@/components/commerce/order-status-badge';
 import {formatDate} from '@/lib/format';
 import {useLocale, useTranslations} from 'next-intl';
+import type {ResultOf} from '@/graphql';
+import type {GetOrderDetailQuery} from '@/lib/vendure/queries';
+
+type OrderByCode = NonNullable<ResultOf<typeof GetOrderDetailQuery>['orderByCode']>;
+type OrderLineItem = OrderByCode['lines'][number];
+type OrderDiscount = OrderByCode['discounts'][number];
+type OrderPayment = NonNullable<OrderByCode['payments']>[number];
+type OrderShippingLine = NonNullable<OrderByCode['shippingLines']>[number];
 
 interface OrderDetailProps {
-    orderPromise: Promise<{ data: { orderByCode: any }; token?: string }>;
+    orderPromise: Promise<{ data: ResultOf<typeof GetOrderDetailQuery>; token?: string }>;
 }
 
 export function OrderDetail({orderPromise}: OrderDetailProps) {
@@ -53,7 +61,7 @@ export function OrderDetail({orderPromise}: OrderDetailProps) {
                         </CardHeader>
                         <CardContent>
                             <div className="space-y-4">
-                                {order.lines.map((line: any) => (
+                                {order.lines.map((line: OrderLineItem) => (
                                     <div key={line.id} className="flex gap-4">
                                         <div className="relative h-20 w-20 rounded-md overflow-hidden bg-gray-100 flex-shrink-0">
                                             {line.productVariant.product.featuredAsset && (
@@ -107,7 +115,7 @@ export function OrderDetail({orderPromise}: OrderDetailProps) {
                                     <span className="text-muted-foreground">{t('shipping')}</span>
                                     <span><Price value={order.shippingWithTax} currencyCode={order.currencyCode}/></span>
                                 </div>
-                                {order.discounts?.length > 0 && order.discounts.map((discount: any, idx: number) => (
+                                {order.discounts?.length > 0 && order.discounts.map((discount: OrderDiscount, idx: number) => (
                                     <div key={idx} className="flex justify-between text-sm">
                                         <span className="text-muted-foreground">{discount.description}</span>
                                         <span className="text-green-600">
@@ -156,11 +164,11 @@ export function OrderDetail({orderPromise}: OrderDetailProps) {
                         </Card>
                     )}
 
-                    {order.payments?.length > 0 && (
+                    {order.payments && order.payments.length > 0 && (
                         <Card>
                             <CardHeader><CardTitle>{t('payment')}</CardTitle></CardHeader>
                             <CardContent>
-                                {order.payments.map((payment: any) => (
+                                {order.payments.map((payment: OrderPayment) => (
                                     <div key={payment.id} className="space-y-1 text-sm">
                                         <div className="flex justify-between">
                                             <span className="text-muted-foreground">{t('method')}</span>
@@ -190,7 +198,7 @@ export function OrderDetail({orderPromise}: OrderDetailProps) {
                         <Card>
                             <CardHeader><CardTitle>{t('shippingMethod')}</CardTitle></CardHeader>
                             <CardContent>
-                                {order.shippingLines.map((line: any, idx: number) => (
+                                {order.shippingLines.map((line: OrderShippingLine, idx: number) => (
                                     <div key={idx} className="space-y-1 text-sm">
                                         <p className="font-medium">{line.shippingMethod.name}</p>
                                         {line.shippingMethod.description && (

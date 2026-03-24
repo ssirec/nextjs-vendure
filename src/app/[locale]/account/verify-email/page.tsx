@@ -1,15 +1,14 @@
 import { Suspense } from 'react';
-import { redirect } from '@/i18n/navigation';
 import { mutate } from '@/lib/vendure/api';
 import { UpdateCustomerEmailAddressMutation } from '@/lib/vendure/mutations';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
-import {locale as rootLocale} from 'next/root-params';
+import {getRouteLocale} from '@/i18n/server';
 import {getTranslations} from 'next-intl/server';
 
 async function VerifyEmailContent({searchParams}: {searchParams: Promise<Record<string, string | string[] | undefined>>}) {
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Account'});
     const resolvedParams = await searchParams;
     const tokenParam = resolvedParams.token;
@@ -73,7 +72,7 @@ async function VerifyEmailContent({searchParams}: {searchParams: Promise<Record<
                 </CardContent>
             </Card>
         );
-    } catch (error) {
+    } catch {
         return (
             <Card className="max-w-md mx-auto">
                 <CardHeader>
@@ -94,7 +93,7 @@ async function VerifyEmailContent({searchParams}: {searchParams: Promise<Record<
 }
 
 export default async function VerifyEmailPage({searchParams}: PageProps<'/[locale]/account/verify-email'>) {
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Account'});
 
     return (

@@ -3,9 +3,10 @@
 import {mutate} from '@/lib/vendure/api';
 import {RegisterCustomerAccountMutation} from '@/lib/vendure/mutations';
 import {redirect} from '@/i18n/navigation';
-import {getLocale} from 'next-intl/server';
+import {getLocale, getTranslations} from 'next-intl/server';
 
 export async function registerAction(prevState: { error?: string } | undefined, formData: FormData) {
+    const t = await getTranslations('Errors');
     const emailAddress = formData.get('emailAddress') as string;
     const firstName = formData.get('firstName') as string;
     const lastName = formData.get('lastName') as string;
@@ -14,7 +15,7 @@ export async function registerAction(prevState: { error?: string } | undefined, 
     const redirectTo = formData.get('redirectTo') as string | null;
 
     if (!emailAddress || !password) {
-        return {error: 'Email address and password are required'};
+        return {error: t('emailPasswordRequired')};
     }
 
 

@@ -1,4 +1,4 @@
-import {locale as rootLocale} from 'next/root-params';
+import {getRouteLocale} from '@/i18n/server';
 import {cacheLife, cacheTag} from 'next/cache';
 import {getTopCollections} from '@/lib/vendure/cached';
 import {
@@ -12,7 +12,7 @@ export async function NavbarCollections() {
     "use cache";
     cacheLife('days');
 
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     cacheTag(`navbar-collections-${locale}`);
 
     const collections = await getTopCollections(locale);

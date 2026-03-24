@@ -7,7 +7,6 @@ import { ProductGrid } from '@/components/commerce/product-grid';
 import { FacetFilters } from '@/components/commerce/facet-filters';
 import { ProductGridSkeleton } from '@/components/shared/product-grid-skeleton';
 import { buildSearchInput, getCurrentPage } from '@/lib/search-helpers';
-import { locale as rootLocale } from 'next/root-params';
 import { cacheLife, cacheTag } from 'next/cache';
 import {
     Breadcrumb,
@@ -25,13 +24,14 @@ import {
     buildOgImages,
 } from '@/lib/metadata';
 import {toOgLocale} from '@/i18n/locale-utils';
+import {getRouteLocale} from '@/i18n/server';
 import {getTranslations} from 'next-intl/server';
 
 async function getCollectionProducts(slug: string, searchParams: { [key: string]: string | string[] | undefined }) {
     'use cache';
     cacheLife('hours');
 
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     cacheTag(`collection-${slug}-${locale}`);
 
     return query(SearchProductsQuery, {
@@ -46,7 +46,7 @@ async function getCollectionMetadata(slug: string) {
     'use cache';
     cacheLife('hours');
 
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     cacheTag(`collection-meta-${slug}-${locale}`);
 
     return query(GetCollectionProductsQuery, {
@@ -59,19 +59,21 @@ export async function generateMetadata({
     params,
 }: PageProps<'/[locale]/collection/[slug]'>): Promise<Metadata> {
     const { slug } = await params;
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const result = await getCollectionMetadata(slug);
     const collection = result.data.collection;
 
+    const t = await getTranslations({locale, namespace: 'Product'});
+
     if (!collection) {
         return {
-            title: 'Collection Not Found',
+            title: t('collectionNotFound'),
         };
     }
 
     const description =
         truncateDescription(collection.description) ||
-        `Browse our ${collection.name} collection at ${SITE_NAME}`;
+        t('browseCollectionAt', {name: collection.name, siteName: SITE_NAME});
     const ogLocale = toOgLocale(locale);
     const collectionPath = `/collection/${collection.slug}`;
 
@@ -106,7 +108,7 @@ export async function generateMetadata({
 export default async function CollectionPage({params, searchParams}: PageProps<'/[locale]/collection/[slug]'>) {
     const { slug } = await params;
     const searchParamsResolved = await searchParams;
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Product'});
     const page = getCurrentPage(searchParamsResolved);
 

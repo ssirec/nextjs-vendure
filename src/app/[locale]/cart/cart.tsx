@@ -1,14 +1,14 @@
 import {CartItems} from "@/app/[locale]/cart/cart-items";
 import {OrderSummary} from "@/app/[locale]/cart/order-summary";
 import {PromotionCode} from "@/app/[locale]/cart/promotion-code";
-import {locale as rootLocale} from "next/root-params";
+import {getRouteLocale} from "@/i18n/server";
 import {query} from "@/lib/vendure/api";
 import {GetActiveOrderQuery} from "@/lib/vendure/queries";
 
 export async function Cart() {
     "use cache: private"
 
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const {data} = await query(GetActiveOrderQuery, {}, {
         useAuthToken: true,
         languageCode: locale,

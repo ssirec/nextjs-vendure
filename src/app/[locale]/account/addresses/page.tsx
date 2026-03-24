@@ -1,20 +1,20 @@
 import type {Metadata} from 'next';
-import {locale as rootLocale} from 'next/root-params';
+import {getRouteLocale} from '@/i18n/server';
 import { query } from '@/lib/vendure/api';
 import { GetCustomerAddressesQuery, GetAvailableCountriesQuery } from '@/lib/vendure/queries';
 import { AddressesClient } from './addresses-client';
 import {getTranslations} from 'next-intl/server';
 
 export async function generateMetadata(): Promise<Metadata> {
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Account'});
     return {
         title: t('addressesPageTitle'),
     };
 }
 
-export default async function AddressesPage(_props: PageProps<'/[locale]/account/addresses'>) {
-    const locale = (await rootLocale()) as string;
+export default async function AddressesPage() {
+    const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Account'});
     const [addressesResult, countriesResult] = await Promise.all([
         query(GetCustomerAddressesQuery, {}, { useAuthToken: true }),

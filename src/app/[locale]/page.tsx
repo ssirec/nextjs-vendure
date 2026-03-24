@@ -1,5 +1,5 @@
 import type {Metadata} from "next";
-import {locale as rootLocale} from "next/root-params";
+import {getRouteLocale} from "@/i18n/server";
 import {HeroSection} from "@/components/layout/hero-section";
 import {FeaturedProducts} from "@/components/commerce/featured-products";
 import {SITE_NAME, SITE_URL, buildCanonicalUrl} from "@/lib/metadata";
@@ -8,7 +8,7 @@ import {getTranslations} from 'next-intl/server';
 import {toOgLocale} from '@/i18n/locale-utils';
 
 export async function generateMetadata(): Promise<Metadata> {
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Home'});
     const ogLocale = toOgLocale(locale);
 
@@ -36,8 +36,8 @@ const featureKeys = [
     {icon: Zap, key: 'fastDelivery'},
 ] as const;
 
-export default async function Home(_props: PageProps<'/[locale]'>) {
-    const locale = (await rootLocale()) as string;
+export default async function Home() {
+    const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Home'});
 
     return (

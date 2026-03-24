@@ -1,5 +1,5 @@
 import type {Metadata} from 'next';
-import {locale as rootLocale} from 'next/root-params';
+import {getRouteLocale} from '@/i18n/server';
 import {getTranslations} from 'next-intl/server';
 import {query} from '@/lib/vendure/api';
 import {
@@ -16,7 +16,7 @@ import {getActiveCustomer} from '@/lib/vendure/actions';
 import {getAvailableCountriesCached} from '@/lib/vendure/cached';
 
 export async function generateMetadata(): Promise<Metadata> {
-    const locale = (await rootLocale()) as string;
+    const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Checkout'});
     return {
         title: t('pageTitle'),
@@ -24,8 +24,8 @@ export async function generateMetadata(): Promise<Metadata> {
     };
 }
 
-export default async function CheckoutPage(_props: PageProps<'/[locale]/checkout'>) {
-    const locale = (await rootLocale()) as string;
+export default async function CheckoutPage() {
+    const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Checkout'});
     const customer = await getActiveCustomer();
     const isGuest = !customer;
