@@ -7,12 +7,14 @@ import {Card, CardContent} from '@/components/ui/card';
 import {Button} from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
 import {XCircle} from 'lucide-react';
+import {useTranslations} from 'next-intl';
 
 interface VerifyContentProps {
     searchParams: Promise<{ token?: string }>;
 }
 
 export function VerifyContent({searchParams}: VerifyContentProps) {
+    const t = useTranslations('Verify');
     const params = use(searchParams);
     const token = params.token;
 
@@ -24,20 +26,20 @@ export function VerifyContent({searchParams}: VerifyContentProps) {
                         <XCircle className="h-16 w-16 text-destructive"/>
                     </div>
                     <div className="space-y-2 text-center">
-                        <h1 className="text-2xl font-bold">Invalid Verification Link</h1>
+                        <h1 className="text-2xl font-bold">{t('invalidLink')}</h1>
                         <p className="text-muted-foreground">
-                            The verification link is invalid or missing a token.
+                            {t('invalidLinkMessage')}
                         </p>
                     </div>
                     <div className="flex flex-col gap-2">
                         <Link href="/register" className="block">
                             <Button variant="outline" className="w-full">
-                                Create New Account
+                                {t('createNewAccount')}
                             </Button>
                         </Link>
                         <Link href="/sign-in" className="block">
                             <Button variant="ghost" className="w-full">
-                                Back to Sign In
+                                {t('backToSignIn')}
                             </Button>
                         </Link>
                     </div>

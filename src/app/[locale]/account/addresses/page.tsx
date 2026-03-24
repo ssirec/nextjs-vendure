@@ -1,6 +1,6 @@
 import type {Metadata} from 'next';
+import {locale as rootLocale} from 'next/root-params';
 import { query } from '@/lib/vendure/api';
-import { getLocale } from 'next-intl/server';
 
 export const metadata: Metadata = {
     title: 'Addresses',
@@ -9,7 +9,7 @@ import { GetCustomerAddressesQuery, GetAvailableCountriesQuery } from '@/lib/ven
 import { AddressesClient } from './addresses-client';
 
 export default async function AddressesPage(_props: PageProps<'/[locale]/account/addresses'>) {
-    const locale = await getLocale();
+    const locale = (await rootLocale()) as string;
     const [addressesResult, countriesResult] = await Promise.all([
         query(GetCustomerAddressesQuery, {}, { useAuthToken: true }),
         query(GetAvailableCountriesQuery, {}, { languageCode: locale }),

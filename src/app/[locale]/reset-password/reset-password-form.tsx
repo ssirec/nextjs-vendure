@@ -7,12 +7,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from '@/i18n/navigation';
+import {useTranslations} from 'next-intl';
 
 interface ResetPasswordFormProps {
     searchParams: Promise<{ token?: string }>;
 }
 
 export function ResetPasswordForm({ searchParams }: ResetPasswordFormProps) {
+    const t = useTranslations('Auth');
     const params = use(searchParams);
     const token = params.token || null;
 
@@ -22,15 +24,15 @@ export function ResetPasswordForm({ searchParams }: ResetPasswordFormProps) {
         return (
             <Card>
                 <CardHeader>
-                    <CardTitle>Invalid reset link</CardTitle>
+                    <CardTitle>{t('invalidResetLink')}</CardTitle>
                     <CardDescription>
-                        The password reset link is invalid or has expired.
+                        {t('invalidResetLinkDescription')}
                     </CardDescription>
                 </CardHeader>
                 <CardFooter>
                     <Link href="/forgot-password">
                         <Button variant="outline" className="w-full">
-                            Request a new reset link
+                            {t('requestNewResetLink')}
                         </Button>
                     </Link>
                 </CardFooter>
@@ -41,16 +43,16 @@ export function ResetPasswordForm({ searchParams }: ResetPasswordFormProps) {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Reset your password</CardTitle>
+                <CardTitle>{t('resetYourPassword')}</CardTitle>
                 <CardDescription>
-                    Enter your new password below.
+                    {t('resetYourPasswordDescription')}
                 </CardDescription>
             </CardHeader>
             <form action={formAction}>
                 <input type="hidden" name="token" value={token} />
                 <CardContent className="space-y-4">
                     <div className="space-y-2">
-                        <Label htmlFor="password">New Password</Label>
+                        <Label htmlFor="password">{t('newPassword')}</Label>
                         <Input
                             id="password"
                             name="password"
@@ -61,7 +63,7 @@ export function ResetPasswordForm({ searchParams }: ResetPasswordFormProps) {
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="confirmPassword">Confirm Password</Label>
+                        <Label htmlFor="confirmPassword">{t('confirmPassword')}</Label>
                         <Input
                             id="confirmPassword"
                             name="confirmPassword"
@@ -79,13 +81,13 @@ export function ResetPasswordForm({ searchParams }: ResetPasswordFormProps) {
                 </CardContent>
                 <CardFooter className="flex flex-col space-y-4">
                     <Button type="submit" className="w-full" disabled={isPending}>
-                        {isPending ? 'Resetting password...' : 'Reset password'}
+                        {isPending ? t('resettingPassword') : t('resetPassword')}
                     </Button>
                     <Link
                         href="/sign-in"
                         className="text-sm text-center text-muted-foreground hover:text-primary"
                     >
-                        Back to Sign In
+                        {t('backToSignIn')}
                     </Link>
                 </CardFooter>
             </form>

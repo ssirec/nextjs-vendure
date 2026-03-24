@@ -9,8 +9,9 @@ import { Separator } from '@/components/ui/separator';
 import { OrderLine } from './types';
 import { useCheckout } from './checkout-provider';
 import { Price } from '@/components/commerce/price';
+import {useTranslations} from 'next-intl';
 
-function OrderSummaryContent({ order }: { order: ReturnType<typeof useCheckout>['order'] }) {
+function OrderSummaryContent({ order, t }: { order: ReturnType<typeof useCheckout>['order']; t: ReturnType<typeof useTranslations<'Checkout'>> }) {
   return (
     <div className="space-y-4">
       <div className="space-y-3">
@@ -41,7 +42,7 @@ function OrderSummaryContent({ order }: { order: ReturnType<typeof useCheckout>[
                 </p>
               )}
               <p className="text-xs text-muted-foreground">
-                Qty: {line.quantity}
+                {t('qty', {quantity: line.quantity})}
               </p>
             </div>
             <div className="text-sm font-medium">
@@ -55,7 +56,7 @@ function OrderSummaryContent({ order }: { order: ReturnType<typeof useCheckout>[
 
       <div className="space-y-2">
         <div className="flex justify-between text-sm">
-          <span className="text-muted-foreground">Subtotal</span>
+          <span className="text-muted-foreground">{t('subtotal')}</span>
           <span>
             <Price value={order.subTotalWithTax} currencyCode={order.currencyCode} />
           </span>
@@ -75,11 +76,11 @@ function OrderSummaryContent({ order }: { order: ReturnType<typeof useCheckout>[
         )}
 
         <div className="flex justify-between text-sm">
-          <span className="text-muted-foreground">Shipping</span>
+          <span className="text-muted-foreground">{t('shipping')}</span>
           <span>
             {order.shippingWithTax > 0
               ? <Price value={order.shippingWithTax} currencyCode={order.currencyCode} />
-              : 'To be calculated'}
+              : t('toBeCalculated')}
           </span>
         </div>
       </div>
@@ -87,7 +88,7 @@ function OrderSummaryContent({ order }: { order: ReturnType<typeof useCheckout>[
       <Separator />
 
       <div className="flex justify-between font-bold text-lg">
-        <span>Total</span>
+        <span>{t('total')}</span>
         <span>
           <Price value={order.totalWithTax} currencyCode={order.currencyCode} />
         </span>
@@ -97,6 +98,7 @@ function OrderSummaryContent({ order }: { order: ReturnType<typeof useCheckout>[
 }
 
 export default function OrderSummary() {
+  const t = useTranslations('Checkout');
   const { order } = useCheckout();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -111,7 +113,7 @@ export default function OrderSummary() {
                 <div className="flex items-center justify-between">
                   <CardTitle className="flex items-center gap-2">
                     <ShoppingBag className="h-5 w-5" />
-                    Order Summary ({order.lines.length} {order.lines.length === 1 ? 'item' : 'items'})
+                    {t('orderSummary')} ({order.lines.length} {order.lines.length === 1 ? t('item') : t('items')})
                   </CardTitle>
                   <div className="flex items-center gap-2">
                     <span className="font-bold text-lg">
@@ -124,7 +126,7 @@ export default function OrderSummary() {
             </CollapsibleTrigger>
             <CollapsibleContent>
               <CardContent>
-                <OrderSummaryContent order={order} />
+                <OrderSummaryContent order={order} t={t} />
               </CardContent>
             </CollapsibleContent>
           </Collapsible>
@@ -135,10 +137,10 @@ export default function OrderSummary() {
       <div className="hidden lg:block">
         <Card className="sticky top-24">
           <CardHeader>
-            <CardTitle>Order Summary</CardTitle>
+            <CardTitle>{t('orderSummary')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <OrderSummaryContent order={order} />
+            <OrderSummaryContent order={order} t={t} />
           </CardContent>
         </Card>
       </div>

@@ -13,6 +13,7 @@ import {
     SheetTitle,
     SheetClose,
 } from '@/components/ui/sheet';
+import {useTranslations} from 'next-intl';
 
 interface Collection {
     id: string;
@@ -25,6 +26,7 @@ interface MobileNavProps {
 }
 
 export function MobileNav({collections}: MobileNavProps) {
+    const t = useTranslations('Navigation');
     const [open, setOpen] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const router = useRouter();
@@ -44,11 +46,11 @@ export function MobileNav({collections}: MobileNavProps) {
         <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger render={<Button variant="ghost" size="icon" className="md:hidden" />}>
                 <Menu className="size-5" />
-                <span className="sr-only">Open menu</span>
+                <span className="sr-only">{t('openMenu')}</span>
             </SheetTrigger>
             <SheetContent side="left" className="w-full sm:max-w-sm overflow-y-auto">
                 <SheetHeader>
-                    <SheetTitle>Menu</SheetTitle>
+                    <SheetTitle>{t('menu')}</SheetTitle>
                 </SheetHeader>
 
                 <div className="flex flex-col gap-6 px-4 pb-6">
@@ -57,7 +59,7 @@ export function MobileNav({collections}: MobileNavProps) {
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                         <Input
                             type="search"
-                            placeholder="Search products..."
+                            placeholder={t('searchProducts')}
                             className="pl-9 w-full"
                             value={searchValue}
                             onChange={(e) => setSearchValue(e.target.value)}
@@ -76,7 +78,7 @@ export function MobileNav({collections}: MobileNavProps) {
                             onClick={handleLinkClick}
                         >
                             <ShoppingBag className="h-5 w-5" />
-                            Shop All
+                            {t('shopAll')}
                         </SheetClose>
                     </div>
 
@@ -84,7 +86,7 @@ export function MobileNav({collections}: MobileNavProps) {
                     {collections.length > 0 && (
                         <div>
                             <p className="px-3 mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                                Collections
+                                {t('collections')}
                             </p>
                             <nav className="flex flex-col gap-0.5">
                                 {collections.map((collection) => (
@@ -108,7 +110,7 @@ export function MobileNav({collections}: MobileNavProps) {
                     {/* Account links */}
                     <div>
                         <p className="px-3 mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                            Account
+                            {t('account')}
                         </p>
                         <nav className="flex flex-col gap-0.5">
                             <SheetClose
@@ -121,7 +123,7 @@ export function MobileNav({collections}: MobileNavProps) {
                                 onClick={handleLinkClick}
                             >
                                 <User className="h-5 w-5" />
-                                Profile
+                                {t('profile')}
                             </SheetClose>
                             <SheetClose
                                 render={
@@ -133,7 +135,7 @@ export function MobileNav({collections}: MobileNavProps) {
                                 onClick={handleLinkClick}
                             >
                                 <Package className="h-5 w-5" />
-                                Orders
+                                {t('orders')}
                             </SheetClose>
                             <SheetClose
                                 render={
@@ -145,7 +147,7 @@ export function MobileNav({collections}: MobileNavProps) {
                                 onClick={handleLinkClick}
                             >
                                 <MapPin className="h-5 w-5" />
-                                Addresses
+                                {t('addresses')}
                             </SheetClose>
                         </nav>
                     </div>

@@ -4,6 +4,7 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
 import { CheckCircle } from 'lucide-react';
+import {getTranslations} from 'next-intl/server';
 
 export const metadata: Metadata = {
     title: 'Verification Pending',
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
 };
 
 async function VerifyPendingContent({searchParams}: {searchParams: Promise<Record<string, string | string[] | undefined>>}) {
+    const t = await getTranslations('Verify');
     const resolvedParams = await searchParams;
     const redirectTo = resolvedParams?.redirectTo as string | undefined;
 
@@ -25,22 +27,21 @@ async function VerifyPendingContent({searchParams}: {searchParams: Promise<Recor
                     <CheckCircle className="h-16 w-16 text-green-600" />
                 </div>
                 <div className="space-y-2 text-center">
-                    <h1 className="text-2xl font-bold">Check Your Email</h1>
+                    <h1 className="text-2xl font-bold">{t('pending.title')}</h1>
                     <p className="text-muted-foreground">
-                        We&apos;ve sent a verification link to your email address.
-                        Please check your inbox and click the link to verify your account.
+                        {t('pending.message')}
                     </p>
                 </div>
                 <div className="bg-muted p-4 rounded-md">
                     <p className="text-sm text-muted-foreground">
-                        Don&apos;t see the email? Check your spam folder or request a new verification link.
+                        {t('pending.spamNote')}
                     </p>
                 </div>
             </CardContent>
             <CardFooter className="flex flex-col space-y-2">
                 <Link href={signInHref} className="w-full">
                     <Button className="w-full">
-                        Go to Sign In
+                        {t('pending.goToSignIn')}
                     </Button>
                 </Link>
             </CardFooter>
@@ -49,10 +50,11 @@ async function VerifyPendingContent({searchParams}: {searchParams: Promise<Recor
 }
 
 export default async function VerifyPendingPage({searchParams}: PageProps<'/[locale]/verify-pending'>) {
+    const t = await getTranslations('Verify');
     return (
         <div className="flex min-h-screen items-center justify-center px-4">
             <div className="w-full max-w-md space-y-6">
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<div>{t('loading')}</div>}>
                     <VerifyPendingContent searchParams={searchParams} />
                 </Suspense>
             </div>

@@ -1,4 +1,5 @@
 import type {Metadata} from 'next';
+import {locale as rootLocale} from 'next/root-params';
 import {query} from '@/lib/vendure/api';
 import {
     GetActiveOrderForCheckoutQuery,
@@ -7,7 +8,6 @@ import {
     GetEligibleShippingMethodsQuery,
 } from '@/lib/vendure/queries';
 import {redirect} from '@/i18n/navigation';
-import {getLocale} from 'next-intl/server';
 import CheckoutFlow from './checkout-flow';
 import {CheckoutProvider} from './checkout-provider';
 import {noIndexRobots} from '@/lib/metadata';
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 };
 
 export default async function CheckoutPage(_props: PageProps<'/[locale]/checkout'>) {
-    const locale = await getLocale();
+    const locale = (await rootLocale()) as string;
     const customer = await getActiveCustomer();
     const isGuest = !customer;
 

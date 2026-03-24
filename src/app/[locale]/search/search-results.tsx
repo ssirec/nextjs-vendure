@@ -1,9 +1,9 @@
 import {Suspense} from "react";
+import {locale as rootLocale} from "next/root-params";
 import {FacetFilters} from "@/components/commerce/facet-filters";
 import {ProductGridSkeleton} from "@/components/shared/product-grid-skeleton";
 import {ProductGrid} from "@/components/commerce/product-grid";
 import {buildSearchInput, getCurrentPage} from "@/lib/search-helpers";
-import {getLocale} from "next-intl/server";
 import {query} from "@/lib/vendure/api";
 import {SearchProductsQuery} from "@/lib/vendure/queries";
 
@@ -15,7 +15,7 @@ interface SearchResultsProps {
 
 export async function SearchResults({searchParams}: SearchResultsProps) {
     const searchParamsResolved = await searchParams;
-    const locale = await getLocale();
+    const locale = (await rootLocale()) as string;
     const page = getCurrentPage(searchParamsResolved);
 
     const productDataPromise = query(SearchProductsQuery, {

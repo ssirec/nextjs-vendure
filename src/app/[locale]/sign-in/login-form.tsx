@@ -17,6 +17,7 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Link } from '@/i18n/navigation';
+import {useTranslations} from 'next-intl';
 
 const loginSchema = z.object({
     username: z.email('Please enter a valid email address'),
@@ -30,6 +31,7 @@ interface LoginFormProps {
 }
 
 export function LoginForm({redirectTo}: LoginFormProps) {
+    const t = useTranslations('Auth');
     const [isPending, startTransition] = useTransition();
     const [serverError, setServerError] = useState<string | null>(null);
 
@@ -73,7 +75,7 @@ export function LoginForm({redirectTo}: LoginFormProps) {
                             name="username"
                             render={({field}) => (
                                 <FormItem>
-                                    <FormLabel>Email</FormLabel>
+                                    <FormLabel>{t('email')}</FormLabel>
                                     <FormControl>
                                         <Input
                                             type="email"
@@ -93,12 +95,12 @@ export function LoginForm({redirectTo}: LoginFormProps) {
                             render={({field}) => (
                                 <FormItem>
                                     <div className="flex items-center justify-between">
-                                        <FormLabel>Password</FormLabel>
+                                        <FormLabel>{t('password')}</FormLabel>
                                         <Link
                                             href="/forgot-password"
                                             className="text-muted-foreground hover:text-primary text-sm"
                                         >
-                                            Forgot password?
+                                            {t('forgotPassword')}
                                         </Link>
                                     </div>
 
@@ -121,14 +123,14 @@ export function LoginForm({redirectTo}: LoginFormProps) {
                             </div>
                         )}
                         <Button type="submit" className="w-full" disabled={isPending}>
-                            {isPending ? 'Signing in...' : 'Sign In'}
+                            {isPending ? t('signingIn') : t('signIn')}
                         </Button>
                     </CardContent>
                     <CardFooter className="flex flex-col space-y-4 mt-2">
                         <div className="text-muted-foreground text-sm text-center">
-                            Don&apos;t have an account?{' '}
+                            {t('noAccount')}{' '}
                             <Link href={registerHref} className="hover:text-primary underline">
-                                Register
+                                {t('register')}
                             </Link>
                         </div>
                     </CardFooter>
