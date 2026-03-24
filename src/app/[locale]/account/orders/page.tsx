@@ -20,8 +20,7 @@ import {Button} from "@/components/ui/button";
 import {Price} from '@/components/commerce/price';
 import {OrderStatusBadge} from '@/components/commerce/order-status-badge';
 import {formatDate} from '@/lib/format';
-import Link from "next/link";
-import {redirect} from "next/navigation";
+import { Link, redirect } from '@/i18n/navigation';
 
 const ITEMS_PER_PAGE = 10;
 

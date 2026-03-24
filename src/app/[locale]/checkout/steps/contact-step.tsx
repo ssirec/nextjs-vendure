@@ -7,8 +7,7 @@ import { Field, FieldLabel, FieldError, FieldGroup } from '@/components/ui/field
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useForm } from 'react-hook-form';
 import { Loader2, AlertCircle } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { Link, useRouter } from '@/i18n/navigation';
 import { setCustomerForOrder, SetCustomerForOrderResult } from '../actions';
 
 interface ContactStepProps {

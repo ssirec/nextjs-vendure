@@ -3,7 +3,7 @@
 import {use} from 'react';
 import {Card, CardContent} from '@/components/ui/card';
 import {Button} from '@/components/ui/button';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import {CheckCircle, XCircle} from 'lucide-react';
 
 type VerifyResultType = {success: boolean; error?: undefined} | {error: string; success?: undefined};

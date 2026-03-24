@@ -6,7 +6,7 @@ import {
     GetEligiblePaymentMethodsQuery,
     GetEligibleShippingMethodsQuery,
 } from '@/lib/vendure/queries';
-import {redirect} from 'next/navigation';
+import {redirect} from '@/i18n/navigation';
 import {getLocale} from 'next-intl/server';
 import CheckoutFlow from './checkout-flow';
 import {CheckoutProvider} from './checkout-provider';

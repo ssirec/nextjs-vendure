@@ -11,7 +11,8 @@ import {
     SetCustomerForOrderMutation,
 } from '@/lib/vendure/mutations';
 import {revalidatePath, updateTag} from 'next/cache';
-import {redirect} from "next/navigation";
+import {redirect} from '@/i18n/navigation';
+import {getLocale} from 'next-intl/server';
 
 interface AddressInput {
     fullName: string;
@@ -47,7 +48,8 @@ export async function setShippingAddress(
         );
     }
 
-    revalidatePath('/checkout');
+    const locale = await getLocale();
+    revalidatePath(`/${locale}/checkout`);
 }
 
 export async function setShippingMethod(shippingMethodId: string) {
@@ -61,7 +63,8 @@ export async function setShippingMethod(shippingMethodId: string) {
         throw new Error('Failed to set shipping method');
     }
 
-    revalidatePath('/checkout');
+    const locale = await getLocale();
+    revalidatePath(`/${locale}/checkout`);
 }
 
 export async function createCustomerAddress(address: AddressInput) {
@@ -75,7 +78,8 @@ export async function createCustomerAddress(address: AddressInput) {
         throw new Error('Failed to create customer address');
     }
 
-    revalidatePath('/checkout');
+    const locale = await getLocale();
+    revalidatePath(`/${locale}/checkout`);
     return result.data.createCustomerAddress;
 }
 
@@ -93,7 +97,8 @@ export async function transitionToArrangingPayment() {
         );
     }
 
-    revalidatePath('/checkout');
+    const locale = await getLocale();
+    revalidatePath(`/${locale}/checkout`);
 }
 
 export async function placeOrder(paymentMethodCode: string) {
@@ -164,9 +169,11 @@ export async function setCustomerForOrder(
     const response = result.data.setCustomerForOrder;
 
     switch (response.__typename) {
-        case 'Order':
-            revalidatePath('/checkout');
+        case 'Order': {
+            const locale = await getLocale();
+            revalidatePath(`/${locale}/checkout`);
             return { success: true };
+        }
         case 'AlreadyLoggedInError':
             return { success: true };
         case 'EmailAddressConflictError':

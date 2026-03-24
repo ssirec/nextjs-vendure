@@ -5,7 +5,7 @@ import {VerifyResult} from './verify-result';
 import {verifyAccountAction} from './actions';
 import {Card, CardContent} from '@/components/ui/card';
 import {Button} from '@/components/ui/button';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import {XCircle} from 'lucide-react';
 
 interface VerifyContentProps {

@@ -1,11 +1,14 @@
 'use client';
 
 import {useState, useEffect, useTransition} from 'react';
-import {useRouter, useSearchParams} from 'next/navigation';
+import {useSearchParams} from 'next/navigation';
+import {useRouter} from '@/i18n/navigation';
 import {Search} from 'lucide-react';
 import {Input} from '@/components/ui/input';
+import {useTranslations} from 'next-intl';
 
 export function SearchInput() {
+    const t = useTranslations('Navigation');
     const router = useRouter();
     const searchParams = useSearchParams();
     const [isPending, startTransition] = useTransition();
@@ -26,7 +29,7 @@ export function SearchInput() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground"/>
             <Input
                 type="search"
-                placeholder="Search products..."
+                placeholder={t('searchProducts')}
                 className="pl-9 w-64 bg-transparent"
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}

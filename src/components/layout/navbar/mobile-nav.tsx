@@ -1,8 +1,7 @@
 'use client';
 
 import {useState} from 'react';
-import Link from 'next/link';
-import {useRouter} from 'next/navigation';
+import { Link, useRouter } from '@/i18n/navigation';
 import {Menu, Search, ShoppingBag, User, Package, MapPin} from 'lucide-react';
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';

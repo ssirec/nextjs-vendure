@@ -2,7 +2,7 @@ import type {Metadata} from 'next';
 import {Suspense} from 'react';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { CheckCircle } from 'lucide-react';
 
 export const metadata: Metadata = {

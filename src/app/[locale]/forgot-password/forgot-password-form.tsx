@@ -16,7 +16,7 @@ import {
     FormLabel,
     FormMessage,
 } from '@/components/ui/form';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 
 const forgotPasswordSchema = z.object({
     emailAddress: z.email('Please enter a valid email address'),

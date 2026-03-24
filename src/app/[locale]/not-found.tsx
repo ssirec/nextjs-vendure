@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { SearchX, Home, ShoppingBag } from 'lucide-react';
-import Link from "next/link";
+import { Link } from '@/i18n/navigation';
 import { getLocale } from 'next-intl/server';
 import { getTopCollections } from '@/lib/vendure/cached';
 

@@ -2,7 +2,7 @@
 
 import {mutate} from '@/lib/vendure/api';
 import {RegisterCustomerAccountMutation} from '@/lib/vendure/mutations';
-import {redirect} from 'next/navigation';
+import {redirect} from '@/i18n/navigation';
 
 export async function registerAction(prevState: { error?: string } | undefined, formData: FormData) {
     const emailAddress = formData.get('emailAddress') as string;

@@ -3,7 +3,7 @@
 import {mutate} from '@/lib/vendure/api';
 import {ResetPasswordMutation} from '@/lib/vendure/mutations';
 import {setAuthToken} from '@/lib/auth';
-import {redirect} from 'next/navigation';
+import {redirect} from '@/i18n/navigation';
 
 export async function resetPasswordAction(prevState: { error?: string } | undefined, formData: FormData) {
     const token = formData.get('token') as string;

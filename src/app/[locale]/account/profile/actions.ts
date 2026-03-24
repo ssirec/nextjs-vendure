@@ -7,6 +7,7 @@ import {
     RequestUpdateCustomerEmailAddressMutation,
 } from '@/lib/vendure/mutations';
 import {revalidatePath} from 'next/cache';
+import {getLocale} from 'next-intl/server';
 
 export async function updatePasswordAction(prevState: { error?: string; success?: boolean } | undefined, formData: FormData) {
     const currentPassword = formData.get('currentPassword') as string;
@@ -65,7 +66,8 @@ export async function updateCustomerAction(prevState: { error?: string; success?
             return {error: 'Failed to update customer information'};
         }
 
-        revalidatePath('/account/profile');
+        const locale = await getLocale();
+        revalidatePath(`/${locale}/account/profile`);
         return {success: true};
     } catch (error: unknown) {
         return {error: 'An unexpected error occurred. Please try again.'};

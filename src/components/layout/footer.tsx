@@ -2,16 +2,20 @@ import {locale as rootLocale} from 'next/root-params';
 import {cacheLife, cacheTag} from 'next/cache';
 import {getTopCollections} from '@/lib/vendure/cached';
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from '@/i18n/navigation';
+import {getTranslations} from 'next-intl/server';
 
 
 async function Copyright() {
     'use cache'
     cacheLife('days');
 
+    const locale = (await rootLocale()) as string;
+    const t = await getTranslations({locale, namespace: 'Footer'});
+
     return (
         <div>
-            &copy; {new Date().getFullYear()} Vendure Store. All rights reserved.
+            &copy; {new Date().getFullYear()} {t('copyright')}
         </div>
     )
 }
@@ -23,6 +27,7 @@ export async function Footer() {
     const locale = (await rootLocale()) as string;
     cacheTag(`footer-${locale}`);
 
+    const t = await getTranslations({locale, namespace: 'Footer'});
     const collections = await getTopCollections(locale);
 
     return (
@@ -34,12 +39,12 @@ export async function Footer() {
                             <Image src="/vendure.svg" alt="Vendure" width={40} height={27} className="h-6 w-auto dark:invert" />
                         </Link>
                         <p className="text-sm text-muted-foreground text-balance leading-relaxed">
-                            A modern, headless e-commerce storefront built with Vendure and Next.js. Fast, flexible, and ready for production.
+                            {t('description')}
                         </p>
                     </div>
 
                     <div>
-                        <p className="text-sm font-semibold mb-4">Categories</p>
+                        <p className="text-sm font-semibold mb-4">{t('categories')}</p>
                         <ul className="space-y-2 text-sm text-muted-foreground">
                             {collections.map((collection) => (
                                 <li key={collection.id}>
@@ -55,14 +60,14 @@ export async function Footer() {
                     </div>
 
                     <div>
-                        <p className="text-sm font-semibold mb-4">Customer</p>
+                        <p className="text-sm font-semibold mb-4">{t('customer')}</p>
                         <ul className="space-y-2 text-sm text-muted-foreground">
                             <li>
                                 <Link
                                     href="/search"
                                     className="hover:text-foreground transition-colors"
                                 >
-                                    Shop All
+                                    {t('shopAll')}
                                 </Link>
                             </li>
                             <li>
@@ -70,7 +75,7 @@ export async function Footer() {
                                     href="/account/orders"
                                     className="hover:text-foreground transition-colors"
                                 >
-                                    Orders
+                                    {t('orders')}
                                 </Link>
                             </li>
                             <li>
@@ -78,14 +83,14 @@ export async function Footer() {
                                     href="/account/profile"
                                     className="hover:text-foreground transition-colors"
                                 >
-                                    Account
+                                    {t('account')}
                                 </Link>
                             </li>
                         </ul>
                     </div>
 
                     <div>
-                        <p className="text-sm font-semibold mb-4">Vendure</p>
+                        <p className="text-sm font-semibold mb-4">{t('vendure')}</p>
                         <ul className="space-y-2 text-sm text-muted-foreground">
                             <li>
                                 <a
@@ -94,7 +99,7 @@ export async function Footer() {
                                     rel="noopener noreferrer"
                                     className="hover:text-foreground transition-colors"
                                 >
-                                    GitHub
+                                    {t('github')}
                                 </a>
                             </li>
                             <li>
@@ -104,7 +109,7 @@ export async function Footer() {
                                     rel="noopener noreferrer"
                                     className="hover:text-foreground transition-colors"
                                 >
-                                    Documentation
+                                    {t('documentation')}
                                 </a>
                             </li>
                             <li>
@@ -114,7 +119,7 @@ export async function Footer() {
                                     rel="noopener noreferrer"
                                     className="hover:text-foreground transition-colors"
                                 >
-                                    Source Code
+                                    {t('sourceCode')}
                                 </a>
                             </li>
                         </ul>
@@ -126,7 +131,7 @@ export async function Footer() {
                     className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
                     <Copyright/>
                     <div className="flex items-center gap-2">
-                        <span>Powered by</span>
+                        <span>{t('poweredBy')}</span>
                         <a
                             href="https://vendure.io"
                             target="_blank"

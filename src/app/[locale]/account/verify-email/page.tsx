@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
-import { redirect } from 'next/navigation';
+import { redirect } from '@/i18n/navigation';
 import { mutate } from '@/lib/vendure/api';
 import { UpdateCustomerEmailAddressMutation } from '@/lib/vendure/mutations';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 
 async function VerifyEmailContent({searchParams}: {searchParams: Promise<Record<string, string | string[] | undefined>>}) {
     const resolvedParams = await searchParams;

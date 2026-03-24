@@ -3,7 +3,7 @@ import {locale as rootLocale} from "next/root-params";
 import {cacheLife, cacheTag} from "next/cache";
 import {query} from "@/lib/vendure/api";
 import {GetCollectionProductsQuery} from "@/lib/vendure/queries";
-import Link from "next/link";
+import { Link } from '@/i18n/navigation';
 import {ArrowRight} from "lucide-react";
 
 async function getFeaturedCollectionProducts() {

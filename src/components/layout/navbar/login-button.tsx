@@ -2,7 +2,7 @@
 
 import {ComponentProps, useTransition} from "react";
 import {logoutAction} from "@/app/[locale]/sign-in/actions";
-import {useRouter} from "next/navigation";
+import {useRouter} from '@/i18n/navigation';
 
 interface LoginButtonProps extends ComponentProps<'button'> {
     isLoggedIn: boolean;

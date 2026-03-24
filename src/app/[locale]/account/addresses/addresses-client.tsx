@@ -25,7 +25,7 @@ import {
 import { Plus, MoreVertical, Home, CreditCard, Edit2, Trash2 } from 'lucide-react';
 import { AddressForm } from './address-form';
 import { createAddress, updateAddress, deleteAddress, setDefaultShippingAddress, setDefaultBillingAddress } from './actions';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
 
 interface Country {
     id: string;

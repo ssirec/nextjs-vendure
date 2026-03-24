@@ -3,7 +3,7 @@ import {FragmentOf, readFragment} from '@/graphql';
 import {ProductCardFragment} from '@/lib/vendure/fragments';
 import {Price} from '@/components/commerce/price';
 import {Suspense} from "react";
-import Link from "next/link";
+import { Link } from '@/i18n/navigation';
 
 interface ProductCardProps {
     product: FragmentOf<typeof ProductCardFragment>;
