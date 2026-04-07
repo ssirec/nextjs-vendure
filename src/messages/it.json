@@ -1,0 +1,12 @@
+{
+  "currencyCode": "EUR",
+  "common": {
+    "addToCart": "Aggiungi al carrello",
+    "cart": "Carrello",
+    "checkout": "Checkout",
+    "login": "Login",
+    "logout": "Logout",
+    "search": "Cerca",
+    "products": "Prodotti"
+  }
+}
