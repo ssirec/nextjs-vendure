@@ -1,0 +1,12 @@
+{
+  "currencyCode": "EUR",
+  "common": {
+    "addToCart": "Dodaj v košarico",
+    "cart": "Košarica",
+    "checkout": "Naročilo",
+    "login": "Prijava",
+    "logout": "Odjava",
+    "search": "Iskanje",
+    "products": "Izdelki"
+  }
+}
