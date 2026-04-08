@@ -23,10 +23,10 @@ import {
     buildCanonicalUrl,
     buildOgImages,
 } from '@/lib/metadata';
-import {toOgLocale} from '@/i18n/locale-utils';
-import {getActiveCurrencyCode} from '@/lib/currency-server';
-import {getRouteLocale} from '@/i18n/server';
-import {getTranslations} from 'next-intl/server';
+import { toOgLocale } from '@/i18n/locale-utils';
+import { getActiveCurrencyCode } from '@/lib/currency-server';
+import { getRouteLocale } from '@/i18n/server';
+import { getTranslations } from 'next-intl/server';
 
 async function getCollectionProducts(slug: string, searchParams: { [key: string]: string | string[] | undefined }, currencyCode: string) {
     'use cache';
@@ -41,7 +41,7 @@ async function getCollectionProducts(slug: string, searchParams: { [key: string]
             searchParams,
             collectionSlug: slug
         })
-    }, {languageCode: locale, currencyCode});
+    }, { languageCode: locale, currencyCode });
 }
 
 async function getCollectionMetadata(slug: string) {
@@ -54,7 +54,7 @@ async function getCollectionMetadata(slug: string) {
     return query(GetCollectionProductsQuery, {
         slug,
         input: { take: 0, collectionSlug: slug, groupByProduct: true },
-    }, {languageCode: locale});
+    }, { languageCode: locale });
 }
 
 export async function generateMetadata({
@@ -65,7 +65,7 @@ export async function generateMetadata({
     const result = await getCollectionMetadata(slug);
     const collection = result.data.collection;
 
-    const t = await getTranslations({locale, namespace: 'Product'});
+    const t = await getTranslations({ locale, namespace: 'Product' });
 
     if (!collection) {
         return {
@@ -75,7 +75,7 @@ export async function generateMetadata({
 
     const description =
         truncateDescription(collection.description) ||
-        t('browseCollectionAt', {name: collection.name, siteName: SITE_NAME});
+        t('browseCollectionAt', { name: collection.name, siteName: SITE_NAME });
     const ogLocale = toOgLocale(locale);
     const collectionPath = `/collection/${collection.slug}`;
 
@@ -107,12 +107,12 @@ export async function generateMetadata({
     };
 }
 
-export default async function CollectionPage({params, searchParams}: PageProps<'/[locale]/collection/[slug]'>) {
+export default async function CollectionPage({ params, searchParams }: PageProps<'/[locale]/collection/[slug]'>) {
     const { slug } = await params;
     const searchParamsResolved = await searchParams;
     const locale = await getRouteLocale();
     const currencyCode = await getActiveCurrencyCode();
-    const t = await getTranslations({locale, namespace: 'Product'});
+    const t = await getTranslations({ locale, namespace: 'Product' });
     const page = getCurrentPage(searchParamsResolved);
 
     const productDataPromise = getCollectionProducts(slug, searchParamsResolved, currencyCode);
@@ -125,7 +125,7 @@ export default async function CollectionPage({params, searchParams}: PageProps<'
             <Breadcrumb className="mb-6">
                 <BreadcrumbList>
                     <BreadcrumbItem>
-                        <BreadcrumbLink render={<Link href="/" />}>{t('home')}</BreadcrumbLink>
+                        <BreadcrumbLink render={<Link href={`/${locale}/`} />}>{t('home')}</BreadcrumbLink>
                     </BreadcrumbItem>
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
