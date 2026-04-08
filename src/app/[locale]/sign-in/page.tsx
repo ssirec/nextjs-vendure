@@ -30,7 +30,6 @@ function LoginFormSkeleton() {
                 <Skeleton className="h-10 w-full"/>
             </CardContent>
             <CardFooter className="flex flex-col space-y-4">
-
                 <div className="flex flex-col items-center space-y-2">
                     <Skeleton className="h-4 w-40"/>
                 </div>
@@ -39,11 +38,17 @@ function LoginFormSkeleton() {
     );
 }
 
-async function SignInContent({searchParams}: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+async function SignInContent({
+    searchParams,
+    locale,
+}: {
+    searchParams: Promise<Record<string, string | string[] | undefined>>;
+    locale: string;
+}) {
     const resolvedParams = await searchParams;
     const redirectTo = resolvedParams?.redirectTo as string | undefined;
 
-    return <LoginForm redirectTo={redirectTo}/>;
+    return <LoginForm redirectTo={redirectTo} locale={locale} />;
 }
 
 export default async function SignInPage({searchParams}: PageProps<'/[locale]/sign-in'>) {
@@ -87,7 +92,7 @@ export default async function SignInPage({searchParams}: PageProps<'/[locale]/si
                         </p>
                     </div>
                     <Suspense fallback={<LoginFormSkeleton/>}>
-                        <SignInContent searchParams={searchParams}/>
+                        <SignInContent searchParams={searchParams} locale={locale} />
                     </Suspense>
                 </div>
             </div>
