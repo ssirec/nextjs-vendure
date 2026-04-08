@@ -1,4 +1,4 @@
-import { Locale } from './i18n'
+export type Locale = 'en' | 'de' | 'sl'
 
 export const vendureLanguageMap: Record<Locale, string> = {
   en: 'en',
