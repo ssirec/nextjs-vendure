@@ -10,6 +10,7 @@ import {GetActiveChannelQuery, GetAvailableCountriesQuery, GetTopCollectionsQuer
 export async function getActiveChannelCached() {
     'use cache';
     cacheLife('hours');
+    cacheTag('channel');
 
     const result = await query(GetActiveChannelQuery);
     return result.data.activeChannel;
@@ -25,7 +26,7 @@ export async function getAvailableCountriesCached(locale: string) {
     cacheLife('max');
     cacheTag(`countries-${locale}`);
 
-    const result = await query(GetAvailableCountriesQuery, undefined, {languageCode: locale});
+    const result = await query(GetAvailableCountriesQuery, undefined, { languageCode: locale });
     return result.data.availableCountries || [];
 }
 
@@ -39,6 +40,6 @@ export async function getTopCollections(locale: string) {
     cacheLife('days');
     cacheTag(`collections-${locale}`);
 
-    const result = await query(GetTopCollectionsQuery, undefined, {languageCode: locale});
+    const result = await query(GetTopCollectionsQuery, undefined, { languageCode: locale });
     return result.data.collections.items;
 }
