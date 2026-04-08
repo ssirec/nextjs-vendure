@@ -3,6 +3,7 @@ import {Suspense} from 'react';
 import {Card, CardContent} from '@/components/ui/card';
 import {Loader2} from 'lucide-react';
 import {VerifyContent} from './verify-content';
+import {getRouteLocale} from '@/i18n/server';
 
 export const metadata: Metadata = {
     title: 'Verify Email',
@@ -27,12 +28,14 @@ function VerifyLoading() {
     );
 }
 
-export default function VerifyPage({searchParams}: PageProps<'/[locale]/verify'>) {
+export default async function VerifyPage({searchParams}: PageProps<'/[locale]/verify'>) {
+    const locale = await getRouteLocale();
+
     return (
         <div className="flex min-h-screen items-center justify-center px-4">
             <div className="w-full max-w-md space-y-6">
                 <Suspense fallback={<VerifyLoading/>}>
-                    <VerifyContent searchParams={searchParams}/>
+                    <VerifyContent searchParams={searchParams} locale={locale} />
                 </Suspense>
             </div>
         </div>
