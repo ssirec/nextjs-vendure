@@ -1,3 +1,4 @@
+```tsx
 'use client';
 
 import { useState } from 'react';
@@ -102,3 +103,4 @@ export function ProductImageCarousel({ images }: ProductImageCarouselProps) {
         </div>
     );
 }
+```
