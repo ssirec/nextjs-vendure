@@ -1,39 +1,41 @@
-import type {Metadata} from 'next';
-import {getRouteLocale} from '@/i18n/server';
+import type { Metadata } from 'next';
+import { getRouteLocale } from '@/i18n/server';
 import { query } from '@/lib/vendure/api';
 import { GetCustomerAddressesQuery, GetAvailableCountriesQuery } from '@/lib/vendure/queries';
 import { AddressesClient } from './addresses-client';
-import {getTranslations} from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 
-export async function generateMetadata(): Promise<Metadata> {
-    const locale = await getRouteLocale();
-    const t = await getTranslations({locale, namespace: 'Account'});
-    return {
-        title: t('addressesPageTitle'),
-    };
+export async function generateMetadata(): Promise {
+const locale = await getRouteLocale();
+const t = await getTranslations({ locale, namespace: 'Account' });
+return {
+title: t('addressesPageTitle'),
+};
 }
 
 export default async function AddressesPage() {
-    const locale = await getRouteLocale();
-    const t = await getTranslations({locale, namespace: 'Account'});
-    const [addressesResult, countriesResult] = await Promise.all([
-        query(GetCustomerAddressesQuery, {}, { useAuthToken: true }),
-        query(GetAvailableCountriesQuery, {}, { languageCode: locale }),
-    ]);
+const locale = await getRouteLocale();
+const t = await getTranslations({ locale, namespace: 'Account' });
 
-    const addresses = addressesResult.data.activeCustomer?.addresses || [];
-    const countries = countriesResult.data.availableCountries || [];
+const [addressesResult, countriesResult] = await Promise.all([
+    query(GetCustomerAddressesQuery, {}, { useAuthToken: true, languageCode: locale }),
+    query(GetAvailableCountriesQuery, {}, { languageCode: locale }),
+]);
 
-    return (
-        <div className="space-y-6">
-            <div>
-                <h1 className="text-3xl font-bold">{t('addresses')}</h1>
-                <p className="text-muted-foreground mt-2">
-                    {t('manageAddresses')}
-                </p>
-            </div>
+const addresses = addressesResult.data.activeCustomer?.addresses || [];
+const countries = countriesResult.data.availableCountries || [];
 
-            <AddressesClient addresses={addresses} countries={countries} />
+return (
+    <div className="space-y-6">
+        <div>
+            <h1 className="text-3xl font-bold">{t('addresses')}</h1>
+            <p className="text-muted-foreground mt-2">
+                {t('manageAddresses')}
+            </p>
         </div>
-    );
+
+        <AddressesClient addresses={addresses} countries={countries} />
+    </div>
+);
+
 }
