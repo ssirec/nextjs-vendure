@@ -1,0 +1,177 @@
+{
+  "Navigation": {
+    "openMenu": "Odpri meni",
+    "menu": "Meni",
+    "searchProducts": "Išči izdelke...",
+    "shopAll": "Vsi izdelki",
+    "collections": "Zbirke",
+    "account": "Uporabniški račun",
+    "profile": "Profil",
+    "orders": "Naročila",
+    "addresses": "Naslovi",
+    "signIn": "Prijava",
+    "signOut": "Odjava",
+    "greeting": "Pozdravljeni, {name}",
+    "shoppingCart": "Košarica",
+    "switchLanguage": "Zamenjaj jezik",
+    "switchCurrency": "Zamenjaj valuto"
+  },
+  "Hero": {
+    "title": "Odkrijte kakovost",
+    "titleHighlight": "izdelkov",
+    "subtitle": "Vrhunski izdelki po odličnih cenah. Brezplačna dostava za naročila nad 50 $.",
+    "shopNow": "Nakupuj zdaj",
+    "viewCollections": "Poglej zbirke"
+  },
+  "Home": {
+    "pageTitle": "Vse na enem mestu",
+    "description": "Odkrijte kakovostne izdelke po konkurenčnih cenah. Nakupujte zdaj za najboljše ponudbe na področju elektronike, mode, izdelkov za dom in več.",
+    "ogDescription": "Odkrijte kakovostne izdelke po konkurenčnih cenah.",
+    "whyShopWithUs": "Zakaj izbrati nas",
+    "features": {
+      "highQuality": {
+        "title": "Visoka kakovost",
+        "description": "Skrbno izbrani vrhunski izdelki"
+      },
+      "bestPrices": {
+        "title": "Najboljše cene",
+        "description": "Konkurenčne cene za vse izdelke"
+      },
+      "fastDelivery": {
+        "title": "Hitra dostava",
+        "description": "Zanesljiva dostava po vsem svetu"
+      }
+    }
+  },
+  "Product": {
+    "inStock": "Na zalogi",
+    "outOfStock": "Ni na zalogi",
+    "addToCart": "Dodaj v košarico",
+    "addedToCart": "Dodano v košarico",
+    "adding": "Dodajanje...",
+    "selectOptions": "Izberite možnosti",
+    "addedToCartMessage": "Izdelek dodan",
+    "addedToCartDescription": "{name} je dodan v košarico",
+    "errorTitle": "Napaka",
+    "errorAddToCart": "Izdelka ni bilo mogoče dodati v košarico",
+    "sku": "SKU: {sku}",
+    "from": "Od",
+    "noImage": "Ni slike",
+    "featuredProducts": "Izpostavljeni izdelki",
+    "relatedProducts": "Sorodni izdelki",
+    "viewAllProducts": "Vsi izdelki",
+    "notFound": "Izdelek ni najden",
+    "home": "Domov",
+    "noProductsFound": "Ni najdenih izdelkov",
+    "shopProductAt": "Kupite {name} na {siteName}",
+    "collectionNotFound": "Zbirka ni najdena",
+    "browseCollectionAt": "Raziščite zbirko {name} na {siteName}",
+    "productCount": "{count, plural, one {# izdelek} other {# izdelki}}",
+    "trustBadges": {
+      "fastShipping": "Hitra dostava",
+      "freeReturns": "Brezplačna vračila",
+      "secureCheckout": "Varno plačilo",
+      "guarantee": "30-dnevna garancija"
+    },
+    "faq": {
+      "title": "Pogosta vprašanja",
+      "shipping": {
+        "question": "Kakšne so možnosti dostave?",
+        "answer": "Ponujamo standardno dostavo (5–7 delovnih dni), hitro dostavo (2–3 delovne dni) in dostavo naslednji dan za izbrana območja. Brezplačna dostava je na voljo za naročila nad 50 $."
+      },
+      "returns": {
+        "question": "Kakšna je politika vračil?",
+        "answer": "Vračila sprejemamo v 30 dneh od nakupa. Izdelki morajo biti neuporabljeni in v originalni embalaži."
+      },
+      "tracking": {
+        "question": "Kako sledim naročilu?",
+        "answer": "Po odpremi boste prejeli e-pošto s številko za sledenje. Status naročila lahko preverite tudi v svojem računu."
+      },
+      "international": {
+        "question": "Ali pošiljate v tujino?",
+        "answer": "Da! Pošiljamo v več kot 50 držav. Stroški in čas dostave se razlikujejo glede na lokacijo."
+      }
+    }
+  },
+  "Cart": {
+    "title": "Košarica",
+    "empty": "Košarica je prazna",
+    "emptyMessage": "Dodajte izdelke za začetek nakupa",
+    "continueShopping": "Nadaljuj z nakupovanjem",
+    "each": "kos",
+    "orderSummary": "Povzetek naročila",
+    "subtotal": "Vmesni znesek",
+    "shipping": "Dostava",
+    "calculatedAtCheckout": "Izračunano na blagajni",
+    "total": "Skupaj",
+    "proceedToCheckout": "Na blagajno",
+    "secureCheckout": "Varno plačilo",
+    "promotionCode": "Koda za popust",
+    "enterDiscountCode": "Vnesite kodo za popust",
+    "remove": "Odstrani",
+    "enterCode": "Vnesi kodo",
+    "apply": "Uporabi",
+    "sku": "SKU: {sku}"
+  },
+  "Checkout": {
+    "pageTitle": "Zaključek nakupa",
+    "steps": {
+      "contact": "Kontakt",
+      "address": "Naslov",
+      "delivery": "Dostava",
+      "payment": "Plačilo",
+      "review": "Pregled"
+    },
+    "contactInformation": "Kontaktni podatki",
+    "shippingAddress": "Naslov za dostavo",
+    "deliveryMethod": "Način dostave",
+    "paymentMethod": "Način plačila",
+    "reviewAndPlaceOrder": "Pregled in oddaja naročila",
+    "continue": "Nadaljuj",
+    "placeOrder": "Oddaj naročilo",
+    "completeAllSteps": "Pred oddajo naročila dokončajte vse korake"
+  },
+  "Auth": {
+    "pageTitle": "Prijava",
+    "signIn": "Prijava",
+    "signingIn": "Prijavljanje...",
+    "email": "E-pošta",
+    "password": "Geslo",
+    "forgotPassword": "Pozabljeno geslo?",
+    "noAccount": "Še nimate računa?",
+    "register": "Registracija",
+    "createAccount": "Ustvari račun"
+  },
+  "NotFound": {
+    "title": "Stran ni najdena",
+    "message": "Stran ne obstaja ali je bila premaknjena.",
+    "goHome": "Nazaj na domov",
+    "browseProducts": "Poglej izdelke"
+  },
+  "Footer": {
+    "description": "Sodobna e-trgovina, zgrajena z Vendure in Next.js.",
+    "categories": "Kategorije",
+    "customer": "Stranke",
+    "shopAll": "Vsi izdelki",
+    "orders": "Naročila",
+    "account": "Račun",
+    "vendure": "Vendure",
+    "github": "GitHub",
+    "documentation": "Dokumentacija",
+    "sourceCode": "Izvorna koda",
+    "copyright": "Vse pravice pridržane.",
+    "poweredBy": "Powered by"
+  },
+  "Common": {
+    "loading": "Nalaganje...",
+    "sending": "Pošiljanje...",
+    "sku": "SKU",
+    "siteDescription": "Kupujte najboljše izdelke na {siteName}."
+  },
+  "Errors": {
+    "fieldsRequired": "Vsa polja so obvezna",
+    "passwordsMismatch": "Gesli se ne ujemata",
+    "unexpectedError": "Prišlo je do napake. Poskusite znova.",
+    "invalidCredentials": "Napačen e-poštni naslov ali geslo"
+  }
+}
