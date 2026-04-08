@@ -1,10 +1,11 @@
+```tsx
 'use client';
 
-import {useLocale, useTranslations} from 'next-intl';
-import {useRouter, usePathname} from '@/i18n/navigation';
-import {routing, localeNames} from '@/i18n/routing';
-import {Globe} from 'lucide-react';
-import {Button} from '@/components/ui/button';
+import { useLocale, useTranslations } from 'next-intl';
+import { useRouter, usePathname } from '@/i18n/navigation';
+import { routing, localeNames } from '@/i18n/routing';
+import { Globe } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -19,13 +20,13 @@ export function LanguagePicker() {
     const pathname = usePathname();
 
     const handleLocaleChange = (newLocale: string) => {
-        router.replace(pathname, {locale: newLocale});
+        router.replace(pathname, { locale: newLocale });
     };
 
     return (
         <DropdownMenu>
             <DropdownMenuTrigger render={<Button variant="ghost" size="sm" className="gap-1.5" />}>
-                <Globe className="size-4" />
+                <Globe className="h-4 w-4" />
                 <span>{localeNames[locale as keyof typeof localeNames] ?? locale.toUpperCase()}</span>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -42,3 +43,4 @@ export function LanguagePicker() {
         </DropdownMenu>
     );
 }
+```
