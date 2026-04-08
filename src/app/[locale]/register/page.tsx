@@ -54,11 +54,17 @@ function RegistrationFormSkeleton() {
     );
 }
 
-async function RegisterContent({searchParams}: {searchParams: Promise<Record<string, string | string[] | undefined>>}) {
+async function RegisterContent({
+    searchParams,
+    locale,
+}: {
+    searchParams: Promise<Record<string, string | string[] | undefined>>;
+    locale: string;
+}) {
     const resolvedParams = await searchParams;
     const redirectTo = resolvedParams?.redirectTo as string | undefined;
 
-    return <RegistrationForm redirectTo={redirectTo} />;
+    return <RegistrationForm redirectTo={redirectTo} locale={locale} />;
 }
 
 export default async function RegisterPage({searchParams}: PageProps<'/[locale]/register'>) {
@@ -102,7 +108,7 @@ export default async function RegisterPage({searchParams}: PageProps<'/[locale]/
                         </p>
                     </div>
                     <Suspense fallback={<RegistrationFormSkeleton />}>
-                        <RegisterContent searchParams={searchParams} />
+                        <RegisterContent searchParams={searchParams} locale={locale} />
                     </Suspense>
                 </div>
             </div>
