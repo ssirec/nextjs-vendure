@@ -1,5 +1,162 @@
 {
   "Navigation": {
+    "openMenu": "Open menu",
+    "menu": "Menu",
+    "searchProducts": "Search products...",
+    "shopAll": "Shop all",
+    "collections": "Collections",
+    "account": "Account",
+    "profile": "Profile",
+    "orders": "Orders",
+    "addresses": "Addresses",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "greeting": "Hi, {name}",
+    "shoppingCart": "Cart",
+    "switchLanguage": "Switch language",
+    "switchCurrency": "Switch currency"
+  },
+  "Hero": {
+    "title": "Discover quality",
+    "titleHighlight": "products",
+    "subtitle": "Premium products at exceptional prices. Free shipping on orders over $50.",
+    "shopNow": "Shop now",
+    "viewCollections": "View collections"
+  },
+  "Home": {
+    "pageTitle": "Your one-stop shop",
+    "description": "Discover high-quality products at competitive prices. Shop now for the best deals on electronics, fashion, home goods, and more.",
+    "ogDescription": "Discover high-quality products at competitive prices.",
+    "whyShopWithUs": "Why shop with us",
+    "features": {
+      "highQuality": {
+        "title": "High quality",
+        "description": "Premium products carefully selected for you"
+      },
+      "bestPrices": {
+        "title": "Best prices",
+        "description": "Competitive pricing on all our products"
+      },
+      "fastDelivery": {
+        "title": "Fast delivery",
+        "description": "Reliable worldwide shipping"
+      }
+    }
+  },
+  "Product": {
+    "inStock": "In stock",
+    "outOfStock": "Out of stock",
+    "addToCart": "Add to cart",
+    "addedToCart": "Added to cart",
+    "adding": "Adding...",
+    "selectOptions": "Select options",
+    "addedToCartMessage": "Added to cart",
+    "addedToCartDescription": "{name} has been added to your cart",
+    "errorTitle": "Error",
+    "errorAddToCart": "Failed to add item to cart",
+    "sku": "SKU: {sku}",
+    "from": "From",
+    "noImage": "No image available",
+    "featuredProducts": "Featured products",
+    "relatedProducts": "Related products",
+    "viewAllProducts": "View all products",
+    "notFound": "Product not found",
+    "home": "Home",
+    "noProductsFound": "No products found",
+    "shopProductAt": "Shop {name} at {siteName}",
+    "collectionNotFound": "Collection not found",
+    "browseCollectionAt": "Browse our {name} collection at {siteName}",
+    "productCount": "{count, plural, one {# product} other {# products}}",
+    "trustBadges": {
+      "fastShipping": "Fast shipping",
+      "freeReturns": "Free returns",
+      "secureCheckout": "Secure checkout",
+      "guarantee": "30-day guarantee"
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "shipping": {
+        "question": "What are your shipping options?",
+        "answer": "We offer standard shipping (5–7 business days), express shipping (2–3 business days), and next-day delivery for select areas. Free standard shipping is available on orders over $50."
+      },
+      "returns": {
+        "question": "What is your return policy?",
+        "answer": "We accept returns within 30 days of purchase. Items must be unused and in their original packaging. Contact our support team to start a return and receive a prepaid shipping label."
+      },
+      "tracking": {
+        "question": "How can I track my order?",
+        "answer": "Once your order ships, you'll receive an email with a tracking number. You can also track your order in your account."
+      },
+      "international": {
+        "question": "Do you offer international shipping?",
+        "answer": "Yes! We ship to over 50 countries worldwide. Shipping rates and delivery times vary by location and are shown at checkout."
+      }
+    }
+  },
+  "Cart": {
+    "title": "Cart",
+    "empty": "Your cart is empty",
+    "emptyMessage": "Add some items to get started",
+    "continueShopping": "Continue shopping",
+    "each": "each",
+    "orderSummary": "Order summary",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "calculatedAtCheckout": "Calculated at checkout",
+    "total": "Total",
+    "proceedToCheckout": "Proceed to checkout",
+    "secureCheckout": "Secure checkout",
+    "promotionCode": "Promo code",
+    "enterDiscountCode": "Enter your discount code",
+    "remove": "Remove",
+    "enterCode": "Enter code",
+    "apply": "Apply",
+    "sku": "SKU: {sku}"
+  },
+  "Checkout": {
+    "pageTitle": "Checkout",
+    "steps": {
+      "contact": "Contact",
+      "address": "Address",
+      "delivery": "Delivery",
+      "payment": "Payment",
+      "review": "Review"
+    },
+    "contactInformation": "Contact information",
+    "shippingAddress": "Shipping address",
+    "deliveryMethod": "Delivery method",
+    "paymentMethod": "Payment method",
+    "reviewAndPlaceOrder": "Review & place order",
+    "continue": "Continue",
+    "placeOrder": "Place order",
+    "completeAllSteps": "Please complete all steps before placing your order"
+  },
+  "OrderConfirmation": {
+    "pageTitle": "Order confirmation",
+    "orderConfirmed": "Order confirmed!",
+    "thankYou": "Thank you for your order. Your order number is {orderNumber}.",
+    "emailConfirmation": "You'll receive an email with your order details and tracking information.",
+    "orderSummary": "Order summary",
+    "qty": "Qty: {quantity}",
+    "total": "Total",
+    "shippingAddress": "Shipping address",
+    "continueShopping": "Continue shopping",
+    "viewOrders": "View orders"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "message": "The page you’re looking for doesn’t exist or has been moved.",
+    "goHome": "Go home",
+    "browseProducts": "Browse products"
+  },
+  "Common": {
+    "loading": "Loading...",
+    "sending": "Sending...",
+    "sku": "SKU",
+    "siteDescription": "Shop the best products at {siteName}. Quality products, competitive prices, and fast delivery."
+  }
+}{
+  "Navigation": {
     "openMenu": "Odpri meni",
     "menu": "Meni",
     "searchProducts": "Išči izdelke...",
