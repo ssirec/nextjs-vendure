@@ -1,7 +1,8 @@
-import { vendureLanguageMap } from './vendureLocale'
+import { GraphQLClient } from 'graphql-request'
+import { vendureLanguageMap, Locale } from './vendureLocale'
 
-export function createVendureClient(locale: string) {
-  const languageCode = vendureLanguageMap[locale as keyof typeof vendureLanguageMap] || 'en'
+export function createVendureClient(locale: Locale) {
+  const languageCode = vendureLanguageMap[locale] || 'en'
 
   return new GraphQLClient(process.env.NEXT_PUBLIC_VENDURE_API_URL!, {
     headers: {
