@@ -34,13 +34,13 @@ export default async function CheckoutPage() {
 
     const [orderRes, addressesRes, countries, shippingMethodsRes, paymentMethodsRes] =
         await Promise.all([
-            query(GetActiveOrderForCheckoutQuery, {}, {useAuthToken: true, currencyCode}),
+            query(GetActiveOrderForCheckoutQuery, {}, {useAuthToken: true, currencyCode, languageCode: locale}),
             isGuest
                 ? Promise.resolve({ data: { activeCustomer: null } })
-                : query(GetCustomerAddressesQuery, {}, {useAuthToken: true}),
+                : query(GetCustomerAddressesQuery, {}, {useAuthToken: true, languageCode: locale}),
             getAvailableCountriesCached(locale),
-            query(GetEligibleShippingMethodsQuery, {}, {useAuthToken: true, currencyCode}),
-            query(GetEligiblePaymentMethodsQuery, {}, {useAuthToken: true, currencyCode}),
+            query(GetEligibleShippingMethodsQuery, {}, {useAuthToken: true, currencyCode, languageCode: locale}),
+            query(GetEligiblePaymentMethodsQuery, {}, {useAuthToken: true, currencyCode, languageCode: locale}),
         ]);
 
     const activeOrder = orderRes.data.activeOrder;
