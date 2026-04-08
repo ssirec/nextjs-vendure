@@ -29,13 +29,15 @@ export async function generateMetadata({
 }
 
 export default async function SearchPage({searchParams}: PageProps<'/[locale]/search'>) {
+    const locale = await getRouteLocale();
+
     return (
         <div className="container mx-auto px-4 py-8 mt-16">
             <Suspense fallback={<SearchTermSkeleton/>}>
-                <SearchTerm searchParams={searchParams}/>
+                <SearchTerm searchParams={searchParams} locale={locale} />
             </Suspense>
             <Suspense fallback={<SearchResultsSkeleton />}>
-                <SearchResults searchParams={searchParams}/>
+                <SearchResults searchParams={searchParams} locale={locale} />
             </Suspense>
         </div>
     );
