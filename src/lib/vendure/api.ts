@@ -6,6 +6,7 @@ const VENDURE_API_URL = process.env.VENDURE_SHOP_API_URL || process.env.NEXT_PUB
 const VENDURE_CHANNEL_TOKEN = process.env.VENDURE_CHANNEL_TOKEN || process.env.NEXT_PUBLIC_VENDURE_CHANNEL_TOKEN || '__default_channel__';
 const VENDURE_AUTH_TOKEN_HEADER = process.env.VENDURE_AUTH_TOKEN_HEADER || 'vendure-auth-token';
 const VENDURE_CHANNEL_TOKEN_HEADER = process.env.VENDURE_CHANNEL_TOKEN_HEADER || 'vendure-token';
+const VENDURE_LOCALE_HEADER = process.env.VENDURE_LOCALE_HEADER || 'Accept-Language';
 
 if (!VENDURE_API_URL) {
     throw new Error('VENDURE_SHOP_API_URL or NEXT_PUBLIC_VENDURE_SHOP_API_URL environment variable is not set');
@@ -15,7 +16,7 @@ interface VendureRequestOptions {
     token?: string;
     useAuthToken?: boolean;
     channelToken?: string;
-    languageCode?: string;
+    languageCode?: string; // locale, e.g. "en" or "en-US"
     currencyCode?: string;
     fetch?: RequestInit;
     tags?: string[];
@@ -58,7 +59,7 @@ export async function query<TResult, TVariables>(
         ...(fetchOptions?.headers as Record<string, string>),
     };
 
-    // Use the explicitly provided token, or fetch from cookies if useAuthToken is true
+    // Prefer explicit token, fallback to cookie-based auth token
     let authToken = token;
     if (useAuthToken && !authToken) {
         authToken = await getAuthToken();
@@ -68,8 +69,13 @@ export async function query<TResult, TVariables>(
         headers['Authorization'] = `Bearer ${authToken}`;
     }
 
-    // Set the channel token header (use provided channelToken or default)
+    // Channel token header
     headers[VENDURE_CHANNEL_TOKEN_HEADER] = channelToken || VENDURE_CHANNEL_TOKEN;
+
+    // Locale header (Accept-Language or custom)
+    if (languageCode) {
+        headers[VENDURE_LOCALE_HEADER] = languageCode;
+    }
 
     const url = new URL(VENDURE_API_URL!);
     if (languageCode) {
@@ -121,7 +127,7 @@ export async function mutate<TResult, TVariables>(
         ? [variables?: TVariables, options?: VendureRequestOptions]
         : [variables: TVariables, options?: VendureRequestOptions]
 ): Promise<{ data: TResult; token?: string }> {
-    // Mutations use the same underlying implementation as queries in GraphQL
+    // Reuse query implementation for mutations
     // @ts-expect-error - Complex conditional type inference, runtime behavior is correct
     return query(document, variables, options);
 }
