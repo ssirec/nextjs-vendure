@@ -4,12 +4,12 @@ import { UpdateCustomerEmailAddressMutation } from '@/lib/vendure/mutations';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
-import {getRouteLocale} from '@/i18n/server';
-import {getTranslations} from 'next-intl/server';
+import { getRouteLocale } from '@/i18n/server';
+import { getTranslations } from 'next-intl/server';
 
-async function VerifyEmailContent({searchParams}: {searchParams: Promise<Record<string, string | string[] | undefined>>}) {
+async function VerifyEmailContent({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
     const locale = await getRouteLocale();
-    const t = await getTranslations({locale, namespace: 'Account'});
+    const t = await getTranslations({ locale, namespace: 'Account' });
     const resolvedParams = await searchParams;
     const tokenParam = resolvedParams.token;
     const token = Array.isArray(tokenParam) ? tokenParam[0] : tokenParam;
@@ -34,7 +34,7 @@ async function VerifyEmailContent({searchParams}: {searchParams: Promise<Record<
     }
 
     try {
-        const result = await mutate(UpdateCustomerEmailAddressMutation, { token: token! }, { useAuthToken: true });
+        const result = await mutate(UpdateCustomerEmailAddressMutation, { token }, { useAuthToken: true });
         const updateResult = result.data.updateCustomerEmailAddress;
 
         if (updateResult.__typename === 'Success') {
@@ -92,9 +92,9 @@ async function VerifyEmailContent({searchParams}: {searchParams: Promise<Record<
     }
 }
 
-export default async function VerifyEmailPage({searchParams}: PageProps<'/[locale]/account/verify-email'>) {
+export default async function VerifyEmailPage({ searchParams }: PageProps<'/[locale]/account/verify-email'>) {
     const locale = await getRouteLocale();
-    const t = await getTranslations({locale, namespace: 'Account'});
+    const t = await getTranslations({ locale, namespace: 'Account' });
 
     return (
         <div className="container mx-auto px-4 py-8 mt-16">
