@@ -1,14 +1,19 @@
-import { initGraphQLTada } from 'gql.tada';
-import type { introspection } from './graphql-env.d.ts';
+import { graphql } from './path-to-your-graphql-client'; // import z miejsca, gdzie inicjalizujesz graphql (plik z initGraphQLTada)
+import type { ResultOf, VariablesOf } from 'gql.tada';
 
-export const graphql = initGraphQLTada<{
-    introspection: introspection;
-    scalars: {
-        DateTime: string,
-        JSON: Record<string, unknown>,
-        Money: number
-    }
-}>();
+// opcjonalnie: wklej query jako string (jeśli używasz runtime string queries)
+export const ProductQuery = `query Product($slug: String!) {
+  product(slug: $slug) {
+    id
+    name
+    slug
+    description
+  }
+}`;
 
-export type { FragmentOf, ResultOf, VariablesOf } from 'gql.tada';
-export { readFragment } from 'gql.tada';
+export type ProductVariables = VariablesOf<typeof ProductQuery>; // { slug: string }
+export type ProductResult = ResultOf<typeof ProductQuery>;
+
+export async function fetchProduct(slug: string): Promise<ProductResult> {
+  return await graphql.request(ProductQuery, { slug });
+}
