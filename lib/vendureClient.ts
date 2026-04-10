@@ -1,6 +1,6 @@
 import { vendureLanguageMap, Locale } from './vendureLocale';
-import { query } from './vendure/api';
-import { GetActiveChannelQuery } from './vendure/queries';
+import { query } from '@/lib/vendure/api';
+import { GetActiveChannelQuery } from '@/lib/vendure/queries';
 
 export function createVendureClient(locale: Locale) {
   const languageCode = vendureLanguageMap[locale] || 'en';
