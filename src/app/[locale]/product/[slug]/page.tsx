@@ -63,7 +63,10 @@ if (!product) {
 }
 
 const description = truncateDescription(product.description);
-const fallbackDescription = t('shopProductAt', { name: product.name, siteName: SITE\_NAME });
+const fallbackDescription = t('shopProductAt', {
+  name: product.name,
+  siteName: SITE_NAME,
+});
 const ogImage = product.assets?.[0]?.preview;
 const ogLocale = toOgLocale(locale);
 const productPath = `/product/${product.slug}`;
