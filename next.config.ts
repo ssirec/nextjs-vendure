@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
     serverActions: {
       allowedOrigins: ["*"],
     },
+    cacheComponents: true,
+    rootParams: true,
   },
 };
 
