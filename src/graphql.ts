@@ -1,5 +1,5 @@
-import { graphql } from "gql.tada";
+import { graphql, readFragment, FragmentOf } from "gql.tada";
 import type { ResultOf, VariablesOf } from "gql.tada";
 
-// You can now use `graphql` normally in your components.
-export { graphql };
+export { graphql, readFragment, FragmentOf };
+export type { ResultOf, VariablesOf };
