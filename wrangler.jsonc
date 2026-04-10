@@ -1,8 +1,0 @@
-name = "nextjs-vendure"
-main = ".open-next/worker.js"
-compatibility_date = "2026-01-13"
-compatibility_flags = ["nodejs_compat"]
-
-[vars]
-VENDURE_SHOP_API_URL = "https://vendure-shop-20485845229.europe-west12.run.app"
-PORT = "3000"
