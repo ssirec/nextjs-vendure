@@ -1,13 +1,19 @@
-import { GraphQLClient } from 'graphql-request'
-import { vendureLanguageMap, Locale } from './vendureLocale'
+import { vendureLanguageMap, Locale } from './vendureLocale';
+import { query } from './vendure/api';
+import { GetActiveChannelQuery } from './vendure/queries';
 
 export function createVendureClient(locale: Locale) {
-  const languageCode = vendureLanguageMap[locale] || 'en'
+  const languageCode = vendureLanguageMap[locale] || 'en';
 
-  return new GraphQLClient(process.env.NEXT_PUBLIC_VENDURE_API_URL!, {
-    headers: {
-      'Content-Type': 'application/json',
-      'vendure-language-code': languageCode,
-    },
-  })
+  return {
+    async getActiveChannel() {
+      const result = await query(
+        GetActiveChannelQuery,
+        undefined,
+        { languageCode }
+      );
+
+      return result.data.activeChannel;
+    }
+  };
 }
