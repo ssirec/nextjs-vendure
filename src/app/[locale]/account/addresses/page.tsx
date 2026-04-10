@@ -5,37 +5,37 @@ import { GetCustomerAddressesQuery, GetAvailableCountriesQuery } from '@/lib/ven
 import { AddressesClient } from './addresses-client';
 import { getTranslations } from 'next-intl/server';
 
-export async function generateMetadata(): Promise {
-const locale = await getRouteLocale();
-const t = await getTranslations({ locale, namespace: 'Account' });
-return {
-title: t('addressesPageTitle'),
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getRouteLocale();
+  const t = await getTranslations({ locale, namespace: 'Account' });
+
+  return {
+    title: t('addressesPageTitle'),
+  };
 }
 
 export default async function AddressesPage() {
-const locale = await getRouteLocale();
-const t = await getTranslations({ locale, namespace: 'Account' });
+  const locale = await getRouteLocale();
+  const t = await getTranslations({ locale, namespace: 'Account' });
 
-const [addressesResult, countriesResult] = await Promise.all([
+  const [addressesResult, countriesResult] = await Promise.all([
     query(GetCustomerAddressesQuery, {}, { useAuthToken: true, languageCode: locale }),
     query(GetAvailableCountriesQuery, {}, { languageCode: locale }),
-]);
+  ]);
 
-const addresses = addressesResult.data.activeCustomer?.addresses || [];
-const countries = countriesResult.data.availableCountries || [];
+  const addresses = addressesResult.data.activeCustomer?.addresses || [];
+  const countries = countriesResult.data.availableCountries || [];
 
-return (
+  return (
     <div className="space-y-6">
-        <div>
-            <h1 className="text-3xl font-bold">{t('addresses')}</h1>
-            <p className="text-muted-foreground mt-2">
-                {t('manageAddresses')}
-            </p>
-        </div>
+      <div>
+        <h1 className="text-3xl font-bold">{t('addresses')}</h1>
+        <p className="text-muted-foreground mt-2">
+          {t('manageAddresses')}
+        </p>
+      </div>
 
-        <AddressesClient addresses={addresses} countries={countries} />
+      <AddressesClient addresses={addresses} countries={countries} />
     </div>
-);
-
+  );
 }
