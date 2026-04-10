@@ -1,59 +1,69 @@
 import { ProductCarousel } from "@/components/commerce/product-carousel";
 import { getRouteLocale } from "@/i18n/server";
 import { cacheLife, cacheTag } from "next/cache";
-import {getActiveCurrencyCode} from '@/lib/currency-server';
+import { getActiveCurrencyCode } from "@/lib/currency-server";
 import { query } from "@/lib/vendure/api";
 import { GetCollectionProductsQuery } from "@/lib/vendure/queries";
 import { readFragment } from "@/graphql";
 import { ProductCardFragment } from "@/lib/vendure/fragments";
-import {getTranslations} from 'next-intl/server';
+import { getTranslations } from "next-intl/server";
 
 interface RelatedProductsProps {
-    collectionSlug: string;
-    currentProductId: string;
+  collectionSlug: string;
+  currentProductId: string;
 }
 
-async function getRelatedProducts(collectionSlug: string, currentProductId: string, currencyCode: string) {
-    'use cache'
-    cacheLife('hours')
+async function getRelatedProducts(
+  collectionSlug: string,
+  currentProductId: string,
+  currencyCode: string
+) {
+  "use cache";
+  cacheLife("hours");
 
-    const locale = await getRouteLocale();
-    cacheTag(`related-products-${collectionSlug}-${locale}-${currencyCode}`);
-    cacheTag('products');
+  const locale = await getRouteLocale();
+  cacheTag(`related-products-${collectionSlug}-${locale}-${currencyCode}`);
+  cacheTag("products");
 
-    const result = await query(GetCollectionProductsQuery, {
-        slug: collectionSlug,
-        input: {
-            collectionSlug: collectionSlug,
-            take: 13, // Fetch extra to account for filtering out current product
-            skip: 0,
-            groupByProduct: true
-        }
-    }, {languageCode: locale, currencyCode});
+  const result = await query(
+    GetCollectionProductsQuery,
+    {
+      slug: collectionSlug,
+      input: {
+        collectionSlug,
+        take: 13,
+        skip: 0,
+        groupByProduct: true,
+      },
+    },
+    { languageCode: locale, currencyCode }
+  );
 
-    // Filter out the current product and limit to 12
-    return result.data.search.items
-        .filter(item => {
-            const product = readFragment(ProductCardFragment, item);
-            return product.productId !== currentProductId;
-        })
-        .slice(0, 12);
+  return result.data.search.items
+    .map((item) => readFragment(ProductCardFragment, item))
+    .filter((product) => product.productId !== currentProductId)
+    .slice(0, 12);
 }
 
-export async function RelatedProducts({ collectionSlug, currentProductId }: RelatedProductsProps) {
-    const locale = await getRouteLocale();
-    const currencyCode = await getActiveCurrencyCode();
-    const t = await getTranslations({locale, namespace: 'Product'});
-    const products = await getRelatedProducts(collectionSlug, currentProductId, currencyCode);
+export async function RelatedProducts({
+  collectionSlug,
+  currentProductId,
+}: RelatedProductsProps) {
+  const locale = await getRouteLocale();
+  const currencyCode = await getActiveCurrencyCode();
+  const t = await getTranslations({ locale, namespace: "Product" });
 
-    if (products.length === 0) {
-        return null;
-    }
+  const products = await getRelatedProducts(
+    collectionSlug,
+    currentProductId,
+    currencyCode
+  );
 
-    return (
-        <ProductCarousel
-            title={t('relatedProducts')}
-            products={products}
-        />
-    );
+  if (products.length === 0) {
+    return null;
+  }
+
+  return (
+    <ProductCarousel title={t("relatedProducts")} products={products} />
+  );
 }
