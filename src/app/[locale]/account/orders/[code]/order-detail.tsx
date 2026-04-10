@@ -39,14 +39,14 @@ export function OrderDetail({orderPromise}: OrderDetailProps) {
         <div>
             <div className="mb-6">
                 <Button render={<Link href="/account/orders" />} nativeButton={false} variant="ghost" size="sm" className="mb-4">
-                        <ChevronLeft className="h-4 w-4 mr-2"/>
-                        {t('backToOrders')}
+                    <ChevronLeft className="h-4 w-4 mr-2"/>
+                    {t('backToOrders')}
                 </Button>
                 <div className="flex items-center justify-between">
                     <div>
                         <h1 className="text-3xl font-bold">{t('order', {code: order.code})}</h1>
                         <p className="text-muted-foreground mt-1">
-                            {t('placedOn', {date: formatDate(order.createdAt, 'long', locale)})}
+                            {t('placedOn', {date: formatDate(order.createdAt as string, 'long', locale)})}
                         </p>
                     </div>
                     <OrderStatusBadge state={order.state}/>
