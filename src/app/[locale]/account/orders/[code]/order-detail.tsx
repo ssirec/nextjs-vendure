@@ -89,10 +89,11 @@ export function OrderDetail({orderPromise}: OrderDetailProps) {
                                         </div>
                                         <div className="text-right">
                                             <p className="font-medium">
-                                                <Price value={line.linePriceWithTax} currencyCode={order.currencyCode}/>
+                                                <Price value={line.linePriceWithTax as number} currencyCode={order.currencyCode}/>
                                             </p>
                                             <p className="text-sm text-muted-foreground">
-                                                {t('qty', {quantity: line.quantity})} × <Price value={line.unitPriceWithTax} currencyCode={order.currencyCode}/>
+                                                {t('qty', {quantity: line.quantity})} × 
+                                                <Price value={line.unitPriceWithTax as number} currencyCode={order.currencyCode}/>
                                             </p>
                                         </div>
                                     </div>
@@ -109,24 +110,24 @@ export function OrderDetail({orderPromise}: OrderDetailProps) {
                             <div className="space-y-2">
                                 <div className="flex justify-between text-sm">
                                     <span className="text-muted-foreground">{t('subtotal')}</span>
-                                    <span><Price value={order.subTotalWithTax} currencyCode={order.currencyCode}/></span>
+                                    <span><Price value={order.subTotalWithTax as number} currencyCode={order.currencyCode}/></span>
                                 </div>
                                 <div className="flex justify-between text-sm">
                                     <span className="text-muted-foreground">{t('shipping')}</span>
-                                    <span><Price value={order.shippingWithTax} currencyCode={order.currencyCode}/></span>
+                                    <span><Price value={order.shippingWithTax as number} currencyCode={order.currencyCode}/></span>
                                 </div>
                                 {order.discounts?.length > 0 && order.discounts.map((discount: OrderDiscount, idx: number) => (
                                     <div key={idx} className="flex justify-between text-sm">
                                         <span className="text-muted-foreground">{discount.description}</span>
                                         <span className="text-green-600">
-                                            -<Price value={discount.amountWithTax} currencyCode={order.currencyCode}/>
+                                            -<Price value={discount.amountWithTax as number} currencyCode={order.currencyCode}/>
                                         </span>
                                     </div>
                                 ))}
                                 <Separator className="my-2"/>
                                 <div className="flex justify-between font-bold text-lg">
                                     <span>{t('total')}</span>
-                                    <span><Price value={order.totalWithTax} currencyCode={order.currencyCode}/></span>
+                                    <span><Price value={order.totalWithTax as number} currencyCode={order.currencyCode}/></span>
                                 </div>
                             </div>
                         </CardContent>
@@ -176,7 +177,7 @@ export function OrderDetail({orderPromise}: OrderDetailProps) {
                                         </div>
                                         <div className="flex justify-between">
                                             <span className="text-muted-foreground">{t('amount')}</span>
-                                            <span><Price value={payment.amount} currencyCode={order.currencyCode}/></span>
+                                            <span><Price value={payment.amount as number} currencyCode={order.currencyCode}/></span>
                                         </div>
                                         <div className="flex justify-between">
                                             <span className="text-muted-foreground">{t('paymentStatus')}</span>
@@ -205,7 +206,7 @@ export function OrderDetail({orderPromise}: OrderDetailProps) {
                                             <p className="text-muted-foreground">{line.shippingMethod.description}</p>
                                         )}
                                         <p className="font-medium">
-                                            <Price value={line.priceWithTax} currencyCode={order.currencyCode}/>
+                                            <Price value={line.priceWithTax as number} currencyCode={order.currencyCode}/>
                                         </p>
                                     </div>
                                 ))}
