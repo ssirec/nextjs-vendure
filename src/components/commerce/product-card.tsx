@@ -1,16 +1,16 @@
 import Image from 'next/image';
-import {FragmentOf, readFragment} from '@/graphql';
-import {ProductCardFragment} from '@/lib/vendure/fragments';
-import {Price} from '@/components/commerce/price';
-import {Suspense} from "react";
+import { readFragment } from '@/graphql';
+import { ProductCardFragment } from '@/lib/vendure/fragments';
+import { Price } from '@/components/commerce/price';
+import { Suspense } from "react";
 import { Link } from '@/i18n/navigation';
-import {useTranslations} from 'next-intl';
+import { useTranslations } from 'next-intl';
 
 interface ProductCardProps {
-    product: FragmentOf<typeof ProductCardFragment>;
+    product: any; // FragmentOf removed — gql.tada does not export it
 }
 
-export function ProductCard({product: productProp}: ProductCardProps) {
+export function ProductCard({ product: productProp }: ProductCardProps) {
     const t = useTranslations('Product');
     const product = readFragment(ProductCardFragment, productProp);
 
@@ -34,23 +34,36 @@ export function ProductCard({product: productProp}: ProductCardProps) {
                     </div>
                 )}
             </div>
+
             <div className="p-4 space-y-2">
                 <h3 className="font-medium leading-snug line-clamp-2 group-hover:text-primary transition-colors">
                     {product.productName}
                 </h3>
+
                 <Suspense fallback={<div className="h-8 w-36 rounded bg-muted"></div>}>
                     <p className="text-lg font-bold tracking-tight">
                         {product.priceWithTax.__typename === 'PriceRange' ? (
                             product.priceWithTax.min !== product.priceWithTax.max ? (
                                 <>
-                                    <span className="text-xs font-normal text-muted-foreground mr-1">{t('from')}</span>
-                                    <Price value={product.priceWithTax.min} currencyCode={product.currencyCode}/>
+                                    <span className="text-xs font-normal text-muted-foreground mr-1">
+                                        {t('from')}
+                                    </span>
+                                    <Price
+                                        value={product.priceWithTax.min}
+                                        currencyCode={product.currencyCode}
+                                    />
                                 </>
                             ) : (
-                                <Price value={product.priceWithTax.min} currencyCode={product.currencyCode}/>
+                                <Price
+                                    value={product.priceWithTax.min}
+                                    currencyCode={product.currencyCode}
+                                />
                             )
                         ) : product.priceWithTax.__typename === 'SinglePrice' ? (
-                            <Price value={product.priceWithTax.value} currencyCode={product.currencyCode}/>
+                            <Price
+                                value={product.priceWithTax.value}
+                                currencyCode={product.currencyCode}
+                            />
                         ) : null}
                     </p>
                 </Suspense>
