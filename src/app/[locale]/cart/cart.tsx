@@ -22,7 +22,7 @@ type LineItemShape = {
     product: {
       name: string;
       slug: string;
-      featuredAsset?: { preview?: string } | null;
+      featuredAsset?: { preview: string } | null;
     };
   };
 };
@@ -59,7 +59,7 @@ export function Cart({ activeOrder }: CartProps) {
     );
   }
 
-  // Normalize numeric fields and ensure currencyCode is a string (fallback to 'USD' or choose appropriate default)
+  // Normalize numeric fields and ensure currencyCode and featuredAsset.preview are proper strings
   const normalizedOrder: ActiveOrderShape = {
     id: String(raw.id ?? ''),
     code: raw.code,
