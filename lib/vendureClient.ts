@@ -7,13 +7,8 @@ export function createVendureClient(locale: Locale) {
 
   return {
     async getActiveChannel() {
-      const result = await query(
-        GetActiveChannelQuery,
-        undefined,
-        { languageCode }
-      );
-
+      const result = await query(GetActiveChannelQuery, undefined, { languageCode });
       return result.data.activeChannel;
-    }
+    },
   };
 }
