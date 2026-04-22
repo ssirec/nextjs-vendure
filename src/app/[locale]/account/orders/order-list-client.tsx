@@ -9,7 +9,8 @@ import type { ResultOf } from '@/graphql';
 import type { GetCustomerOrdersQuery } from '@/lib/vendure/queries';
 
 type ActiveCustomer = NonNullable<ResultOf<typeof GetCustomerOrdersQuery>['activeCustomer']>;
-type OrderItem = ActiveCustomer['orders'][number];
+type OrdersConnection = NonNullable<ActiveCustomer['orders']>;
+type OrderItem = OrdersConnection['items'][number];
 
 interface OrderListClientProps {
   orders: OrderItem[];
