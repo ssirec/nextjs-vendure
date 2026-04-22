@@ -3,7 +3,6 @@
 import React from 'react';
 import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
-import { Button } from '@/components/ui/button';
 import { Minus, Plus, X } from 'lucide-react';
 import { Price } from '@/components/commerce/price';
 import { useTranslations } from 'next-intl';
@@ -45,9 +44,12 @@ export function CartItems({ activeOrder }: CartItemsProps) {
         <div className="text-center">
           <h1 className="text-3xl font-bold mb-4">{t('empty')}</h1>
           <p className="text-muted-foreground mb-8">{t('emptyMessage')}</p>
-          <Button asChild>
-            <Link href="/">{t('continueShopping')}</Link>
-          </Button>
+          <Link
+            href="/"
+            className="inline-flex items-center px-4 py-2 rounded-md bg-primary text-white hover:opacity-95"
+          >
+            {t('continueShopping')}
+          </Link>
         </div>
       </div>
     );
@@ -101,40 +103,37 @@ export function CartItems({ activeOrder }: CartItemsProps) {
             <div className="flex items-center gap-3 mt-4">
               <div className="flex items-center gap-1 border rounded-full bg-muted/50">
                 <form action={() => adjustQuantity(line.id, Math.max(1, line.quantity - 1))}>
-                  <Button
+                  <button
                     type="submit"
-                    variant="ghost"
-                    size="icon"
-                    className="h-9 w-9 rounded-full transition-all duration-200 hover:bg-background"
+                    className="h-9 w-9 rounded-full flex items-center justify-center transition-all duration-200 hover:bg-background"
+                    aria-label="Decrease quantity"
                     disabled={line.quantity <= 1}
                   >
                     <Minus className="h-4 w-4" />
-                  </Button>
+                  </button>
                 </form>
 
                 <span className="w-10 text-center font-semibold tabular-nums transition-all duration-200">{line.quantity}</span>
 
                 <form action={() => adjustQuantity(line.id, line.quantity + 1)}>
-                  <Button
+                  <button
                     type="submit"
-                    variant="ghost"
-                    size="icon"
-                    className="h-9 w-9 rounded-full transition-all duration-200 hover:bg-background"
+                    className="h-9 w-9 rounded-full flex items-center justify-center transition-all duration-200 hover:bg-background"
+                    aria-label="Increase quantity"
                   >
                     <Plus className="h-4 w-4" />
-                  </Button>
+                  </button>
                 </form>
               </div>
 
               <form action={() => removeFromCartAction(line.id)}>
-                <Button
+                <button
                   type="submit"
-                  variant="ghost"
-                  size="icon"
-                  className="h-9 w-9 rounded-full text-destructive hover:text-destructive hover:bg-destructive/10 transition-colors duration-200"
+                  className="h-9 w-9 rounded-full flex items-center justify-center text-destructive hover:text-destructive hover:bg-destructive/10 transition-colors duration-200"
+                  aria-label="Remove item"
                 >
                   <X className="h-5 w-5" />
-                </Button>
+                </button>
               </form>
 
               <div className="sm:hidden ml-auto">
