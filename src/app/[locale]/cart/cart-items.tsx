@@ -1,3 +1,96 @@
+'use client';
+
+import React from 'react';
+import Image from 'next/image';
+import { Price } from '@/components/commerce/price';
+import { Link } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
+import { adjustQuantity, removeFromCart } from './actions';
+import type { ActiveOrderShape } from './types'; // optional: if you created a shared types file
+
+interface CartItemsProps {
+  activeOrder: any; // kept loose because codegen produces fragment refs; we normalize below
+}
+
+export function CartItems({ activeOrder }: CartItemsProps) {
+  const t = useTranslations('Cart');
+
+  if (!activeOrder || !activeOrder.lines || activeOrder.lines.length === 0) {
+    return <div className="text-sm text-muted-foreground">{t('emptyCart')}</div>;
+  }
+
+  // Normalize numeric fields that may be typed as unknown by codegen
+  const normalized = {
+    ...activeOrder,
+    lines: (activeOrder.lines || []).map((l: any) => ({
+      ...l,
+      unitPriceWithTax: Number(l.unitPriceWithTax ?? 0),
+      linePriceWithTax: Number(l.linePriceWithTax ?? 0),
+      quantity: Number(l.quantity ?? 0),
+    })),
+  };
+
+  return (
+    <div className="space-y-4">
+      {normalized.lines.map((line: any) => (
+        <div key={line.id} className="flex items-center gap-4 p-4 border rounded-md">
+          <div className="relative h-20 w-20 rounded-md overflow-hidden bg-gray-100 flex-shrink-0">
+            {line.productVariant?.product?.featuredAsset?.preview && (
+              <Image
+                src={line.productVariant.product.featuredAsset.preview}
+                alt={line.productVariant.name || ''}
+                fill
+                className="object-cover"
+              />
+            )}
+          </div>
+
+          <div className="flex-1">
+            <Link href={`/product/${line.productVariant.product.slug}`} className="font-medium hover:underline">
+              {line.productVariant.product.name}
+            </Link>
+            <p className="text-sm text-muted-foreground">{line.productVariant.name}</p>
+            <p className="text-sm text-muted-foreground">{t('skuLabel', { sku: line.productVariant.sku })}</p>
+          </div>
+
+          <div className="text-right space-y-2">
+            <div className="font-medium">
+              <Price value={line.linePriceWithTax as number} currencyCode={normalized.currencyCode} />
+            </div>
+
+            {/* Quantity update form using exported server action */}
+            <form
+              action={() => adjustQuantity(line.id, Math.max(1, line.quantity - 1))}
+              className="inline"
+            >
+              <button type="submit" className="px-2 py-1 border rounded-md mr-2">-</button>
+            </form>
+
+            <span className="inline-block px-2">{line.quantity}</span>
+
+            <form
+              action={() => adjustQuantity(line.id, line.quantity + 1)}
+              className="inline"
+            >
+              <button type="submit" className="px-2 py-1 border rounded-md ml-2">+</button>
+            </form>
+
+            {/* Remove line form using exported server action */}
+            <form
+              action={() => removeFromCart(line.id)}
+            >
+              <button type="submit" className="text-sm text-red-600 mt-2">Remove</button>
+            </form>
+
+            <div className="text-sm text-muted-foreground">
+              <Price value={line.unitPriceWithTax as number} currencyCode={normalized.currencyCode} /> {t('each')}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
 import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
 import {Button} from '@/components/ui/button';
