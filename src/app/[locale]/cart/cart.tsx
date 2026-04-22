@@ -7,9 +7,8 @@ import type { ResultOf } from '@/graphql';
 import type { GetActiveOrderQuery } from '@/lib/vendure/queries';
 
 /**
- * Narrowed runtime shape used by the UI components.
- * The GraphQL codegen in this repo produces fragment-ref / unknown numeric fields,
- * so we cast and normalize numeric fields to satisfy TypeScript.
+ * Lokalni tipi, ki jih uporablja UI (poenostavljena/narrowed shape).
+ * Namen: normalizirati polja, ki jih codegen tipizira kot unknown/optional.
  */
 type LineItemShape = {
   id: string;
@@ -36,7 +35,7 @@ type ActiveOrderShape = {
   subTotalWithTax?: number;
   shippingWithTax?: number;
   totalWithTax?: number;
-  currencyCode?: string;
+  currencyCode: string; // vedno string po normalizaciji
   couponCodes?: string[];
   discounts?: { description?: string; amountWithTax?: number }[] | null;
   lines: LineItemShape[];
@@ -50,7 +49,7 @@ interface CartProps {
 
 export function Cart({ activeOrder }: CartProps) {
   // Cast the generated/fragment-ref type into our plain shape.
-  const raw = (activeOrder as unknown) as ActiveOrderShape | null;
+  const raw = (activeOrder as unknown) as Partial<ActiveOrderShape> | null;
 
   if (!raw) {
     return (
@@ -60,17 +59,35 @@ export function Cart({ activeOrder }: CartProps) {
     );
   }
 
-  // Normalize numeric fields that may be typed as unknown by codegen
+  // Normalize numeric fields and ensure currencyCode is a string (fallback to 'USD' or choose appropriate default)
   const normalizedOrder: ActiveOrderShape = {
-    ...raw,
-    subTotalWithTax: Number(raw.subTotalWithTax ?? 0),
-    shippingWithTax: Number(raw.shippingWithTax ?? 0),
-    totalWithTax: Number(raw.totalWithTax ?? 0),
-    lines: (raw.lines || []).map((l) => ({
-      ...l,
+    id: String(raw.id ?? ''),
+    code: raw.code,
+    state: raw.state,
+    totalQuantity: Number((raw as any).totalQuantity ?? 0),
+    subTotalWithTax: Number((raw as any).subTotalWithTax ?? 0),
+    shippingWithTax: Number((raw as any).shippingWithTax ?? 0),
+    totalWithTax: Number((raw as any).totalWithTax ?? 0),
+    currencyCode: String(raw.currencyCode ?? 'USD'),
+    couponCodes: (raw as any).couponCodes ?? [],
+    discounts: (raw as any).discounts ?? null,
+    lines: ((raw as any).lines ?? []).map((l: any) => ({
+      id: String(l.id),
       quantity: Number(l.quantity ?? 0),
-      unitPriceWithTax: Number((l as any).unitPriceWithTax ?? 0),
-      linePriceWithTax: Number((l as any).linePriceWithTax ?? 0),
+      unitPriceWithTax: Number(l.unitPriceWithTax ?? 0),
+      linePriceWithTax: Number(l.linePriceWithTax ?? 0),
+      productVariant: {
+        id: String(l.productVariant?.id ?? ''),
+        name: String(l.productVariant?.name ?? ''),
+        sku: String(l.productVariant?.sku ?? ''),
+        product: {
+          name: String(l.productVariant?.product?.name ?? ''),
+          slug: String(l.productVariant?.product?.slug ?? ''),
+          featuredAsset: l.productVariant?.product?.featuredAsset
+            ? { preview: String(l.productVariant.product.featuredAsset.preview ?? '') }
+            : null,
+        },
+      },
     })),
   };
 
