@@ -7,13 +7,10 @@ import type { ResultOf } from '@/graphql';
 import type { GetActiveOrderQuery } from '@/lib/vendure/queries';
 
 /**
- * The GraphQL codegen in this project produces fragment-ref / unknown numeric fields.
- * To satisfy TypeScript for the UI components, we narrow the incoming shape to a plain
- * object with numeric price fields. This keeps runtime behavior unchanged while fixing
- * the type errors during build.
+ * Narrowed runtime shape used by the UI components.
+ * The GraphQL codegen in this repo produces fragment-ref / unknown numeric fields,
+ * so we cast and normalize numeric fields to satisfy TypeScript.
  */
-
-/* Minimal shape used by CartItems / OrderSummary */
 type LineItemShape = {
   id: string;
   quantity: number;
@@ -53,10 +50,9 @@ interface CartProps {
 
 export function Cart({ activeOrder }: CartProps) {
   // Cast the generated/fragment-ref type into our plain shape.
-  // We defensively convert numeric fields that may be typed as `unknown`.
-  const order = (activeOrder as unknown) as ActiveOrderShape | null;
+  const raw = (activeOrder as unknown) as ActiveOrderShape | null;
 
-  if (!order) {
+  if (!raw) {
     return (
       <div className="text-sm text-muted-foreground">
         Your cart is empty.
@@ -64,14 +60,15 @@ export function Cart({ activeOrder }: CartProps) {
     );
   }
 
-  // Ensure numeric fields are numbers at runtime (fallback to 0)
+  // Normalize numeric fields that may be typed as unknown by codegen
   const normalizedOrder: ActiveOrderShape = {
-    ...order,
-    subTotalWithTax: Number(order.subTotalWithTax ?? 0),
-    shippingWithTax: Number(order.shippingWithTax ?? 0),
-    totalWithTax: Number(order.totalWithTax ?? 0),
-    lines: (order.lines || []).map((l) => ({
+    ...raw,
+    subTotalWithTax: Number(raw.subTotalWithTax ?? 0),
+    shippingWithTax: Number(raw.shippingWithTax ?? 0),
+    totalWithTax: Number(raw.totalWithTax ?? 0),
+    lines: (raw.lines || []).map((l) => ({
       ...l,
+      quantity: Number(l.quantity ?? 0),
       unitPriceWithTax: Number((l as any).unitPriceWithTax ?? 0),
       linePriceWithTax: Number((l as any).linePriceWithTax ?? 0),
     })),
