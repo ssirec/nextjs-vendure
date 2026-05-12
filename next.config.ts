@@ -1,7 +1,5 @@
 import type { NextConfig } from "next";
-import createNextIntlPlugin from "next-intl/plugin";
-
-const withNextIntl = createNextIntlPlugin();
+import path from "path";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -17,7 +15,12 @@ const nextConfig: NextConfig = {
       allowedOrigins: ["*"],
     },
     rootParams: true,
+    turbo: {
+      resolveAlias: {
+        "next-intl/config": path.resolve("./src/i18n/request.ts"),
+      },
+    },
   },
 };
 
-export default withNextIntl(nextConfig);
+export default nextConfig;
