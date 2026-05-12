@@ -31,11 +31,11 @@ type ActiveOrderShape = {
   id: string;
   code?: string;
   state?: string;
-  totalQuantity?: number;
-  subTotalWithTax?: number;
-  shippingWithTax?: number;
-  totalWithTax?: number;
-  currencyCode: string; // vedno string po normalizaciji
+  totalQuantity: number;
+  subTotalWithTax: number;
+  shippingWithTax: number;
+  totalWithTax: number;
+  currencyCode: string;
   couponCodes?: string[];
   discounts?: { description?: string; amountWithTax?: number }[] | null;
   lines: LineItemShape[];
@@ -48,7 +48,6 @@ interface CartProps {
 }
 
 export function Cart({ activeOrder }: CartProps) {
-  // Cast the generated/fragment-ref type into our plain shape.
   const raw = (activeOrder as unknown) as Partial<ActiveOrderShape> | null;
 
   if (!raw) {
@@ -59,7 +58,6 @@ export function Cart({ activeOrder }: CartProps) {
     );
   }
 
-  // Normalize numeric fields and ensure currencyCode and featuredAsset.preview are proper strings
   const normalizedOrder: ActiveOrderShape = {
     id: String(raw.id ?? ''),
     code: raw.code,
