@@ -37,7 +37,7 @@ type ActiveOrderShape = {
   totalWithTax: number;
   currencyCode: string;
   couponCodes?: string[];
-  discounts?: { description?: string; amountWithTax?: number }[] | null;
+  discounts?: { description: string; amountWithTax: number }[] | null;
   lines: LineItemShape[];
 };
 
@@ -68,7 +68,10 @@ export function Cart({ activeOrder }: CartProps) {
     totalWithTax: Number((raw as any).totalWithTax ?? 0),
     currencyCode: String(raw.currencyCode ?? 'USD'),
     couponCodes: (raw as any).couponCodes ?? [],
-    discounts: (raw as any).discounts ?? null,
+    discounts: ((raw as any).discounts ?? []).map((d: any) => ({
+      description: String(d.description ?? ''),
+      amountWithTax: Number(d.amountWithTax ?? 0),
+    })),
     lines: ((raw as any).lines ?? []).map((l: any) => ({
       id: String(l.id),
       quantity: Number(l.quantity ?? 0),
