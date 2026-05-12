@@ -5,13 +5,10 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-
   cacheComponents: true,
-
   typescript: {
     ignoreBuildErrors: true,
   },
-
   experimental: {
     serverActions: {
       allowedOrigins: ["*"],
