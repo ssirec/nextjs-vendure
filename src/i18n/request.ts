@@ -1,12 +1,24 @@
-import {hasLocale} from 'next-intl';
-import {getRequestConfig} from 'next-intl/server';
-import {routing} from './routing';
+import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
 
-export default getRequestConfig(async ({requestLocale}) => {
-    const requested = (await requestLocale) as string;
-    const locale = hasLocale(routing.locales, requested) ? requested : routing.defaultLocale;
-    return {
-        locale,
-        messages: (await import(`../../messages/${locale}.json`)).default,
-    };
-});
+const withNextIntl = createNextIntlPlugin();
+
+const nextConfig: NextConfig = {
+  reactStrictMode: true,
+
+  // moved out of experimental
+  cacheComponents: true,
+
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+
+  experimental: {
+    serverActions: {
+      allowedOrigins: ["*"],
+    },
+    rootParams: true,
+  },
+};
+
+export default withNextIntl(nextConfig);
