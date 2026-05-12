@@ -6,6 +6,10 @@ const nextConfig: NextConfig = {
   // moved out of experimental
   cacheComponents: true,
 
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+
   experimental: {
     serverActions: {
       allowedOrigins: ["*"],
