@@ -6,7 +6,6 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig: NextConfig = {
   reactStrictMode: true,
 
-  // moved out of experimental
   cacheComponents: true,
 
   typescript: {
