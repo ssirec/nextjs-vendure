@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import path from "path";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -15,10 +16,11 @@ const nextConfig: NextConfig = {
     rootParams: true,
   },
 
-  turbopack: {
-    resolveAlias: {
-      "next-intl/config": "./src/i18n/request.ts",
-    },
+  webpack: (config) => {
+    config.resolve.alias["next-intl/config"] = path.resolve(
+      "./src/i18n/request.ts"
+    );
+    return config;
   },
 };
 
