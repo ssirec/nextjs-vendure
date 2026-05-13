@@ -1,5 +1,4 @@
 import type { NextConfig } from "next";
-import path from "path";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -18,7 +17,7 @@ const nextConfig: NextConfig = {
 
   turbopack: {
     resolveAlias: {
-      "next-intl/config": path.resolve("./src/i18n/request.ts"),
+      "next-intl/config": "./src/i18n/request.ts",
     },
   },
 };
