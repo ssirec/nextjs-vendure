@@ -16,11 +16,10 @@ const nextConfig: NextConfig = {
     rootParams: true,
   },
 
-  webpack: (config) => {
-    config.resolve.alias["next-intl/config"] = path.resolve(
-      "./src/i18n/request.ts"
-    );
-    return config;
+  turbopack: {
+    resolveAlias: {
+      "next-intl/config": path.resolve("./src/i18n/request.ts"),
+    },
   },
 };
 
