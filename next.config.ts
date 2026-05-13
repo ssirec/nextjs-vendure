@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
       allowedOrigins: ["*"],
     },
     rootParams: true,
+    serverExternalPackages: ["@swc/core"],
   },
 
   webpack: (config) => {
