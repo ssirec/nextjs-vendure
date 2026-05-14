@@ -46,7 +46,7 @@ function OrderSummaryContent({ order, t }: { order: ReturnType<typeof useCheckou
               </p>
             </div>
             <div className="text-sm font-medium">
-              <Price value={line.linePriceWithTax} currencyCode={order.currencyCode} />
+              <Price value={Number(line.linePriceWithTax)} currencyCode={order.currencyCode} />
             </div>
           </div>
         ))}
@@ -58,7 +58,7 @@ function OrderSummaryContent({ order, t }: { order: ReturnType<typeof useCheckou
         <div className="flex justify-between text-sm">
           <span className="text-muted-foreground">{t('subtotal')}</span>
           <span>
-            <Price value={order.subTotalWithTax} currencyCode={order.currencyCode} />
+            <Price value={Number(order.subTotalWithTax)} currencyCode={order.currencyCode} />
           </span>
         </div>
 
@@ -68,7 +68,7 @@ function OrderSummaryContent({ order, t }: { order: ReturnType<typeof useCheckou
               <div key={index} className="flex justify-between text-sm text-green-600">
                 <span>{discount.description}</span>
                 <span>
-                  <Price value={discount.amountWithTax} currencyCode={order.currencyCode} />
+                  <Price value={Number(discount.amountWithTax)} currencyCode={order.currencyCode} />
                 </span>
               </div>
             ))}
@@ -78,8 +78,8 @@ function OrderSummaryContent({ order, t }: { order: ReturnType<typeof useCheckou
         <div className="flex justify-between text-sm">
           <span className="text-muted-foreground">{t('shipping')}</span>
           <span>
-            {order.shippingWithTax > 0
-              ? <Price value={order.shippingWithTax} currencyCode={order.currencyCode} />
+            {Number(order.shippingWithTax) > 0
+              ? <Price value={Number(order.shippingWithTax)} currencyCode={order.currencyCode} />
               : t('toBeCalculated')}
           </span>
         </div>
@@ -90,7 +90,7 @@ function OrderSummaryContent({ order, t }: { order: ReturnType<typeof useCheckou
       <div className="flex justify-between font-bold text-lg">
         <span>{t('total')}</span>
         <span>
-          <Price value={order.totalWithTax} currencyCode={order.currencyCode} />
+          <Price value={Number(order.totalWithTax)} currencyCode={order.currencyCode} />
         </span>
       </div>
     </div>
@@ -117,7 +117,7 @@ export default function OrderSummary() {
                   </CardTitle>
                   <div className="flex items-center gap-2">
                     <span className="font-bold text-lg">
-                      <Price value={order.totalWithTax} currencyCode={order.currencyCode} />
+                      <Price value={Number(order.totalWithTax)} currencyCode={order.currencyCode} />
                     </span>
                     <ChevronDown className={`h-5 w-5 text-muted-foreground transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
                   </div>
