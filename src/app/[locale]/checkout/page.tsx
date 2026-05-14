@@ -1,4 +1,4 @@
-import type {Metadata} from 'next';
+¸import type {Metadata} from 'next';
 import {getActiveCurrencyCode} from '@/lib/currency-server';
 import {getRouteLocale} from '@/i18n/server';
 import {getTranslations} from 'next-intl/server';
@@ -54,7 +54,10 @@ export default async function CheckoutPage() {
     }
 
     const addresses = addressesRes.data.activeCustomer?.addresses || [];
-    const shippingMethods = shippingMethodsRes.data.eligibleShippingMethods || [];
+    const shippingMethods = (shippingMethodsRes.data.eligibleShippingMethods || []).map((m: any) => ({
+        ...m,
+        priceWithTax: Number(m.priceWithTax ?? 0),
+    }));
     const paymentMethods =
         paymentMethodsRes.data.eligiblePaymentMethods?.filter((m) => m.isEligible) || [];
 
