@@ -44,6 +44,7 @@ type ActiveOrderShape = {
 type ActiveOrderRaw = NonNullable<ResultOf<typeof GetActiveOrderQuery>['activeOrder']> | null;
 
 interface CartProps {
+  locale: string;
   activeOrder: ActiveOrderRaw;
 }
 
