@@ -1,28 +1,13 @@
 import type { NextConfig } from "next";
-import path from "path";
 
 const nextConfig: NextConfig = {
-  reactStrictMode: true,
-  cacheComponents: true,
-
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-
-  experimental: {
-    serverActions: {
-      allowedOrigins: ["*"],
-    },
-    rootParams: true,
-    serverExternalPackages: ["@swc/core"],
-  },
-
-  webpack: (config) => {
-    config.resolve.alias["next-intl/config"] = path.resolve(
-      "./src/i18n/request.ts"
-    );
-    return config;
-  },
+  // Top-level in Next.js 16+ (NOT under experimental)
+  serverExternalPackages: [
+    "@swc/core",
+    "@swc/core-linux-x64-gnu",
+    "@swc/core-linux-x64-musl",
+    "@swc/wasm",
+  ],
 };
 
 export default nextConfig;
