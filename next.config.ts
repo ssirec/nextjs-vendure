@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
     "@swc/core-linux-x64-musl",
     "@swc/wasm",
   ],
+  experimental: {
+    cacheComponents: true,
+  },
 };
 
 export default nextConfig;
