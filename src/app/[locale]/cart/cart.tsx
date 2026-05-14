@@ -63,4 +63,38 @@ export function Cart({ activeOrder }: CartProps) {
     subTotalWithTax: Number((raw as any).subTotalWithTax ?? 0),
     shippingWithTax: Number((raw as any).shippingWithTax ?? 0),
     totalWithTax: Number((raw as any).totalWithTax ?? 0),
-    currencyCode: S
+    currencyCode: String(raw.currencyCode ?? 'USD'),
+    couponCodes: (raw as any).couponCodes ?? [],
+    discounts: ((raw as any).discounts ?? []).map((d: any) => ({
+      description: String(d.description ?? ''),
+      amountWithTax: Number(d.amountWithTax ?? 0),
+    })),
+    lines: ((raw as any).lines ?? []).map((l: any) => ({
+      id: String(l.id),
+      quantity: Number(l.quantity ?? 0),
+      unitPriceWithTax: Number(l.unitPriceWithTax ?? 0),
+      linePriceWithTax: Number(l.linePriceWithTax ?? 0),
+      productVariant: {
+        id: String(l.productVariant?.id ?? ''),
+        name: String(l.productVariant?.name ?? ''),
+        sku: String(l.productVariant?.sku ?? ''),
+        product: {
+          name: String(l.productVariant?.product?.name ?? ''),
+          slug: String(l.productVariant?.product?.slug ?? ''),
+          featuredAsset: l.productVariant?.product?.featuredAsset
+            ? { preview: String(l.productVariant.product.featuredAsset.preview ?? '') }
+            : null,
+        },
+      },
+    })),
+  };
+
+  return (
+    <div className="grid lg:grid-cols-3 gap-8">
+      <CartItems activeOrder={normalizedOrder} />
+      <div className="lg:col-span-1">
+        <OrderSummary activeOrder={normalizedOrder} />
+      </div>
+    </div>
+  );
+}
