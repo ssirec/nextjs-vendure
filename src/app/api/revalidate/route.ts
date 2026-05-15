@@ -1,29 +1,32 @@
 import {revalidateTag} from 'next/cache';
 import {NextRequest, NextResponse} from 'next/server';
 import {routing} from '@/i18n/routing';
+import {getActiveChannelCached} from '@/lib/vendure/cached';
 
-// Supported base cache tags that can be revalidated.
-// These are the tag names WITHOUT locale suffixes.
-const VALID_BASE_TAGS = [
-    'collections',
-    'countries',
-    'featured',
-] as const;
+type TagKind = 'locale-only' | 'currency-dependent';
 
-// Dynamic tags follow patterns like 'product-{slug}', 'collection-{slug}', 'related-products-{slug}'
-const DYNAMIC_TAG_PATTERNS = [
-    /^product-.+$/,
-    /^collection-.+$/,
-    /^collection-meta-.+$/,
-    /^related-products-.+$/,
-    /^navbar-collections$/,
-    /^mobile-nav$/,
-    /^footer$/,
+// Order matters: `collection-meta-` must precede `collection-` so the meta
+// pattern isn't shadowed by the broader collection pattern.
+const TAG_RULES: ReadonlyArray<{match: string | RegExp; kind: TagKind}> = [
+    {match: 'collections', kind: 'locale-only'},
+    {match: 'countries', kind: 'locale-only'},
+    {match: 'featured', kind: 'currency-dependent'},
+    {match: /^collection-meta-.+$/, kind: 'locale-only'},
+    {match: /^footer$/, kind: 'locale-only'},
+    {match: /^navbar-collections$/, kind: 'locale-only'},
+    {match: /^mobile-nav$/, kind: 'locale-only'},
+    {match: /^product-.+$/, kind: 'currency-dependent'},
+    {match: /^collection-.+$/, kind: 'currency-dependent'},
+    {match: /^related-products-.+$/, kind: 'currency-dependent'},
 ];
 
-function isValidBaseTag(tag: string): boolean {
-    if ((VALID_BASE_TAGS as readonly string[]).includes(tag)) return true;
-    return DYNAMIC_TAG_PATTERNS.some(pattern => pattern.test(tag));
+const MAX_TAGS_PER_REQUEST = 100;
+
+function classifyTag(tag: string): TagKind | null {
+    const rule = TAG_RULES.find(r =>
+        typeof r.match === 'string' ? r.match === tag : r.match.test(tag)
+    );
+    return rule?.kind ?? null;
 }
 
 export async function POST(request: NextRequest) {
@@ -57,7 +60,14 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Validate and revalidate each tag for all locales
+        if (tags.length > MAX_TAGS_PER_REQUEST) {
+            return NextResponse.json(
+                {error: `Too many tags (max ${MAX_TAGS_PER_REQUEST})`},
+                {status: 400}
+            );
+        }
+
+        let currencies: string[] | undefined;
         const results: {tag: string; success: boolean; error?: string}[] = [];
 
         for (const tag of tags) {
@@ -66,19 +76,33 @@ export async function POST(request: NextRequest) {
                 continue;
             }
 
-            if (!isValidBaseTag(tag)) {
+            const kind = classifyTag(tag);
+
+            if (kind === null) {
                 results.push({tag, success: false, error: 'Unknown tag'});
                 continue;
             }
 
-            // Revalidate for every locale
-            for (const locale of routing.locales) {
-                const localizedTag = `${tag}-${locale}`;
+            const expanded: string[] = [];
+            if (kind === 'locale-only') {
+                for (const locale of routing.locales) {
+                    expanded.push(`${tag}-${locale}`);
+                }
+            } else {
+                currencies ??= (await getActiveChannelCached()).availableCurrencyCodes as string[];
+                for (const locale of routing.locales) {
+                    for (const currency of currencies) {
+                        expanded.push(`${tag}-${locale}-${currency}`);
+                    }
+                }
+            }
+
+            for (const fullTag of expanded) {
                 try {
-                    revalidateTag(localizedTag, {expire: 0});
-                    results.push({tag: localizedTag, success: true});
+                    revalidateTag(fullTag, {expire: 0});
+                    results.push({tag: fullTag, success: true});
                 } catch {
-                    results.push({tag: localizedTag, success: false, error: 'Revalidation failed'});
+                    results.push({tag: fullTag, success: false, error: 'Revalidation failed'});
                 }
             }
         }
