@@ -1,4 +1,4 @@
-¸import type {Metadata} from 'next';
+import type {Metadata} from 'next';
 import {getActiveCurrencyCode} from '@/lib/currency-server';
 import {getRouteLocale} from '@/i18n/server';
 import {getTranslations} from 'next-intl/server';
