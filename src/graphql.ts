@@ -1,6 +1,13 @@
-import { graphql, readFragment } from "gql.tada";
-import type { ResultOf, VariablesOf } from "gql.tada";
+import { initGraphQLTada } from 'gql.tada';
+import type { introspection } from './graphql-env.d.ts';
 
-// Only export what actually exists in gql.tada
-export { graphql, readFragment };
-export type { ResultOf, VariablesOf };
+export const graphql = initGraphQLTada<{
+  introspection: introspection;
+  scalars: {
+    Money: number;
+    DateTime: string;
+  };
+}>();
+
+export { readFragment } from 'gql.tada';
+export type { ResultOf, VariablesOf } from 'gql.tada';
