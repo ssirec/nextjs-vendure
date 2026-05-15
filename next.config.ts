@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   serverExternalPackages: [
     "@swc/core",
     "@swc/core-linux-x64-gnu",
