@@ -47,7 +47,7 @@ export default async function Home() {
 const locale = await getRouteLocale();
 ...
 <Suspense>
-  <FeaturedProducts locale={locale} />
+  <FeaturedProducts />
 </Suspense>
 
             <section className="py-16 md:py-24 bg-muted/30">
