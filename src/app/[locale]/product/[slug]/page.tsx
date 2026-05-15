@@ -47,7 +47,7 @@ return await query(GetProductDetailQuery, { slug }, { languageCode: locale, curr
 
 export async function generateMetadata({
 params,
-}: PageProps<'/[locale]/product/[slug]'>): Promise {
+}: PageProps<'/[locale]/product/[slug]'>): Promise<Metadata> {
 const { slug } = await params;
 const locale = await getRouteLocale();
 const currencyCode = await getActiveCurrencyCode();
