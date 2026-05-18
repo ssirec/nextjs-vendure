@@ -154,5 +154,63 @@
     "sending": "Invio...",
     "sku": "Codice",
     "siteDescription": "Acquista i migliori prodotti su {siteName}. Qualità, prezzi competitivi e consegna rapida."
+  },
+    "Auth": {
+    "pageTitle": "Accedi",
+    "signIn": "Accedi",
+    "signingIn": "Accesso in corso...",
+    "email": "E-mail",
+    "password": "Password",
+    "forgotPassword": "Password dimenticata?",
+    "noAccount": "Non hai un account?",
+    "register": "Registrati",
+    "createAccount": "Crea account"
+  },
+  "Account": {
+    "title": "Il mio account",
+    "addresses": "Indirizzi",
+    "orders": "Ordini",
+    "noOrders": "Non hai ancora effettuato ordini.",
+    "noAddresses": "Non hai salvato nessun indirizzo.",
+    "defaultAddress": "Indirizzo predefinito",
+    "addAddress": "Aggiungi indirizzo",
+    "editAddress": "Modifica indirizzo",
+    "deleteAddress": "Elimina indirizzo",
+    "orderNumber": "Ordine #{code}",
+    "orderDate": "Effettuato il {date}",
+    "orderTotal": "Totale",
+    "orderStatus": "Stato"
+  },
+  "Footer": {
+    "description": "E-commerce moderno costruito con Vendure e Next.js.",
+    "categories": "Categorie",
+    "customer": "Cliente",
+    "shopAll": "Tutti i prodotti",
+    "orders": "Ordini",
+    "account": "Account",
+    "vendure": "Vendure",
+    "github": "GitHub",
+    "documentation": "Documentazione",
+    "sourceCode": "Codice sorgente",
+    "copyright": "Tutti i diritti riservati.",
+    "poweredBy": "Powered by"
+  },
+  "OrderConfirmation": {
+    "pageTitle": "Conferma ordine",
+    "orderConfirmed": "Ordine confermato!",
+    "thankYou": "Grazie per il tuo ordine. Il numero d'ordine è {orderNumber}.",
+    "emailConfirmation": "Riceverai un'email con i dettagli dell'ordine e le informazioni di tracciamento.",
+    "orderSummary": "Riepilogo ordine",
+    "qty": "Qtà: {quantity}",
+    "total": "Totale",
+    "shippingAddress": "Indirizzo di spedizione",
+    "continueShopping": "Continua gli acquisti",
+    "viewOrders": "Vedi ordini"
+  },
+  "Errors": {
+    "fieldsRequired": "Tutti i campi sono obbligatori",
+    "passwordsMismatch": "Le password non corrispondono",
+    "unexpectedError": "Si è verificato un errore imprevisto. Riprova.",
+    "invalidCredentials": "E-mail o password non validi"
   }
 }
