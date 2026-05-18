@@ -173,5 +173,38 @@
     "passwordsMismatch": "Gesli se ne ujemata",
     "unexpectedError": "Prišlo je do napake. Poskusite znova.",
     "invalidCredentials": "Napačen e-poštni naslov ali geslo"
+  },
+    "Account": {
+    "title": "Moj račun",
+    "addresses": "Naslovi",
+    "orders": "Naročila",
+    "noOrders": "Niste še oddali nobenega naročila.",
+    "noAddresses": "Niste shranili nobenega naslova.",
+    "defaultAddress": "Privzeti naslov",
+    "addAddress": "Dodaj naslov",
+    "editAddress": "Uredi naslov",
+    "deleteAddress": "Izbriši naslov",
+    "orderNumber": "Naročilo #{code}",
+    "orderDate": "Oddano {date}",
+    "orderTotal": "Skupaj",
+    "orderStatus": "Status"
+  },
+  "OrderConfirmation": {
+    "pageTitle": "Potrditev naročila",
+    "orderConfirmed": "Naročilo potrjeno!",
+    "thankYou": "Hvala za vaše naročilo. Številka naročila je {orderNumber}.",
+    "emailConfirmation": "Prejeli boste e-pošto s podrobnostmi naročila in informacijami za sledenje.",
+    "orderSummary": "Povzetek naročila",
+    "qty": "Kol: {quantity}",
+    "total": "Skupaj",
+    "shippingAddress": "Naslov za dostavo",
+    "continueShopping": "Nadaljuj z nakupovanjem",
+    "viewOrders": "Poglej naročila"
+  },
+  "Errors": {
+    "fieldsRequired": "Vsa polja so obvezna",
+    "passwordsMismatch": "Gesli se ne ujemata",
+    "unexpectedError": "Prišlo je do napake. Poskusite znova.",
+    "invalidCredentials": "Napačen e-poštni naslov ali geslo"
   }
 }
