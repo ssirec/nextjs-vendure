@@ -77,7 +77,7 @@
       "title": "Frequently asked questions",
       "shipping": {
         "question": "What are your shipping options?",
-        "answer": "We offer standard shipping (5–7 business days), express shipping (2–3 business days), and next-day delivery for select areas. Free standard shipping is available on orders over $50."
+        "answer": "We offer standard shipping (5-7 business days), express shipping (2-3 business days), and next-day delivery for select areas. Free standard shipping is available on orders over $50."
       },
       "returns": {
         "question": "What is your return policy?",
@@ -155,7 +155,7 @@
     "sku": "SKU",
     "siteDescription": "Shop the best products at {siteName}. Quality products, competitive prices, and fast delivery."
   },
-    "Auth": {
+  "Auth": {
     "pageTitle": "Sign in",
     "signIn": "Sign in",
     "signingIn": "Signing in...",
@@ -201,3 +201,4 @@
     "unexpectedError": "An unexpected error occurred. Please try again.",
     "invalidCredentials": "Invalid email or password"
   }
+}
