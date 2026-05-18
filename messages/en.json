@@ -154,5 +154,50 @@
     "sending": "Sending...",
     "sku": "SKU",
     "siteDescription": "Shop the best products at {siteName}. Quality products, competitive prices, and fast delivery."
+  },
+    "Auth": {
+    "pageTitle": "Sign in",
+    "signIn": "Sign in",
+    "signingIn": "Signing in...",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "register": "Register",
+    "createAccount": "Create account"
+  },
+  "Account": {
+    "title": "My account",
+    "addresses": "Addresses",
+    "orders": "Orders",
+    "noOrders": "You haven't placed any orders yet.",
+    "noAddresses": "You haven't saved any addresses yet.",
+    "defaultAddress": "Default address",
+    "addAddress": "Add address",
+    "editAddress": "Edit address",
+    "deleteAddress": "Delete address",
+    "orderNumber": "Order #{code}",
+    "orderDate": "Placed on {date}",
+    "orderTotal": "Total",
+    "orderStatus": "Status"
+  },
+  "Footer": {
+    "description": "Modern e-commerce built with Vendure and Next.js.",
+    "categories": "Categories",
+    "customer": "Customer",
+    "shopAll": "Shop all",
+    "orders": "Orders",
+    "account": "Account",
+    "vendure": "Vendure",
+    "github": "GitHub",
+    "documentation": "Documentation",
+    "sourceCode": "Source code",
+    "copyright": "All rights reserved.",
+    "poweredBy": "Powered by"
+  },
+  "Errors": {
+    "fieldsRequired": "All fields are required",
+    "passwordsMismatch": "Passwords do not match",
+    "unexpectedError": "An unexpected error occurred. Please try again.",
+    "invalidCredentials": "Invalid email or password"
   }
-}
