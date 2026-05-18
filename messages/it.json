@@ -1,0 +1,158 @@
+{
+  "Navigation": {
+    "openMenu": "Apri menu",
+    "menu": "Menu",
+    "searchProducts": "Cerca prodotti...",
+    "shopAll": "Tutti i prodotti",
+    "collections": "Collezioni",
+    "account": "Account",
+    "profile": "Profilo",
+    "orders": "Ordini",
+    "addresses": "Indirizzi",
+    "signIn": "Accedi",
+    "signOut": "Esci",
+    "greeting": "Ciao, {name}",
+    "shoppingCart": "Carrello",
+    "switchLanguage": "Cambia lingua",
+    "switchCurrency": "Cambia valuta"
+  },
+  "Hero": {
+    "title": "Scopri qualità",
+    "titleHighlight": "prodotti",
+    "subtitle": "Prodotti premium a prezzi eccezionali. Spedizione gratuita per ordini superiori a 50 €.",
+    "shopNow": "Acquista ora",
+    "viewCollections": "Vedi collezioni"
+  },
+  "Home": {
+    "pageTitle": "Il tuo negozio di riferimento",
+    "description": "Scopri prodotti di alta qualità a prezzi competitivi. Acquista ora le migliori offerte su elettronica, moda, articoli per la casa e molto altro.",
+    "ogDescription": "Scopri prodotti di alta qualità a prezzi competitivi.",
+    "whyShopWithUs": "Perché scegliere noi",
+    "features": {
+      "highQuality": {
+        "title": "Alta qualità",
+        "description": "Prodotti premium selezionati con cura per te"
+      },
+      "bestPrices": {
+        "title": "Migliori prezzi",
+        "description": "Prezzi competitivi su tutti i nostri prodotti"
+      },
+      "fastDelivery": {
+        "title": "Consegna rapida",
+        "description": "Spedizione affidabile in tutto il mondo"
+      }
+    }
+  },
+  "Product": {
+    "inStock": "Disponibile",
+    "outOfStock": "Esaurito",
+    "addToCart": "Aggiungi al carrello",
+    "addedToCart": "Aggiunto al carrello",
+    "adding": "Aggiunta...",
+    "selectOptions": "Seleziona opzioni",
+    "addedToCartMessage": "Aggiunto al carrello",
+    "addedToCartDescription": "{name} è stato aggiunto al tuo carrello",
+    "errorTitle": "Errore",
+    "errorAddToCart": "Impossibile aggiungere l'articolo al carrello",
+    "sku": "Codice: {sku}",
+    "from": "Da",
+    "noImage": "Nessuna immagine disponibile",
+    "featuredProducts": "Prodotti in evidenza",
+    "relatedProducts": "Prodotti correlati",
+    "viewAllProducts": "Vedi tutti i prodotti",
+    "notFound": "Prodotto non trovato",
+    "home": "Home",
+    "noProductsFound": "Nessun prodotto trovato",
+    "shopProductAt": "Acquista {name} su {siteName}",
+    "collectionNotFound": "Collezione non trovata",
+    "browseCollectionAt": "Esplora la nostra collezione {name} su {siteName}",
+    "productCount": "{count, plural, one {# prodotto} other {# prodotti}}",
+    "trustBadges": {
+      "fastShipping": "Spedizione rapida",
+      "freeReturns": "Resi gratuiti",
+      "secureCheckout": "Pagamento sicuro",
+      "guarantee": "Garanzia 30 giorni"
+    },
+    "faq": {
+      "title": "Domande frequenti",
+      "shipping": {
+        "question": "Quali sono le opzioni di spedizione?",
+        "answer": "Offriamo spedizione standard (5–7 giorni lavorativi), spedizione express (2–3 giorni lavorativi) e consegna il giorno successivo per aree selezionate. La spedizione standard gratuita è disponibile per ordini superiori a 50 €."
+      },
+      "returns": {
+        "question": "Qual è la politica di reso?",
+        "answer": "Accettiamo resi entro 30 giorni dall'acquisto. Gli articoli devono essere inutilizzati e nella confezione originale. Contatta il nostro servizio clienti per avviare un reso e ricevere un'etichetta di spedizione prepagata."
+      },
+      "tracking": {
+        "question": "Come posso tracciare il mio ordine?",
+        "answer": "Una volta spedito l'ordine, riceverai un'email con il numero di tracciamento. Puoi anche tracciare il tuo ordine dal tuo account."
+      },
+      "international": {
+        "question": "Spedite all'estero?",
+        "answer": "Sì! Spediamo in oltre 50 paesi in tutto il mondo. Le tariffe e i tempi di spedizione variano in base alla destinazione e sono mostrati al momento del checkout."
+      }
+    }
+  },
+  "Cart": {
+    "title": "Carrello",
+    "empty": "Il tuo carrello è vuoto",
+    "emptyMessage": "Aggiungi articoli per iniziare",
+    "continueShopping": "Continua gli acquisti",
+    "each": "ciascuno",
+    "orderSummary": "Riepilogo ordine",
+    "subtotal": "Subtotale",
+    "shipping": "Spedizione",
+    "calculatedAtCheckout": "Calcolata al checkout",
+    "total": "Totale",
+    "proceedToCheckout": "Procedi al checkout",
+    "secureCheckout": "Pagamento sicuro",
+    "promotionCode": "Codice promozionale",
+    "enterDiscountCode": "Inserisci il tuo codice sconto",
+    "remove": "Rimuovi",
+    "enterCode": "Inserisci codice",
+    "apply": "Applica",
+    "sku": "Codice: {sku}"
+  },
+  "Checkout": {
+    "pageTitle": "Checkout",
+    "steps": {
+      "contact": "Contatto",
+      "address": "Indirizzo",
+      "delivery": "Consegna",
+      "payment": "Pagamento",
+      "review": "Riepilogo"
+    },
+    "contactInformation": "Informazioni di contatto",
+    "shippingAddress": "Indirizzo di spedizione",
+    "deliveryMethod": "Metodo di consegna",
+    "paymentMethod": "Metodo di pagamento",
+    "reviewAndPlaceOrder": "Rivedi e conferma ordine",
+    "continue": "Continua",
+    "placeOrder": "Conferma ordine",
+    "completeAllSteps": "Completa tutti i passaggi prima di confermare l'ordine"
+  },
+  "OrderConfirmation": {
+    "pageTitle": "Conferma ordine",
+    "orderConfirmed": "Ordine confermato!",
+    "thankYou": "Grazie per il tuo ordine. Il numero d'ordine è {orderNumber}.",
+    "emailConfirmation": "Riceverai un'email con i dettagli dell'ordine e le informazioni di tracciamento.",
+    "orderSummary": "Riepilogo ordine",
+    "qty": "Qtà: {quantity}",
+    "total": "Totale",
+    "shippingAddress": "Indirizzo di spedizione",
+    "continueShopping": "Continua gli acquisti",
+    "viewOrders": "Vedi ordini"
+  },
+  "NotFound": {
+    "title": "Pagina non trovata",
+    "message": "La pagina che stai cercando non esiste o è stata spostata.",
+    "goHome": "Torna alla home",
+    "browseProducts": "Sfoglia i prodotti"
+  },
+  "Common": {
+    "loading": "Caricamento...",
+    "sending": "Invio...",
+    "sku": "Codice",
+    "siteDescription": "Acquista i migliori prodotti su {siteName}. Qualità, prezzi competitivi e consegna rapida."
+  }
+}
