@@ -140,7 +140,15 @@
     "forgotPassword": "Pozabljeno geslo?",
     "noAccount": "Še nimate računa?",
     "register": "Registracija",
-    "createAccount": "Ustvari račun"
+    "createAccount": "Ustvari račun",
+    "joinUs": "Pridružite se nam",
+    "featureFast": "Hitra in zanesljiva dostava",
+    "featureCheckout": "Preprost postopek plačila",
+    "featureSecure": "Varen nakup",
+    "featurePayments": "Več načinov plačila",
+    "featureEasy": "Enostavno sledenje naročilom",
+    "featureReturns": "Brezhibna vračila",
+    "signUpMessage": "Ustvarite račun za sledenje naročilom, shranjevanje naslovov in hitrejše plačevanje."
   },
   "NotFound": {
     "title": "Stran ni najdena",
@@ -168,13 +176,7 @@
     "sku": "SKU",
     "siteDescription": "Kupujte najboljše izdelke na {siteName}."
   },
-  "Errors": {
-    "fieldsRequired": "Vsa polja so obvezna",
-    "passwordsMismatch": "Gesli se ne ujemata",
-    "unexpectedError": "Prišlo je do napake. Poskusite znova.",
-    "invalidCredentials": "Napačen e-poštni naslov ali geslo"
-  },
-    "Account": {
+  "Account": {
     "title": "Moj račun",
     "addresses": "Naslovi",
     "orders": "Naročila",
@@ -187,7 +189,9 @@
     "orderNumber": "Naročilo #{code}",
     "orderDate": "Oddano {date}",
     "orderTotal": "Skupaj",
-    "orderStatus": "Status"
+    "orderStatus": "Status",
+    "addressesPageTitle": "Moji naslovi",
+    "order": "Naročilo"
   },
   "OrderConfirmation": {
     "pageTitle": "Potrditev naročila",
