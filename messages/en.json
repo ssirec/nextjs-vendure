@@ -164,7 +164,15 @@
     "forgotPassword": "Forgot password?",
     "noAccount": "Don't have an account?",
     "register": "Register",
-    "createAccount": "Create account"
+    "createAccount": "Create account",
+    "joinUs": "Join us today",
+    "featureFast": "Fast & reliable shipping",
+    "featureCheckout": "Easy checkout process",
+    "featureSecure": "Secure shopping experience",
+    "featurePayments": "Multiple payment options",
+    "featureEasy": "Easy order tracking",
+    "featureReturns": "Hassle-free returns",
+    "signUpMessage": "Create an account to track orders, save addresses, and checkout faster."
   },
   "Account": {
     "title": "My account",
@@ -179,7 +187,9 @@
     "orderNumber": "Order #{code}",
     "orderDate": "Placed on {date}",
     "orderTotal": "Total",
-    "orderStatus": "Status"
+    "orderStatus": "Status",
+    "addressesPageTitle": "My addresses",
+    "order": "Order"
   },
   "Footer": {
     "description": "Modern e-commerce built with Vendure and Next.js.",
