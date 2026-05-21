@@ -7,6 +7,8 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {SITE_NAME} from "@/lib/metadata";
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata(): Promise<Metadata> {
     const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Auth'});
@@ -73,7 +75,6 @@ export default async function RegisterPage({searchParams}: PageProps<'/[locale]/
 
     return (
         <div className="flex min-h-[calc(100vh-4rem)] mt-16">
-            {/* Branded panel - desktop only */}
             <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-primary to-primary/70 items-center justify-center p-12 rounded-br-3xl">
                 <div className="max-w-md text-primary-foreground space-y-6">
                     <h2 className="text-4xl font-bold tracking-tight">{SITE_NAME}</h2>
@@ -97,7 +98,6 @@ export default async function RegisterPage({searchParams}: PageProps<'/[locale]/
                 </div>
             </div>
 
-            {/* Form panel */}
             <div className="flex w-full lg:w-1/2 items-center justify-center px-4 py-12">
                 <div className="w-full max-w-md space-y-6">
                     <div className="space-y-2 text-center">
