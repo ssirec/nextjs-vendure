@@ -189,6 +189,7 @@
     "orderTotal": "Total",
     "orderStatus": "Status",
     "addressesPageTitle": "My addresses",
+    "manageAddresses": "Manage your shipping and billing addresses",
     "order": "Order"
   },
   "Footer": {
