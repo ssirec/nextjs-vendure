@@ -7,6 +7,8 @@ import { getTranslations } from 'next-intl/server';
 import { formatDate } from '@/lib/format';
 import { Price } from '@/components/commerce/price';
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getRouteLocale();
   const t = await getTranslations({ locale, namespace: 'Account' });
@@ -21,7 +23,6 @@ export default async function OrdersPage() {
   const t = await getTranslations({ locale, namespace: 'Account' });
 
   const result = await query(GetCustomerOrdersQuery, {}, { useAuthToken: true, languageCode: locale });
-  // Use the items array from the orders connection
   const orders = result.data.activeCustomer?.orders?.items || [];
 
   return (
