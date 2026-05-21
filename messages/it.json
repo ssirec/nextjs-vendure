@@ -155,7 +155,7 @@
     "sku": "Codice",
     "siteDescription": "Acquista i migliori prodotti su {siteName}. Qualità, prezzi competitivi e consegna rapida."
   },
-    "Auth": {
+  "Auth": {
     "pageTitle": "Accedi",
     "signIn": "Accedi",
     "signingIn": "Accesso in corso...",
@@ -164,7 +164,15 @@
     "forgotPassword": "Password dimenticata?",
     "noAccount": "Non hai un account?",
     "register": "Registrati",
-    "createAccount": "Crea account"
+    "createAccount": "Crea account",
+    "joinUs": "Unisciti a noi oggi",
+    "featureFast": "Spedizione rapida e affidabile",
+    "featureCheckout": "Processo di checkout semplice",
+    "featureSecure": "Acquisto sicuro",
+    "featurePayments": "Diverse opzioni di pagamento",
+    "featureEasy": "Tracciamento ordini facile",
+    "featureReturns": "Resi senza problemi",
+    "signUpMessage": "Crea un account per tracciare gli ordini, salvare gli indirizzi e pagare più velocemente."
   },
   "Account": {
     "title": "Il mio account",
@@ -179,7 +187,9 @@
     "orderNumber": "Ordine #{code}",
     "orderDate": "Effettuato il {date}",
     "orderTotal": "Totale",
-    "orderStatus": "Stato"
+    "orderStatus": "Stato",
+    "addressesPageTitle": "I miei indirizzi",
+    "order": "Ordine"
   },
   "Footer": {
     "description": "E-commerce moderno costruito con Vendure e Next.js.",
@@ -194,18 +204,6 @@
     "sourceCode": "Codice sorgente",
     "copyright": "Tutti i diritti riservati.",
     "poweredBy": "Powered by"
-  },
-  "OrderConfirmation": {
-    "pageTitle": "Conferma ordine",
-    "orderConfirmed": "Ordine confermato!",
-    "thankYou": "Grazie per il tuo ordine. Il numero d'ordine è {orderNumber}.",
-    "emailConfirmation": "Riceverai un'email con i dettagli dell'ordine e le informazioni di tracciamento.",
-    "orderSummary": "Riepilogo ordine",
-    "qty": "Qtà: {quantity}",
-    "total": "Totale",
-    "shippingAddress": "Indirizzo di spedizione",
-    "continueShopping": "Continua gli acquisti",
-    "viewOrders": "Vedi ordini"
   },
   "Errors": {
     "fieldsRequired": "Tutti i campi sono obbligatori",
