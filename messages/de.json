@@ -149,7 +149,14 @@
     "forgotPasswordTitle": "Passwort vergessen?",
     "sendResetLink": "Link senden",
     "sending": "Wird gesendet...",
-    "backToSignIn": "Zur Anmeldung"
+    "backToSignIn": "Zur Anmeldung",
+    "featureFast": "Schneller & zuverlässiger Versand",
+    "featureCheckout": "Einfacher Checkout-Prozess",
+    "featureSecure": "Sicheres Einkaufen",
+    "featurePayments": "Mehrere Zahlungsoptionen",
+    "featureEasy": "Einfache Bestellverfolgung",
+    "featureReturns": "Problemlose Rücksendung",
+    "signUpMessage": "Erstellen Sie ein Konto, um Bestellungen zu verfolgen, Adressen zu speichern und schneller zur Kasse zu gehen."
   },
   "Common": {
     "loading": "Wird geladen...",
@@ -164,7 +171,7 @@
     "invalidCredentials": "Ungültige E-Mail-Adresse oder Passwort.",
     "failedAddToCart": "Artikel konnte nicht zum Warenkorb hinzugefügt werden"
   },
-    "NotFound": {
+  "NotFound": {
     "title": "Seite nicht gefunden",
     "message": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
     "goHome": "Zur Startseite",
@@ -183,7 +190,9 @@
     "orderNumber": "Bestellung #{code}",
     "orderDate": "Aufgegeben am {date}",
     "orderTotal": "Gesamt",
-    "orderStatus": "Status"
+    "orderStatus": "Status",
+    "addressesPageTitle": "Meine Adressen",
+    "order": "Bestellung"
   },
   "OrderConfirmation": {
     "pageTitle": "Bestellbestätigung",
