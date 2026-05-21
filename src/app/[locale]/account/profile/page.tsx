@@ -1,34 +1,35 @@
 import type { Metadata } from 'next';
-import { getRouteLocale } from '@/i18n/server';
+import { Suspense } from 'react';
 import { query } from '@/lib/vendure/api';
-import { GetActiveCustomerQuery } from '@/lib/vendure/queries';
-import { ProfileClient } from './profile-client';
+import { GetOrderDetailQuery } from '@/lib/vendure/queries';
 import { getTranslations } from 'next-intl/server';
+import { getRouteLocale } from '@/i18n/server';
+import { OrderDetail } from './order-detail';
 
-export async function generateMetadata(): Promise<Metadata> {
-  const locale = await getRouteLocale();
-  const t = await getTranslations({ locale, namespace: 'Account' });
+type OrderDetailPageProps = PageProps<'/[locale]/account/orders/[code]'>;
 
-  return {
-    title: t('profilePageTitle'),
-  };
+export const dynamic = 'force-dynamic';
+
+export async function generateMetadata({ params }: OrderDetailPageProps): Promise<Metadata> {
+    const { code } = await params;
+    const locale = await getRouteLocale();
+    const t = await getTranslations({ locale, namespace: 'Account' });
+    return {
+        title: t('order', { code }),
+    };
 }
 
-export default async function ProfilePage() {
-  const locale = await getRouteLocale();
-  const t = await getTranslations({ locale, namespace: 'Account' });
+export default async function OrderDetailPage(props: PageProps<'/[locale]/account/orders/[code]'>) {
+    const locale = await getRouteLocale();
+    const t = await getTranslations({ locale, namespace: 'Common' });
 
-  const result = await query(GetActiveCustomerQuery, {}, { useAuthToken: true, languageCode: locale });
-  const customer = result.data.activeCustomer;
+    const orderPromise = props.params.then(({ code }) =>
+        query(GetOrderDetailQuery, { code }, { useAuthToken: true, fetch: {} })
+    );
 
-  return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold">{t('profile')}</h1>
-        <p className="text-muted-foreground mt-2">{t('manageProfile')}</p>
-      </div>
-
-      <ProfileClient customer={customer} />
-    </div>
-  );
+    return (
+        <Suspense fallback={<div className="p-8 text-center">{t('loading')}</div>}>
+            <OrderDetail orderPromise={orderPromise} />
+        </Suspense>
+    );
 }
