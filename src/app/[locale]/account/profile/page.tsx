@@ -5,6 +5,7 @@ import { GetActiveCustomerQuery } from '@/lib/vendure/queries';
 import { getTranslations } from 'next-intl/server';
 import { getRouteLocale } from '@/i18n/server';
 import { ProfileClient } from './profile-client';
+import { connection } from 'next/server';
 
 export async function generateMetadata(): Promise<Metadata> {
     const locale = await getRouteLocale();
@@ -15,6 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ProfilePage() {
+    await connection();
     const locale = await getRouteLocale();
     const t = await getTranslations({ locale, namespace: 'Common' });
 
