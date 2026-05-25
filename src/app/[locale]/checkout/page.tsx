@@ -12,7 +12,8 @@ import {
 } from '@/lib/vendure/queries';
 import { getAvailableCountriesCached } from '@/lib/vendure/cached';
 import { getTranslations } from 'next-intl/server';
-import { CheckoutFlow } from './checkout-flow';
+import CheckoutFlow from './checkout-flow';
+import { CheckoutProvider } from './checkout-provider';
 
 export async function generateMetadata(): Promise<Metadata> {
     const locale = await getRouteLocale();
@@ -53,14 +54,8 @@ export default async function CheckoutPage() {
         paymentMethodsRes.data.eligiblePaymentMethods?.filter((m) => m.isEligible) || [];
 
     return (
-        <Suspense>
-            <CheckoutFlow
-                activeOrder={activeOrder}
-                addresses={addresses}
-                countries={countries}
-                shippingMethods={shippingMethods}
-                paymentMethods={paymentMethods}
-            />
-        </Suspense>
+        <CheckoutProvider order={activeOrder} shippingMethods={shippingMethods} paymentMethods={paymentMethods} countries={countries} addresses={addresses}>
+            <CheckoutFlow />
+        </CheckoutProvider>
     );
 }
