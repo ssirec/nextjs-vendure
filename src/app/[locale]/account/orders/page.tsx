@@ -6,6 +6,7 @@ import { OrderListClient } from './order-list-client';
 import { getTranslations } from 'next-intl/server';
 import { formatDate } from '@/lib/format';
 import { Price } from '@/components/commerce/price';
+import { connection } from 'next/server';
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getRouteLocale();
@@ -17,6 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function OrdersPage() {
+  await connection();
   const locale = await getRouteLocale();
   const t = await getTranslations({ locale, namespace: 'Account' });
 
