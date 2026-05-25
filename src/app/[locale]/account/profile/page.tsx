@@ -1,33 +1,28 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { query } from '@/lib/vendure/api';
-import { GetOrderDetailQuery } from '@/lib/vendure/queries';
+import { GetActiveCustomerQuery } from '@/lib/vendure/queries';
 import { getTranslations } from 'next-intl/server';
 import { getRouteLocale } from '@/i18n/server';
-import { OrderDetail } from './order-detail';
+import { ProfileForm } from './profile-form';
 
-type OrderDetailPageProps = PageProps<'/[locale]/account/orders/[code]'>;
-
-export async function generateMetadata({ params }: OrderDetailPageProps): Promise<Metadata> {
-    const { code } = await params;
+export async function generateMetadata(): Promise<Metadata> {
     const locale = await getRouteLocale();
     const t = await getTranslations({ locale, namespace: 'Account' });
     return {
-        title: t('order', { code }),
+        title: t('profile'),
     };
 }
 
-export default async function OrderDetailPage(props: PageProps<'/[locale]/account/orders/[code]'>) {
+export default async function ProfilePage() {
     const locale = await getRouteLocale();
     const t = await getTranslations({ locale, namespace: 'Common' });
 
-    const orderPromise = props.params.then(({ code }) =>
-        query(GetOrderDetailQuery, { code }, { useAuthToken: true, fetch: {} })
-    );
+    const customerPromise = query(GetActiveCustomerQuery, {}, { useAuthToken: true, fetch: {} });
 
     return (
         <Suspense fallback={<div className="p-8 text-center">{t('loading')}</div>}>
-            <OrderDetail orderPromise={orderPromise} />
+            <ProfileForm customerPromise={customerPromise} />
         </Suspense>
     );
 }
