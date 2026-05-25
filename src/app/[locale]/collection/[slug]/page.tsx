@@ -1,16 +1,13 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { Link } from '@/i18n/navigation';
 import { query } from '@/lib/vendure/api';
-import { GetProductDetailQuery } from '@/lib/vendure/queries';
-import { ProductImageCarousel } from '@/components/commerce/product-image-carousel';
-import { ProductInfo } from '@/components/commerce/product-info';
-import { RelatedProducts } from '@/components/commerce/related-products';
-import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from '@/components/ui/accordion';
+import { SearchProductsQuery, GetCollectionProductsQuery } from '@/lib/vendure/queries';
+import { ProductGrid } from '@/components/commerce/product-grid';
+import { FacetFilters } from '@/components/commerce/facet-filters';
+import { ProductGridSkeleton } from '@/components/shared/product-grid-skeleton';
+import { buildSearchInput, getCurrentPage } from '@/lib/search-helpers';
+import { cacheLife, cacheTag } from 'next/cache';
 import {
     Breadcrumb,
     BreadcrumbList,
@@ -19,8 +16,6 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-import { notFound } from 'next/navigation';
-import { Truck, RotateCcw, ShieldCheck, Clock } from 'lucide-react';
 import { routing } from '@/i18n/routing';
 import {
     SITE_NAME,
@@ -28,147 +23,137 @@ import {
     buildCanonicalUrl,
     buildOgImages,
 } from '@/lib/metadata';
-import { getTranslations } from 'next-intl/server';
-import { toOgLocale } from '@/i18n/locale-utils';
-import { getActiveCurrencyCode } from '@/lib/currency-server';
-import { getRouteLocale } from '@/i18n/server';
+import {toOgLocale} from '@/i18n/locale-utils';
+import {getActiveCurrencyCode} from '@/lib/currency-server';
+import {getRouteLocale} from '@/i18n/server';
+import {getTranslations} from 'next-intl/server';
 
-export const dynamic = 'force-dynamic';
+async function getCollectionProducts(slug: string, searchParams: { [key: string]: string | string[] | undefined }, currencyCode: string) {
+    'use cache';
+    cacheLife('hours');
 
-async function getProductData(slug: string, currencyCode: string, locale: string) {
-    return await query(GetProductDetailQuery, { slug }, { languageCode: locale, currencyCode });
+    const locale = await getRouteLocale();
+    cacheTag(`collection-${slug}-${locale}-${currencyCode}`);
+    cacheTag('collection');
+
+    return query(SearchProductsQuery, {
+        input: buildSearchInput({
+            searchParams,
+            collectionSlug: slug
+        })
+    }, {languageCode: locale, currencyCode});
+}
+
+async function getCollectionMetadata(slug: string) {
+    'use cache';
+    cacheLife('hours');
+
+    const locale = await getRouteLocale();
+    cacheTag(`collection-meta-${slug}-${locale}`);
+
+    return query(GetCollectionProductsQuery, {
+        slug,
+        input: { take: 0, collectionSlug: slug, groupByProduct: true },
+    }, {languageCode: locale});
 }
 
 export async function generateMetadata({
     params,
-}: PageProps<'/[locale]/product/[slug]'>): Promise<Metadata> {
+}: PageProps<'/[locale]/collection/[slug]'>): Promise<Metadata> {
     const { slug } = await params;
     const locale = await getRouteLocale();
-    const currencyCode = await getActiveCurrencyCode();
-    const result = await getProductData(slug, currencyCode, locale);
-    const product = result.data.product;
+    const result = await getCollectionMetadata(slug);
+    const collection = result.data.collection;
 
-    const t = await getTranslations({ locale, namespace: 'Product' });
+    const t = await getTranslations({locale, namespace: 'Product'});
 
-    if (!product) {
+    if (!collection) {
         return {
-            title: t('notFound'),
+            title: t('collectionNotFound'),
         };
     }
 
-    const description = truncateDescription(product.description);
-    const fallbackDescription = t('shopProductAt', {
-        name: product.name,
-        siteName: SITE_NAME,
-    });
-    const ogImage = product.assets?.[0]?.preview;
+    const description =
+        truncateDescription(collection.description) ||
+        t('browseCollectionAt', {name: collection.name, siteName: SITE_NAME});
     const ogLocale = toOgLocale(locale);
-    const productPath = `/product/${product.slug}`;
+    const collectionPath = `/collection/${collection.slug}`;
 
     return {
-        title: product.name,
-        description: description || fallbackDescription,
+        title: collection.name,
+        description,
         alternates: {
-            canonical: buildCanonicalUrl(`/${locale}${productPath}`),
+            canonical: buildCanonicalUrl(`/${locale}${collectionPath}`),
             languages: Object.fromEntries(
-                routing.locales.map((l) => [l, buildCanonicalUrl(`/${l}${productPath}`)])
+                routing.locales.map((l) => [l, buildCanonicalUrl(`/${l}${collectionPath}`)])
             ),
         },
         openGraph: {
-            title: product.name,
-            description: description || fallbackDescription,
+            title: collection.name,
+            description,
             type: 'website',
             locale: ogLocale,
-            url: buildCanonicalUrl(`/${locale}${productPath}`),
-            images: buildOgImages(ogImage, product.name),
+            url: buildCanonicalUrl(`/${locale}${collectionPath}`),
+            images: buildOgImages(collection.featuredAsset?.preview, collection.name),
         },
         twitter: {
             card: 'summary_large_image',
-            title: product.name,
-            description: description || fallbackDescription,
-            images: ogImage ? [ogImage] : undefined,
+            title: collection.name,
+            description,
+            images: collection.featuredAsset?.preview
+                ? [collection.featuredAsset.preview]
+                : undefined,
         },
     };
 }
 
-export default async function ProductDetailPage({ params, searchParams }: PageProps<'/[locale]/product/[slug]'>) {
+export default async function CollectionPage({params, searchParams}: PageProps<'/[locale]/collection/[slug]'>) {
     const { slug } = await params;
     const searchParamsResolved = await searchParams;
     const locale = await getRouteLocale();
     const currencyCode = await getActiveCurrencyCode();
-    const t = await getTranslations({ locale, namespace: 'Product' });
+    const t = await getTranslations({locale, namespace: 'Product'});
+    const page = getCurrentPage(searchParamsResolved);
 
-    const result = await getProductData(slug, currencyCode, locale);
-
-    const product = result.data.product;
-
-    if (!product) {
-        notFound();
-    }
-
-    const primaryCollection = product.collections?.find(c => c.parent?.id) ?? product.collections?.[0];
+    const productDataPromise = getCollectionProducts(slug, searchParamsResolved, currencyCode);
+    const collectionResult = await getCollectionMetadata(slug);
+    const collectionName = collectionResult.data.collection?.name ?? slug;
 
     return (
-        <>
-            <div className="container mx-auto px-4 py-8 mt-16">
-                <Breadcrumb className="mb-6">
-                    <BreadcrumbList>
-                        <BreadcrumbItem>
-                            <BreadcrumbLink render={<Link href={`/${locale}/`} />}>{t('home')}</BreadcrumbLink>
-                        </BreadcrumbItem>
-                        {primaryCollection && (
-                            <>
-                                <BreadcrumbSeparator />
-                                <BreadcrumbItem>
-                                    <BreadcrumbLink
-                                        render={<Link href={`/${locale}/collection/${primaryCollection.slug}`} />}
-                                    >
-                                        {primaryCollection.name}
-                                    </BreadcrumbLink>
-                                </BreadcrumbItem>
-                            </>
-                        )}
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage>{product.name}</BreadcrumbPage>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb>
+        <div className="container mx-auto px-4 py-8 mt-16">
+            {/* Breadcrumbs */}
+            <Breadcrumb className="mb-6">
+                <BreadcrumbList>
+                    <BreadcrumbItem>
+                        <BreadcrumbLink render={<Link href="/" />}>{t('home')}</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                        <BreadcrumbPage>{collectionName}</BreadcrumbPage>
+                    </BreadcrumbItem>
+                </BreadcrumbList>
+            </Breadcrumb>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-                    <div className="lg:sticky lg:top-20 lg:self-start">
-                        <ProductImageCarousel images={product.assets} />
-                    </div>
-
-                    <div>
-                        <ProductInfo product={product} searchParams={searchParamsResolved} currencyCode={currencyCode} />
-                    </div>
-                </div>
+            {/* Collection Header */}
+            <div className="mb-8">
+                <h1 className="text-3xl font-bold tracking-tight">{collectionName}</h1>
             </div>
 
-            <section className="py-8 mt-8 border-y border-border/50">
-                <div className="container mx-auto px-4">
-                    <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
-                        <div className="inline-flex items-center gap-2 rounded-full bg-muted/60 px-4 py-2 text-sm font-medium text-muted-foreground">
-                            <Truck className="h-4 w-4 text-primary" />
-                            {t('trustBadges.fastShipping')}
-                        </div>
-                        <div className="inline-flex items-center gap-2 rounded-full bg-muted/60 px-4 py-2 text-sm font-medium text-muted-foreground">
-                            <RotateCcw className="h-4 w-4 text-primary" />
-                            {t('trustBadges.freeReturns')}
-                        </div>
-                        <div className="inline-flex items-center gap-2 rounded-full bg-muted/60 px-4 py-2 text-sm font-medium text-muted-foreground">
-                            <ShieldCheck className="h-4 w-4 text-primary" />
-                            {t('trustBadges.secureCheckout')}
-                        </div>
-                        <div className="inline-flex items-center gap-2 rounded-full bg-muted/60 px-4 py-2 text-sm font-medium text-muted-foreground">
-                            <Clock className="h-4 w-4 text-primary" />
-                            {t('trustBadges.guarantee')}
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                {/* Filters Sidebar */}
+                <aside className="lg:col-span-1">
+                    <Suspense fallback={<div className="h-64 animate-pulse bg-muted rounded-lg" />}>
+                        <FacetFilters productDataPromise={productDataPromise} />
+                    </Suspense>
+                </aside>
 
-            <section className="py-16 bg-muted/30">
-                <div className="container mx-auto px-4 max-w-2xl">
-                    <h2 className="text-2xl font-bold text-center mb-
+                {/* Product Grid */}
+                <div className="lg:col-span-3">
+                    <Suspense fallback={<ProductGridSkeleton />}>
+                        <ProductGrid productDataPromise={productDataPromise} currentPage={page} take={12} />
+                    </Suspense>
+                </div>
+            </div>
+        </div>
+    );
+}
