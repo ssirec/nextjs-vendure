@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { connection } from 'next/server';
 import { getRouteLocale } from '@/i18n/server';
 import { getActiveCurrencyCode } from '@/lib/currency-server';
 import { query } from '@/lib/vendure/api';
