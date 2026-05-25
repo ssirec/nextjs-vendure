@@ -8,8 +8,6 @@ import { OrderDetail } from './order-detail';
 
 type OrderDetailPageProps = PageProps<'/[locale]/account/orders/[code]'>;
 
-export const dynamic = 'force-dynamic';
-
 export async function generateMetadata({ params }: OrderDetailPageProps): Promise<Metadata> {
     const { code } = await params;
     const locale = await getRouteLocale();
