@@ -1,36 +1,33 @@
-import type {Metadata} from 'next';
-import {getActiveCurrencyCode} from '@/lib/currency-server';
-import {getRouteLocale} from '@/i18n/server';
-import {getTranslations} from 'next-intl/server';
-import {query} from '@/lib/vendure/api';
+import type { Metadata } from 'next';
+import { getRouteLocale } from '@/i18n/server';
+import { getActiveCurrencyCode } from '@/lib/currency-server';
+import { query } from '@/lib/vendure/api';
 import {
     GetActiveOrderForCheckoutQuery,
     GetCustomerAddressesQuery,
-    GetEligiblePaymentMethodsQuery,
     GetEligibleShippingMethodsQuery,
+    GetEligiblePaymentMethodsQuery,
 } from '@/lib/vendure/queries';
-import {redirect} from '@/i18n/navigation';
-import CheckoutFlow from './checkout-flow';
-import {CheckoutProvider} from './checkout-provider';
-import {noIndexRobots} from '@/lib/metadata';
-import {getActiveCustomer} from '@/lib/vendure/actions';
-import {getAvailableCountriesCached} from '@/lib/vendure/cached';
+import { getAvailableCountriesCached } from '@/lib/vendure/cached';
+import { getTranslations } from 'next-intl/server';
+import { CheckoutContent } from './checkout-content';
+import { connection } from 'next/server';
 
 export async function generateMetadata(): Promise<Metadata> {
     const locale = await getRouteLocale();
-    const t = await getTranslations({locale, namespace: 'Checkout'});
+    const t = await getTranslations({ locale, namespace: 'Checkout' });
     return {
         title: t('pageTitle'),
-        robots: noIndexRobots(),
     };
 }
 
 export default async function CheckoutPage() {
+    await connection();
     const locale = await getRouteLocale();
     const currencyCode = await getActiveCurrencyCode();
-    const t = await getTranslations({locale, namespace: 'Checkout'});
-    const customer = await getActiveCustomer();
-    const isGuest = !customer;
+    const t = await getTranslations({ locale, namespace: 'Checkout' });
+
+    const isGuest = false;
 
     const [orderRes, addressesRes, countries, shippingMethodsRes, paymentMethodsRes] =
         await Promise.all([
@@ -46,11 +43,11 @@ export default async function CheckoutPage() {
     const activeOrder = orderRes.data.activeOrder;
 
     if (!activeOrder || activeOrder.lines.length === 0) {
-        return redirect({href: '/cart', locale});
-    }
-
-    if (activeOrder.state !== 'AddingItems' && activeOrder.state !== 'ArrangingPayment') {
-        return redirect({href: `/order-confirmation/${activeOrder.code}`, locale});
+        return (
+            <div className="container mx-auto px-4 py-16 text-center">
+                <h1 className="text-2xl font-bold mb-4">{t('cartEmpty')}</h1>
+            </div>
+        );
     }
 
     const addresses = addressesRes.data.activeCustomer?.addresses || [];
@@ -62,18 +59,13 @@ export default async function CheckoutPage() {
         paymentMethodsRes.data.eligiblePaymentMethods?.filter((m) => m.isEligible) || [];
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-8">{t('pageTitle')}</h1>
-            <CheckoutProvider
-                order={activeOrder}
-                addresses={addresses}
-                countries={countries}
-                shippingMethods={shippingMethods}
-                paymentMethods={paymentMethods}
-                isGuest={isGuest}
-            >
-                <CheckoutFlow/>
-            </CheckoutProvider>
-        </div>
+        <CheckoutContent
+            activeOrder={activeOrder}
+            addresses={addresses}
+            countries={countries}
+            shippingMethods={shippingMethods}
+            paymentMethods={paymentMethods}
+            currencyCode={currencyCode}
+        />
     );
 }
