@@ -20,11 +20,14 @@ export async function resetPasswordAction(prevState: { error?: string } | undefi
         return {error: t('passwordsMismatch')};
     }
 
-
     const result = await mutate(ResetPasswordMutation, {
         token,
         password,
     });
+
+    if (!result) {
+        return {error: t('unexpectedError')};
+    }
 
     const resetResult = result.data.resetPassword;
 
