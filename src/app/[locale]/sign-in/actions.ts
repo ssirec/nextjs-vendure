@@ -18,6 +18,10 @@ export async function loginAction(prevState: { error?: string } | undefined, for
         password,
     }, { useAuthToken: true });
 
+    if (!result) {
+        return { error: t('unexpectedError') };
+    }
+
     const loginResult = result.data.login;
 
     if (loginResult.__typename !== 'CurrentUser') {
