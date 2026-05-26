@@ -32,7 +32,7 @@ export async function createAddress(address: AddressInput) {
         {useAuthToken: true}
     );
 
-    if (!result.data.createCustomerAddress) {
+    if (!result || !result.data.createCustomerAddress) {
         throw new Error('Failed to create address');
     }
 
@@ -63,7 +63,7 @@ export async function updateAddress(address: UpdateAddressInput) {
         {useAuthToken: true}
     );
 
-    if (!result.data.updateCustomerAddress) {
+    if (!result || !result.data.updateCustomerAddress) {
         throw new Error('Failed to update address');
     }
 
@@ -76,56 +76,4 @@ export async function deleteAddress(id: string) {
     const result = await mutate(
         DeleteCustomerAddressMutation,
         {id},
-        {useAuthToken: true}
-    );
-
-    if (!result.data.deleteCustomerAddress.success) {
-        throw new Error('Failed to delete address');
-    }
-
-    const locale = await getLocale();
-    revalidatePath(`/${locale}/account/addresses`);
-    return result.data.deleteCustomerAddress;
-}
-
-export async function setDefaultShippingAddress(id: string) {
-    const result = await mutate(
-        UpdateCustomerAddressMutation,
-        {
-            input: {
-                id,
-                defaultShippingAddress: true,
-            },
-        },
-        {useAuthToken: true}
-    );
-
-    if (!result.data.updateCustomerAddress) {
-        throw new Error('Failed to set default shipping address');
-    }
-
-    const locale = await getLocale();
-    revalidatePath(`/${locale}/account/addresses`);
-    return result.data.updateCustomerAddress;
-}
-
-export async function setDefaultBillingAddress(id: string) {
-    const result = await mutate(
-        UpdateCustomerAddressMutation,
-        {
-            input: {
-                id,
-                defaultBillingAddress: true,
-            },
-        },
-        {useAuthToken: true}
-    );
-
-    if (!result.data.updateCustomerAddress) {
-        throw new Error('Failed to set default billing address');
-    }
-
-    const locale = await getLocale();
-    revalidatePath(`/${locale}/account/addresses`);
-    return result.data.updateCustomerAddress;
-}
+        {useA
