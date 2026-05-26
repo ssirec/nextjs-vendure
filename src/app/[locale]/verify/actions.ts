@@ -18,6 +18,10 @@ export async function verifyAccountAction(token: string, password?: string) {
             password: password || undefined,
         });
 
+        if (!result) {
+            return {error: t('unexpectedError')};
+        }
+
         const verifyResult = result.data.verifyCustomerAccount;
 
         if (verifyResult.__typename !== 'CurrentUser') {
