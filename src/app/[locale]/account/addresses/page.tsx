@@ -25,8 +25,8 @@ export default async function AddressesPage() {
     query(GetAvailableCountriesQuery, {}, { languageCode: locale }),
   ]);
 
-  const addresses = addressesResult.data.activeCustomer?.addresses || [];
-  const countries = countriesResult.data.availableCountries || [];
+  const addresses = addressesResult?.data?.activeCustomer?.addresses || [];
+  const countries = countriesResult?.data?.availableCountries || [];
 
   return (
     <div className="space-y-6">
