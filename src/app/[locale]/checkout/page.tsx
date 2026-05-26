@@ -37,7 +37,7 @@ export default async function CheckoutPage() {
             query(GetEligiblePaymentMethodsQuery, {}, { useAuthToken: true, currencyCode, languageCode: locale }),
         ]);
 
-    const activeOrder = orderRes.data.activeOrder;
+    const activeOrder = orderRes?.data?.activeOrder;
 
     if (!activeOrder || activeOrder.lines.length === 0) {
         const t = await getTranslations({ locale, namespace: 'Checkout' });
@@ -48,10 +48,10 @@ export default async function CheckoutPage() {
         );
     }
 
-    const addresses = addressesRes.data.activeCustomer?.addresses || [];
-    const shippingMethods = shippingMethodsRes.data.eligibleShippingMethods || [];
+    const addresses = addressesRes?.data?.activeCustomer?.addresses || [];
+    const shippingMethods = shippingMethodsRes?.data?.eligibleShippingMethods || [];
     const paymentMethods =
-        paymentMethodsRes.data.eligiblePaymentMethods?.filter((m) => m.isEligible) || [];
+        paymentMethodsRes?.data?.eligiblePaymentMethods?.filter((m) => m.isEligible) || [];
 
     return (
         <CheckoutProvider order={activeOrder} shippingMethods={shippingMethods} paymentMethods={paymentMethods} countries={countries} addresses={addresses}>
