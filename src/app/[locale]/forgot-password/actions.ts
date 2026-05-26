@@ -17,6 +17,10 @@ export async function requestPasswordResetAction(prevState: { error?: string; su
             emailAddress,
         });
 
+        if (!result) {
+            return {error: t('unexpectedError')};
+        }
+
         const resetResult = result.data.requestPasswordReset;
 
         if (resetResult?.__typename !== 'Success') {
