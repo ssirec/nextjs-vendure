@@ -30,7 +30,7 @@ interface VendureRequestOptions {
   token?: string;
   useAuthToken?: boolean;
   channelToken?: string;
-  languageCode?: string; // locale, e.g. "en" or "en-US"
+  languageCode?: string;
   currencyCode?: string;
   fetch?: RequestInit;
   tags?: string[];
@@ -56,7 +56,7 @@ export async function query<TResult, TVariables>(
   ...[variables, options]: TVariables extends Record<string, never>
     ? [variables?: TVariables, options?: VendureRequestOptions]
     : [variables: TVariables, options?: VendureRequestOptions]
-): Promise<{ data: TResult; token?: string }> {
+): Promise<{ data: TResult; token?: string } | null> {
   const { token, useAuthToken, channelToken, languageCode, currencyCode, fetch: fetchOptions, tags } =
     options || {};
 
@@ -90,30 +90,53 @@ export async function query<TResult, TVariables>(
     url.searchParams.set('currencyCode', currencyCode);
   }
 
-  const response = await fetch(url.toString(), {
-    ...fetchOptions,
-    method: 'POST',
-    headers,
-    body: JSON.stringify({ query: print(document), variables: variables || {} }),
-    ...(tags && { next: { tags } }),
-  });
+  try {
+    const response = await fetch(url.toString(), {
+      ...fetchOptions,
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ query: print(document), variables: variables || {} }),
+      ...(tags && { next: { tags } }),
+    });
 
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
+    if (!response.ok) {
+      console.error(`Vendure API HTTP error: ${response.status} ${response.statusText}`);
+      return null;
+    }
+
+    const text = await response.text();
+
+    // Guard against HTML responses (API unreachable during build)
+    const trimmed = text.trim();
+    if (trimmed.startsWith('<!') || trimmed.startsWith('<html') || trimmed.startsWith('<HTML')) {
+      console.error(`Vendure API returned HTML instead of JSON for: ${url.toString()}`);
+      return null;
+    }
+
+    let result: VendureResponse<TResult>;
+    try {
+      result = JSON.parse(text);
+    } catch {
+      console.error(`Vendure API returned invalid JSON for: ${url.toString()}`);
+      return null;
+    }
+
+    if (result.errors) {
+      console.error(`Vendure GraphQL errors: ${result.errors.map(e => e.message).join(', ')}`);
+      return null;
+    }
+
+    if (!result.data) {
+      console.error('No data returned from Vendure API');
+      return null;
+    }
+
+    const newToken = extractAuthToken(response.headers);
+    return { data: result.data, ...(newToken && { token: newToken }) };
+  } catch (error) {
+    console.error('Vendure API request failed:', error);
+    return null;
   }
-
-  const result: VendureResponse<TResult> = await response.json();
-
-  if (result.errors) {
-    throw new Error(result.errors.map(e => e.message).join(', '));
-  }
-
-  if (!result.data) {
-    throw new Error('No data returned from Vendure API');
-  }
-
-  const newToken = extractAuthToken(response.headers);
-  return { data: result.data, ...(newToken && { token: newToken }) };
 }
 
 /**
@@ -124,7 +147,7 @@ export async function mutate<TResult, TVariables>(
   ...[variables, options]: TVariables extends Record<string, never>
     ? [variables?: TVariables, options?: VendureRequestOptions]
     : [variables: TVariables, options?: VendureRequestOptions]
-): Promise<{ data: TResult; token?: string }> {
+): Promise<{ data: TResult; token?: string } | null> {
   // Reuse query implementation for mutations
   // @ts-expect-error - Complex conditional type inference, runtime behavior is correct
   return query(document, variables, options);
