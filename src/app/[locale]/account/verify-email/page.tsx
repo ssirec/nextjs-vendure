@@ -33,46 +33,9 @@ async function VerifyEmailContent({ searchParams }: { searchParams: Promise<Reco
         );
     }
 
-    try {
-        const result = await mutate(UpdateCustomerEmailAddressMutation, { token }, { useAuthToken: true });
-        const updateResult = result.data.updateCustomerEmailAddress;
+    const result = await mutate(UpdateCustomerEmailAddressMutation, { token }, { useAuthToken: true });
 
-        if (updateResult.__typename === 'Success') {
-            return (
-                <Card className="max-w-md mx-auto">
-                    <CardHeader>
-                        <CardTitle>{t('verifyEmail.success')}</CardTitle>
-                        <CardDescription>
-                            {t('verifyEmail.successDesc')}
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="text-sm text-muted-foreground mb-4">
-                            {t('verifyEmail.successMessage')}
-                        </p>
-                        <Button render={<Link href="/account/profile" />} nativeButton={false}>{t('verifyEmail.goToProfile')}</Button>
-                    </CardContent>
-                </Card>
-            );
-        }
-
-        return (
-            <Card className="max-w-md mx-auto">
-                <CardHeader>
-                    <CardTitle>{t('verifyEmail.failed')}</CardTitle>
-                    <CardDescription>
-                        {updateResult.message || t('verifyEmail.failedDefault')}
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <p className="text-sm text-muted-foreground mb-4">
-                        {t('verifyEmail.failedMessage')}
-                    </p>
-                    <Button render={<Link href="/account/profile" />} nativeButton={false}>{t('verifyEmail.goToProfile')}</Button>
-                </CardContent>
-            </Card>
-        );
-    } catch {
+    if (!result) {
         return (
             <Card className="max-w-md mx-auto">
                 <CardHeader>
@@ -90,6 +53,44 @@ async function VerifyEmailContent({ searchParams }: { searchParams: Promise<Reco
             </Card>
         );
     }
+
+    const updateResult = result.data.updateCustomerEmailAddress;
+
+    if (updateResult.__typename === 'Success') {
+        return (
+            <Card className="max-w-md mx-auto">
+                <CardHeader>
+                    <CardTitle>{t('verifyEmail.success')}</CardTitle>
+                    <CardDescription>
+                        {t('verifyEmail.successDesc')}
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <p className="text-sm text-muted-foreground mb-4">
+                        {t('verifyEmail.successMessage')}
+                    </p>
+                    <Button render={<Link href="/account/profile" />} nativeButton={false}>{t('verifyEmail.goToProfile')}</Button>
+                </CardContent>
+            </Card>
+        );
+    }
+
+    return (
+        <Card className="max-w-md mx-auto">
+            <CardHeader>
+                <CardTitle>{t('verifyEmail.failed')}</CardTitle>
+                <CardDescription>
+                    {updateResult.message || t('verifyEmail.failedDefault')}
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                <p className="text-sm text-muted-foreground mb-4">
+                    {t('verifyEmail.failedMessage')}
+                </p>
+                <Button render={<Link href="/account/profile" />} nativeButton={false}>{t('verifyEmail.goToProfile')}</Button>
+            </CardContent>
+        </Card>
+    );
 }
 
 export default async function VerifyEmailPage({ searchParams }: PageProps<'/[locale]/account/verify-email'>) {
