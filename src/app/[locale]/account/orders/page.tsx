@@ -23,7 +23,7 @@ export default async function OrdersPage() {
   const t = await getTranslations({ locale, namespace: 'Account' });
 
   const result = await query(GetCustomerOrdersQuery, {}, { useAuthToken: true, languageCode: locale });
-  const orders = result.data.activeCustomer?.orders?.items || [];
+  const orders = result?.data?.activeCustomer?.orders?.items || [];
 
   return (
     <div className="space-y-6">
