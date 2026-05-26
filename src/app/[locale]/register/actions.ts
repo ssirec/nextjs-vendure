@@ -18,7 +18,6 @@ export async function registerAction(prevState: { error?: string } | undefined, 
         return {error: t('emailPasswordRequired')};
     }
 
-
     const result = await mutate(RegisterCustomerAccountMutation, {
         input: {
             emailAddress,
@@ -28,6 +27,10 @@ export async function registerAction(prevState: { error?: string } | undefined, 
             password,
         }
     });
+
+    if (!result) {
+        return {error: t('unexpectedError')};
+    }
 
     const registerResult = result.data.registerCustomerAccount;
 
