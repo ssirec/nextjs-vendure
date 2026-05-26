@@ -45,22 +45,16 @@ function extractAuthToken(headers: Headers): string | null {
   return headers.get(VENDURE_AUTH_TOKEN_HEADER);
 }
 
-function sleep(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-const MAX_RETRIES = 3;
-const RETRY_DELAYS = [1000, 3000, 5000];
-
 /**
- * Execute a GraphQL query against the Vendure API with retry logic
+ * Execute a GraphQL query against the Vendure API
+ * Returns null if the API is unavailable (e.g. during static generation in CI)
  */
 export async function query<TResult, TVariables>(
   document: TadaDocumentNode<TResult, TVariables>,
   ...[variables, options]: TVariables extends Record<string, never>
     ? [variables?: TVariables, options?: VendureRequestOptions]
     : [variables: TVariables, options?: VendureRequestOptions]
-): Promise<{ data: TResult; token?: string }> {
+): Promise<{ data: TResult; token?: string } | null> {
   const { token, useAuthToken, channelToken, languageCode, currencyCode, fetch: fetchOptions, tags } =
     options || {};
 
@@ -91,78 +85,52 @@ export async function query<TResult, TVariables>(
     url.searchParams.set('currencyCode', currencyCode);
   }
 
-  const body = JSON.stringify({ query: print(document), variables: variables || {} });
+  try {
+    const response = await fetch(url.toString(), {
+      ...fetchOptions,
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ query: print(document), variables: variables || {} }),
+      ...(tags && { next: { tags } }),
+    });
 
-  let lastError: Error | null = null;
-
-  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
-    try {
-      const response = await fetch(url.toString(), {
-        ...fetchOptions,
-        method: 'POST',
-        headers,
-        body,
-        ...(tags && { next: { tags } }),
-      });
-
-      if (!response.ok) {
-        lastError = new Error(`HTTP error! status: ${response.status}`);
-        if (attempt < MAX_RETRIES) {
-          console.warn(`Vendure API HTTP ${response.status}, retry ${attempt + 1}/${MAX_RETRIES}...`);
-          await sleep(RETRY_DELAYS[attempt]);
-          continue;
-        }
-        throw lastError;
-      }
-
-      const text = await response.text();
-      const trimmed = text.trim();
-
-      // API returned HTML instead of JSON — retry
-      if (trimmed.startsWith('<!') || trimmed.startsWith('<html') || trimmed.startsWith('<HTML')) {
-        lastError = new Error(`Vendure API returned HTML instead of JSON`);
-        if (attempt < MAX_RETRIES) {
-          console.warn(`Vendure API returned HTML, retry ${attempt + 1}/${MAX_RETRIES}...`);
-          await sleep(RETRY_DELAYS[attempt]);
-          continue;
-        }
-        throw lastError;
-      }
-
-      let result: VendureResponse<TResult>;
-      try {
-        result = JSON.parse(text);
-      } catch {
-        lastError = new Error(`Vendure API returned invalid JSON`);
-        if (attempt < MAX_RETRIES) {
-          console.warn(`Vendure API invalid JSON, retry ${attempt + 1}/${MAX_RETRIES}...`);
-          await sleep(RETRY_DELAYS[attempt]);
-          continue;
-        }
-        throw lastError;
-      }
-
-      if (result.errors) {
-        throw new Error(result.errors.map(e => e.message).join(', '));
-      }
-
-      if (!result.data) {
-        throw new Error('No data returned from Vendure API');
-      }
-
-      const newToken = extractAuthToken(response.headers);
-      return { data: result.data, ...(newToken && { token: newToken }) };
-    } catch (error) {
-      if (error instanceof Error && attempt < MAX_RETRIES && !error.message.includes('No data returned') && !error.message.includes('GraphQL')) {
-        console.warn(`Vendure API request failed, retry ${attempt + 1}/${MAX_RETRIES}: ${error.message}`);
-        await sleep(RETRY_DELAYS[attempt]);
-        continue;
-      }
-      throw error;
+    if (!response.ok) {
+      console.error(`Vendure API HTTP error: ${response.status}`);
+      return null;
     }
-  }
 
-  throw lastError || new Error('Vendure API request failed after retries');
+    const text = await response.text();
+    const trimmed = text.trim();
+
+    if (trimmed.startsWith('<!') || trimmed.startsWith('<html') || trimmed.startsWith('<HTML')) {
+      console.error('Vendure API returned HTML instead of JSON');
+      return null;
+    }
+
+    let result: VendureResponse<TResult>;
+    try {
+      result = JSON.parse(text);
+    } catch {
+      console.error('Vendure API returned invalid JSON');
+      return null;
+    }
+
+    if (result.errors) {
+      console.error(`Vendure GraphQL errors: ${result.errors.map(e => e.message).join(', ')}`);
+      return null;
+    }
+
+    if (!result.data) {
+      console.error('No data returned from Vendure API');
+      return null;
+    }
+
+    const newToken = extractAuthToken(response.headers);
+    return { data: result.data, ...(newToken && { token: newToken }) };
+  } catch (error) {
+    console.error('Vendure API request failed:', error);
+    return null;
+  }
 }
 
 /**
@@ -173,7 +141,7 @@ export async function mutate<TResult, TVariables>(
   ...[variables, options]: TVariables extends Record<string, never>
     ? [variables?: TVariables, options?: VendureRequestOptions]
     : [variables: TVariables, options?: VendureRequestOptions]
-): Promise<{ data: TResult; token?: string }> {
+): Promise<{ data: TResult; token?: string } | null> {
   // Reuse query implementation for mutations
   // @ts-expect-error - Complex conditional type inference, runtime behavior is correct
   return query(document, variables, options);
