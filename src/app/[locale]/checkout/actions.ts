@@ -36,7 +36,7 @@ export async function setShippingAddress(
         {useAuthToken: true}
     );
 
-    if (shippingResult.data.setOrderShippingAddress.__typename !== 'Order') {
+    if (!shippingResult || shippingResult.data.setOrderShippingAddress.__typename !== 'Order') {
         throw new Error('Failed to set shipping address');
     }
 
@@ -59,7 +59,7 @@ export async function setShippingMethod(shippingMethodId: string) {
         {useAuthToken: true}
     );
 
-    if (result.data.setOrderShippingMethod.__typename !== 'Order') {
+    if (!result || result.data.setOrderShippingMethod.__typename !== 'Order') {
         throw new Error('Failed to set shipping method');
     }
 
@@ -74,7 +74,7 @@ export async function createCustomerAddress(address: AddressInput) {
         {useAuthToken: true}
     );
 
-    if (!result.data.createCustomerAddress) {
+    if (!result || !result.data.createCustomerAddress) {
         throw new Error('Failed to create customer address');
     }
 
@@ -90,10 +90,10 @@ export async function transitionToArrangingPayment() {
         {useAuthToken: true}
     );
 
-    if (result.data.transitionOrderToState?.__typename === 'OrderStateTransitionError') {
-        const errorResult = result.data.transitionOrderToState;
+    if (!result || result.data.transitionOrderToState?.__typename === 'OrderStateTransitionError') {
+        const errorResult = result?.data.transitionOrderToState;
         throw new Error(
-            `Failed to transition order state: ${errorResult.errorCode} - ${errorResult.message}`
+            `Failed to transition order state: ${errorResult?.errorCode ?? 'UNKNOWN'} - ${errorResult?.message ?? 'Service unavailable'}`
         );
     }
 
@@ -127,10 +127,10 @@ export async function placeOrder(paymentMethodCode: string) {
         {useAuthToken: true}
     );
 
-    if (result.data.addPaymentToOrder.__typename !== 'Order') {
-        const errorResult = result.data.addPaymentToOrder;
+    if (!result || result.data.addPaymentToOrder.__typename !== 'Order') {
+        const errorResult = result?.data.addPaymentToOrder;
         throw new Error(
-            `Failed to place order: ${errorResult.errorCode} - ${errorResult.message}`
+            `Failed to place order: ${errorResult?.errorCode ?? 'UNKNOWN'} - ${errorResult?.message ?? 'Service unavailable'}`
         );
     }
 
@@ -166,6 +166,10 @@ export async function setCustomerForOrder(
         { input },
         { useAuthToken: true }
     );
+
+    if (!result) {
+        return { success: false, errorCode: 'UNKNOWN', message: 'Service unavailable' };
+    }
 
     const response = result.data.setCustomerForOrder;
 
