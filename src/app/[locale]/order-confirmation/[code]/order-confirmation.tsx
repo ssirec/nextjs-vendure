@@ -59,8 +59,13 @@ export async function OrderConfirmation({paramsPromise}: OrderConfirmationProps)
     const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'OrderConfirmation'});
 
-    const {data} = await query(GetOrderByCodeQuery, {code}, {useAuthToken: true});
-    const order = data.orderByCode;
+    const result = await query(GetOrderByCodeQuery, {code}, {useAuthToken: true});
+
+    if (!result) {
+        notFound();
+    }
+
+    const order = result.data.orderByCode;
 
     if (!order) {
         notFound();
