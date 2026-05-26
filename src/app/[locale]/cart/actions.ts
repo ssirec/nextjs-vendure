@@ -12,13 +12,15 @@ import {updateTag} from 'next/cache';
 
 export async function removeFromCart(lineId: string) {
     const currencyCode = await getActiveCurrencyCode();
-    await mutate(RemoveFromCartMutation, {lineId}, {useAuthToken: true, currencyCode});
+    const result = await mutate(RemoveFromCartMutation, {lineId}, {useAuthToken: true, currencyCode});
+    if (!result) return { error: 'Service unavailable' };
     updateTag('cart');
 }
 
 export async function adjustQuantity(lineId: string, quantity: number) {
     const currencyCode = await getActiveCurrencyCode();
-    await mutate(AdjustCartItemMutation, {lineId, quantity}, {useAuthToken: true, currencyCode});
+    const result = await mutate(AdjustCartItemMutation, {lineId, quantity}, {useAuthToken: true, currencyCode});
+    if (!result) return { error: 'Service unavailable' };
     updateTag('cart');
 }
 
@@ -27,7 +29,8 @@ export async function applyPromotionCode(formData: FormData) {
     if (!code) return;
 
     const currencyCode = await getActiveCurrencyCode();
-    await mutate(ApplyPromotionCodeMutation, {couponCode: code}, {useAuthToken: true, currencyCode});
+    const result = await mutate(ApplyPromotionCodeMutation, {couponCode: code}, {useAuthToken: true, currencyCode});
+    if (!result) return { error: 'Service unavailable' };
     updateTag('cart');
 }
 
@@ -36,6 +39,7 @@ export async function removePromotionCode(formData: FormData) {
     if (!code) return;
 
     const currencyCode = await getActiveCurrencyCode();
-    await mutate(RemovePromotionCodeMutation, {couponCode: code}, {useAuthToken: true, currencyCode});
+    const result = await mutate(RemovePromotionCodeMutation, {couponCode: code}, {useAuthToken: true, currencyCode});
+    if (!result) return { error: 'Service unavailable' };
     updateTag('cart');
 }
