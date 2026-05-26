@@ -76,4 +76,56 @@ export async function deleteAddress(id: string) {
     const result = await mutate(
         DeleteCustomerAddressMutation,
         {id},
-        {useA
+        {useAuthToken: true}
+    );
+
+    if (!result || !result.data.deleteCustomerAddress.success) {
+        throw new Error('Failed to delete address');
+    }
+
+    const locale = await getLocale();
+    revalidatePath(`/${locale}/account/addresses`);
+    return result.data.deleteCustomerAddress;
+}
+
+export async function setDefaultShippingAddress(id: string) {
+    const result = await mutate(
+        UpdateCustomerAddressMutation,
+        {
+            input: {
+                id,
+                defaultShippingAddress: true,
+            },
+        },
+        {useAuthToken: true}
+    );
+
+    if (!result || !result.data.updateCustomerAddress) {
+        throw new Error('Failed to set default shipping address');
+    }
+
+    const locale = await getLocale();
+    revalidatePath(`/${locale}/account/addresses`);
+    return result.data.updateCustomerAddress;
+}
+
+export async function setDefaultBillingAddress(id: string) {
+    const result = await mutate(
+        UpdateCustomerAddressMutation,
+        {
+            input: {
+                id,
+                defaultBillingAddress: true,
+            },
+        },
+        {useAuthToken: true}
+    );
+
+    if (!result || !result.data.updateCustomerAddress) {
+        throw new Error('Failed to set default billing address');
+    }
+
+    const locale = await getLocale();
+    revalidatePath(`/${locale}/account/addresses`);
+    return result.data.updateCustomerAddress;
+}
