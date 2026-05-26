@@ -21,7 +21,7 @@ export default async function ProfilePage() {
     const t = await getTranslations({ locale, namespace: 'Common' });
 
     const result = await query(GetActiveCustomerQuery, {}, { useAuthToken: true, languageCode: locale });
-    const customer = result.data.activeCustomer ?? null;
+    const customer = result?.data?.activeCustomer ?? null;
 
     return (
         <Suspense fallback={<div className="p-8 text-center">{t('loading')}</div>}>
