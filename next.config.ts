@@ -4,6 +4,10 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
+  cacheComponents: true,
+  experimental: {
+    rootParams: true,
+  },
   typescript: {
     ignoreBuildErrors: true,
   },
