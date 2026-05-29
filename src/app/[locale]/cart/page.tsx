@@ -1,7 +1,6 @@
-export const dynamic = 'force-dynamic';
-
 import { Suspense } from 'react';
 import { connection } from 'next/server';
+import { cookies } from 'next/headers';
 import { getRouteLocale } from '@/i18n/server';
 import { getTranslations } from 'next-intl/server';
 import { Cart } from './cart';
@@ -16,6 +15,7 @@ export async function generateMetadata() {
 
 export default async function CartPage() {
     await connection();
+    cookies(); // Force dynamic rendering
     const locale = await getRouteLocale();
     const t = await getTranslations({ locale, namespace: 'Cart' });
 
