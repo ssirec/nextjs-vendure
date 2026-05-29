@@ -1,6 +1,5 @@
-export const dynamic = 'force-dynamic';
-
 import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
 import { getRouteLocale } from '@/i18n/server';
 import { query } from '@/lib/vendure/api';
 import { GetCustomerAddressesQuery, GetAvailableCountriesQuery } from '@/lib/vendure/queries';
@@ -19,6 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function AddressesPage() {
   await connection();
+  cookies(); // Forces dynamic rendering
   const locale = await getRouteLocale();
   const t = await getTranslations({ locale, namespace: 'Account' });
 
