@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { Suspense } from 'react';
 import { connection } from 'next/server';
 import { getRouteLocale } from '@/i18n/server';
