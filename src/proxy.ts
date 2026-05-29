@@ -1,10 +1,11 @@
-export const runtime = 'edge';
-
 import createMiddleware from 'next-intl/middleware';
-import { routing } from '@/i18n/routing';
+import {NextRequest} from 'next/server';
+import {routing} from './i18n/routing';
 
-export default createMiddleware(routing);
+const middleware = createMiddleware(routing);
 
-export const config = {
-  matcher: ['/((?!api|_next|.*\\..*).*)']
-};
+export function proxy(request: NextRequest) {
+    return middleware(request);
+}
+
+export const config = {matcher: ['/((?!api|_next|_vercel|.*\\..*).*)']};
