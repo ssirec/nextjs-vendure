@@ -1,7 +1,6 @@
-export const dynamic = 'force-dynamic';
-
 import type {Metadata} from 'next';
 import {Suspense} from 'react';
+import { cookies } from 'next/headers';
 import {getRouteLocale} from '@/i18n/server';
 import {getTranslations} from 'next-intl/server';
 import { RegistrationForm } from "./registration-form";
@@ -70,6 +69,7 @@ async function RegisterContent({
 }
 
 export default async function RegisterPage({searchParams}: PageProps<'/[locale]/register'>) {
+    cookies(); // Forces dynamic rendering
     const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Auth'});
 
