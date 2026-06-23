@@ -147,7 +147,8 @@
     "title": "Page not found",
     "message": "The page you're looking for doesn't exist or has been moved.",
     "goHome": "Go home",
-    "browseProducts": "Browse products"
+    "browseProducts": "Browse products",
+    "popularCollections": "Popular collections"
   },
   "Common": {
     "loading": "Loading...",
@@ -172,7 +173,15 @@
     "featurePayments": "Multiple payment options",
     "featureEasy": "Easy order tracking",
     "featureReturns": "Hassle-free returns",
-    "signUpMessage": "Create an account to track orders, save addresses, and checkout faster."
+    "signUpMessage": "Create an account to track orders, save addresses, and checkout faster.",
+    "welcomeBack": "Welcome back",
+    "enterCredentials": "Enter your credentials to continue",
+    "forgotPasswordPageTitle": "Forgot password",
+    "emailValidation": "Please enter a valid email address",
+    "forgotPasswordTitle": "Forgot your password?",
+    "forgotPasswordDescription": "Enter your email address and we'll send you a link to reset your password.",
+    "sendResetLink": "Send reset link",
+    "backToSignIn": "Back to sign in"
   },
   "Account": {
     "title": "My account",
@@ -190,7 +199,13 @@
     "orderStatus": "Status",
     "addressesPageTitle": "My addresses",
     "manageAddresses": "Manage your shipping and billing addresses",
-    "order": "Order"
+    "order": "Order",
+    "ordersPageTitle": "My orders",
+    "profile": "Profile",
+    "verifyEmail": {
+      "verifying": "Verifying your email...",
+      "verifyingDesc": "Please wait while we verify your email address."
+    }
   },
   "Footer": {
     "description": "Modern e-commerce built with Vendure and Next.js.",
@@ -211,5 +226,6 @@
     "passwordsMismatch": "Passwords do not match",
     "unexpectedError": "An unexpected error occurred. Please try again.",
     "invalidCredentials": "Invalid email or password"
-  }
+  },
+  "Verify": "Verify your email"
 }
