@@ -122,6 +122,10 @@
       "payment": "Zahlung",
       "review": "Übersicht"
     },
+    "contactInformation": "Kontaktinformationen",
+    "shippingAddress": "Lieferadresse",
+    "deliveryMethod": "Liefermethode",
+    "paymentMethod": "Zahlungsmethode",
     "reviewAndPlaceOrder": "Bestellung überprüfen und abschließen",
     "continue": "Weiter",
     "cancel": "Abbrechen",
@@ -129,9 +133,36 @@
     "free": "Kostenlos",
     "continueToPayment": "Weiter zur Zahlung",
     "continueToReview": "Weiter zur Übersicht",
-    "placeOrder": "Jetzt kaufen"
+    "placeOrder": "Jetzt kaufen",
+    "completeAllSteps": "Bitte vervollständigen Sie alle Schritte, bevor Sie Ihre Bestellung aufgeben"
+  },
+  "OrderConfirmation": {
+    "pageTitle": "Bestellbestätigung",
+    "orderConfirmed": "Bestellung bestätigt!",
+    "thankYou": "Vielen Dank für Ihre Bestellung. Ihre Bestellnummer ist {orderNumber}.",
+    "emailConfirmation": "Sie erhalten eine E-Mail mit Ihren Bestelldetails und Sendungsverfolgungsinformationen.",
+    "orderSummary": "Bestellübersicht",
+    "qty": "Menge: {quantity}",
+    "total": "Gesamt",
+    "shippingAddress": "Lieferadresse",
+    "continueShopping": "Weiter einkaufen",
+    "viewOrders": "Bestellungen ansehen"
+  },
+  "NotFound": {
+    "title": "Seite nicht gefunden",
+    "message": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+    "goHome": "Zur Startseite",
+    "browseProducts": "Produkte durchsuchen",
+    "popularCollections": "Beliebte Kollektionen"
+  },
+  "Common": {
+    "loading": "Wird geladen...",
+    "sending": "Wird gesendet...",
+    "sku": "Art.-Nr.",
+    "siteDescription": "Entdecken Sie Top-Produkte bei {siteName}. Hohe Qualität, faire Preise und schnelle Lieferung."
   },
   "Auth": {
+    "pageTitle": "Anmelden",
     "signIn": "Anmelden",
     "signingIn": "Wird angemeldet...",
     "email": "E-Mail",
@@ -147,6 +178,7 @@
     "enterCredentials": "Geben Sie Ihre Zugangsdaten ein",
     "joinUs": "Erstellen Sie ein Konto für schnelleren Checkout und exklusive Angebote.",
     "forgotPasswordTitle": "Passwort vergessen?",
+    "forgotPasswordPageTitle": "Passwort vergessen",
     "sendResetLink": "Link senden",
     "sending": "Wird gesendet...",
     "backToSignIn": "Zur Anmeldung",
@@ -156,26 +188,9 @@
     "featurePayments": "Mehrere Zahlungsoptionen",
     "featureEasy": "Einfache Bestellverfolgung",
     "featureReturns": "Problemlose Rücksendung",
-    "signUpMessage": "Erstellen Sie ein Konto, um Bestellungen zu verfolgen, Adressen zu speichern und schneller zur Kasse zu gehen."
-  },
-  "Common": {
-    "loading": "Wird geladen...",
-    "sending": "Wird gesendet...",
-    "sku": "Art.-Nr.",
-    "siteDescription": "Entdecken Sie Top-Produkte bei {siteName}. Hohe Qualität, faire Preise und schnelle Lieferung."
-  },
-  "Errors": {
-    "fieldsRequired": "Alle Felder sind erforderlich",
-    "passwordsMismatch": "Passwörter stimmen nicht überein",
-    "unexpectedError": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
-    "invalidCredentials": "Ungültige E-Mail-Adresse oder Passwort.",
-    "failedAddToCart": "Artikel konnte nicht zum Warenkorb hinzugefügt werden"
-  },
-  "NotFound": {
-    "title": "Seite nicht gefunden",
-    "message": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
-    "goHome": "Zur Startseite",
-    "browseProducts": "Produkte durchsuchen"
+    "signUpMessage": "Erstellen Sie ein Konto, um Bestellungen zu verfolgen, Adressen zu speichern und schneller zur Kasse zu gehen.",
+    "emailValidation": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+    "forgotPasswordDescription": "Geben Sie Ihre E-Mail-Adresse ein und wir senden Ihnen einen Link zum Zurücksetzen Ihres Passworts."
   },
   "Account": {
     "title": "Mein Konto",
@@ -192,18 +207,34 @@
     "orderTotal": "Gesamt",
     "orderStatus": "Status",
     "addressesPageTitle": "Meine Adressen",
-    "order": "Bestellung"
+    "manageAddresses": "Verwalten Sie Ihre Liefer- und Rechnungsadressen",
+    "order": "Bestellung",
+    "ordersPageTitle": "Meine Bestellungen",
+    "profile": "Profil",
+    "verifyEmail": {
+      "verifying": "E-Mail wird verifiziert...",
+      "verifyingDesc": "Bitte warten Sie, während wir Ihre E-Mail-Adresse verifizieren."
+    }
   },
-  "OrderConfirmation": {
-    "pageTitle": "Bestellbestätigung",
-    "orderConfirmed": "Bestellung bestätigt!",
-    "thankYou": "Vielen Dank für Ihre Bestellung. Ihre Bestellnummer ist {orderNumber}.",
-    "emailConfirmation": "Sie erhalten eine E-Mail mit Ihren Bestelldetails und Sendungsverfolgungsinformationen.",
-    "orderSummary": "Bestellübersicht",
-    "qty": "Menge: {quantity}",
-    "total": "Gesamt",
-    "shippingAddress": "Lieferadresse",
-    "continueShopping": "Weiter einkaufen",
-    "viewOrders": "Bestellungen ansehen"
-  }
+  "Footer": {
+    "description": "Moderne E-Commerce-Lösung mit Vendure und Next.js.",
+    "categories": "Kategorien",
+    "customer": "Kunde",
+    "shopAll": "Alle Produkte",
+    "orders": "Bestellungen",
+    "account": "Konto",
+    "vendure": "Vendure",
+    "github": "GitHub",
+    "documentation": "Dokumentation",
+    "sourceCode": "Quellcode",
+    "copyright": "Alle Rechte vorbehalten.",
+    "poweredBy": "Powered by"
+  },
+  "Errors": {
+    "fieldsRequired": "Alle Felder sind erforderlich",
+    "passwordsMismatch": "Passwörter stimmen nicht überein",
+    "unexpectedError": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    "invalidCredentials": "Ungültige E-Mail-Adresse oder Passwort."
+  },
+  "Verify": "E-Mail bestätigen"
 }
