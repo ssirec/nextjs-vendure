@@ -147,7 +147,8 @@
     "title": "Pagina non trovata",
     "message": "La pagina che stai cercando non esiste o è stata spostata.",
     "goHome": "Torna alla home",
-    "browseProducts": "Sfoglia i prodotti"
+    "browseProducts": "Sfoglia i prodotti",
+    "popularCollections": "Collezioni popolari"
   },
   "Common": {
     "loading": "Caricamento...",
@@ -172,7 +173,15 @@
     "featurePayments": "Diverse opzioni di pagamento",
     "featureEasy": "Tracciamento ordini facile",
     "featureReturns": "Resi senza problemi",
-    "signUpMessage": "Crea un account per tracciare gli ordini, salvare gli indirizzi e pagare più velocemente."
+    "signUpMessage": "Crea un account per tracciare gli ordini, salvare gli indirizzi e pagare più velocemente.",
+    "welcomeBack": "Bentornato",
+    "enterCredentials": "Inserisci le tue credenziali per continuare",
+    "forgotPasswordPageTitle": "Password dimenticata",
+    "emailValidation": "Inserisci un indirizzo email valido",
+    "forgotPasswordTitle": "Hai dimenticato la password?",
+    "forgotPasswordDescription": "Inserisci il tuo indirizzo email e ti invieremo un link per reimpostare la password.",
+    "sendResetLink": "Invia link di reset",
+    "backToSignIn": "Torna all'accesso"
   },
   "Account": {
     "title": "Il mio account",
@@ -189,7 +198,14 @@
     "orderTotal": "Totale",
     "orderStatus": "Stato",
     "addressesPageTitle": "I miei indirizzi",
-    "order": "Ordine"
+    "manageAddresses": "Gestisci i tuoi indirizzi di spedizione e fatturazione",
+    "order": "Ordine",
+    "ordersPageTitle": "I miei ordini",
+    "profile": "Profilo",
+    "verifyEmail": {
+      "verifying": "Verifica dell'email in corso...",
+      "verifyingDesc": "Attendi mentre verifichiamo il tuo indirizzo email."
+    }
   },
   "Footer": {
     "description": "E-commerce moderno costruito con Vendure e Next.js.",
@@ -210,5 +226,6 @@
     "passwordsMismatch": "Le password non corrispondono",
     "unexpectedError": "Si è verificato un errore imprevisto. Riprova.",
     "invalidCredentials": "E-mail o password non validi"
-  }
+  },
+  "Verify": "Verifica la tua email"
 }
