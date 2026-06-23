@@ -236,5 +236,7 @@
     "unexpectedError": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
     "invalidCredentials": "Ungültige E-Mail-Adresse oder Passwort."
   },
-  "Verify": "E-Mail bestätigen"
+  "Verify": {
+    "loading": "E-Mail wird verifiziert..."
+  }
 }
