@@ -214,12 +214,7 @@
     "shopAll": "Tutti i prodotti",
     "orders": "Ordini",
     "account": "Account",
-    "vendure": "Vendure",
-    "github": "GitHub",
-    "documentation": "Documentazione",
-    "sourceCode": "Codice sorgente",
-    "copyright": "Tutti i diritti riservati.",
-    "poweredBy": "Powered by"
+    "copyright": "© {year} Sirsa d.o.o. Tutti i diritti riservati."
   },
   "Errors": {
     "fieldsRequired": "Tutti i campi sono obbligatori",
