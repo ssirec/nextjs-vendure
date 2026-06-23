@@ -237,6 +237,7 @@
     "invalidCredentials": "Ungültige E-Mail-Adresse oder Passwort."
   },
   "Verify": {
-    "loading": "E-Mail wird verifiziert..."
+    "loading": "E-Mail wird verifiziert...",
+    "title": "E-Mail bestätigen"
   }
 }
