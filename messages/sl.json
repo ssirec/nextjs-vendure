@@ -148,13 +148,22 @@
     "featurePayments": "Več načinov plačila",
     "featureEasy": "Enostavno sledenje naročilom",
     "featureReturns": "Brezhibna vračila",
-    "signUpMessage": "Ustvarite račun za sledenje naročilom, shranjevanje naslovov in hitrejše plačevanje."
+    "signUpMessage": "Ustvarite račun za sledenje naročilom, shranjevanje naslovov in hitrejše plačevanje.",
+    "welcomeBack": "Dobrodošli nazaj",
+    "enterCredentials": "Vnesite svoje poverilnice za nadaljevanje",
+    "forgotPasswordPageTitle": "Pozabljeno geslo",
+    "emailValidation": "Vnesite veljaven e-poštni naslov",
+    "forgotPasswordTitle": "Ste pozabili geslo?",
+    "forgotPasswordDescription": "Vnesite svoj e-poštni naslov in poslali vam bomo povezavo za ponastavitev gesla.",
+    "sendResetLink": "Pošlji povezavo",
+    "backToSignIn": "Nazaj na prijavo"
   },
   "NotFound": {
     "title": "Stran ni najdena",
     "message": "Stran ne obstaja ali je bila premaknjena.",
     "goHome": "Nazaj na domov",
-    "browseProducts": "Poglej izdelke"
+    "browseProducts": "Poglej izdelke",
+    "popularCollections": "Priljubljene zbirke"
   },
   "Footer": {
     "description": "Sodobna e-trgovina, zgrajena z Vendure in Next.js.",
@@ -191,7 +200,14 @@
     "orderTotal": "Skupaj",
     "orderStatus": "Status",
     "addressesPageTitle": "Moji naslovi",
-    "order": "Naročilo"
+    "manageAddresses": "Upravljajte svoje naslove za dostavo in obračun",
+    "order": "Naročilo",
+    "ordersPageTitle": "Moja naročila",
+    "profile": "Profil",
+    "verifyEmail": {
+      "verifying": "Potrjevanje e-pošte...",
+      "verifyingDesc": "Počakajte, da potrdimo vaš e-poštni naslov."
+    }
   },
   "OrderConfirmation": {
     "pageTitle": "Potrditev naročila",
@@ -210,5 +226,6 @@
     "passwordsMismatch": "Gesli se ne ujemata",
     "unexpectedError": "Prišlo je do napake. Poskusite znova.",
     "invalidCredentials": "Napačen e-poštni naslov ali geslo"
-  }
+  },
+  "Verify": "Potrdite svoj e-poštni naslov"
 }
