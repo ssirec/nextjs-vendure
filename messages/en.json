@@ -227,5 +227,7 @@
     "unexpectedError": "An unexpected error occurred. Please try again.",
     "invalidCredentials": "Invalid email or password"
   },
-  "Verify": "Verify your email"
+  "Verify": {
+    "loading": "Verifying your email..."
+  }
 }
