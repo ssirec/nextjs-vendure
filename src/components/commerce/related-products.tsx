@@ -18,12 +18,7 @@ async function getRelatedProducts(
   currentProductId: string,
   currencyCode: string
 ) {
-  "use cache";
-  cacheLife("hours");
-
   const locale = await getRouteLocale();
-  cacheTag(`related-products-${collectionSlug}-${locale}-${currencyCode}`);
-  cacheTag("products");
 
   const result = await query(
     GetCollectionProductsQuery,
