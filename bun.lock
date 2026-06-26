@@ -1,4 +1,0 @@
-bun install
-git add bun.lock
-git commit -m "Add bun lockfile and fix page.tsx"
-git push
