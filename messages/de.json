@@ -216,13 +216,17 @@
       "verifyingDesc": "Bitte warten Sie, während wir Ihre E-Mail-Adresse verifizieren."
     }
   },
-  "Footer": {
+    "Footer": {
     "description": "Moderne E-Commerce-Lösung mit Vendure und Next.js.",
     "categories": "Kategorien",
     "customer": "Kunde",
     "shopAll": "Alle Produkte",
     "orders": "Bestellungen",
     "account": "Konto",
+    "company": "Unternehmen",
+    "aboutUs": "Über uns",
+    "privacyPolicy": "Datenschutz",
+    "termsConditions": "AGB",
     "copyright": "© {year} Sirsa d.o.o. Alle Rechte vorbehalten."
   },
   "Errors": {
