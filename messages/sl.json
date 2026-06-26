@@ -165,19 +165,18 @@
     "browseProducts": "Poglej izdelke",
     "popularCollections": "Priljubljene zbirke"
   },
-  "Footer": {
+    "Footer": {
     "description": "Sodobna e-trgovina, zgrajena z Vendure in Next.js.",
     "categories": "Kategorije",
     "customer": "Stranke",
     "shopAll": "Vsi izdelki",
     "orders": "Naročila",
     "account": "Račun",
-    "vendure": "Vendure",
-    "github": "GitHub",
-    "documentation": "Dokumentacija",
-    "sourceCode": "Izvorna koda",
-    "copyright": "Vse pravice pridržane.",
-    "poweredBy": "Powered by"
+    "company": "Podjetje",
+    "aboutUs": "O nas",
+    "privacyPolicy": "Zasebnost",
+    "termsConditions": "Pogoji poslovanja",
+    "copyright": "© {year} Sirsa d.o.o. Vse pravice pridržane."
   },
   "Common": {
     "loading": "Nalaganje...",
