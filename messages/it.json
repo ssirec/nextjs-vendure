@@ -207,13 +207,17 @@
       "verifyingDesc": "Attendi mentre verifichiamo il tuo indirizzo email."
     }
   },
-  "Footer": {
+    "Footer": {
     "description": "E-commerce moderno costruito con Vendure e Next.js.",
     "categories": "Categorie",
     "customer": "Cliente",
     "shopAll": "Tutti i prodotti",
     "orders": "Ordini",
     "account": "Account",
+    "company": "Azienda",
+    "aboutUs": "Chi siamo",
+    "privacyPolicy": "Privacy",
+    "termsConditions": "Termini e condizioni",
     "copyright": "© {year} Sirsa d.o.o. Tutti i diritti riservati."
   },
   "Errors": {
