@@ -165,7 +165,7 @@
     "browseProducts": "Poglej izdelke",
     "popularCollections": "Priljubljene zbirke"
   },
-    "Footer": {
+  "Footer": {
     "description": "Sodobna e-trgovina, zgrajena z Vendure in Next.js.",
     "categories": "Kategorije",
     "customer": "Stranke",
@@ -226,5 +226,8 @@
     "unexpectedError": "Prišlo je do napake. Poskusite znova.",
     "invalidCredentials": "Napačen e-poštni naslov ali geslo"
   },
-  "Verify": "Potrdite svoj e-poštni naslov"
+  "Verify": {
+    "loading": "Potrjevanje e-pošte...",
+    "title": "Potrdite svoj e-poštni naslov"
+  }
 }
