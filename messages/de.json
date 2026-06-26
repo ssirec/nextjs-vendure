@@ -235,6 +235,25 @@
     "unexpectedError": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
     "invalidCredentials": "Ungültige E-Mail-Adresse oder Passwort."
   },
+  "Sort": {
+    "placeholder": "Sortieren nach",
+    "nameAsc": "Name A–Z",
+    "nameDesc": "Name Z–A",
+    "priceAsc": "Preis aufsteigend",
+    "priceDesc": "Preis absteigend"
+  },
+  "Filters": {
+    "title": "Filter",
+    "clearAll": "Alle löschen",
+    "filtersButton": "Filter"
+  },
+  "Search": {
+    "pageTitle": "Suche",
+    "resultsTitle": "Ergebnisse für \u0022{query}\u0022",
+    "resultsFor": "Ergebnisse für \u0022{query}\u0022",
+    "metaDescription": "Suche nach \u0022{query}\u0022 auf {siteName}",
+    "metaCatalogDescription": "Alle Produkte bei {siteName} ansehen"
+  },
   "Verify": {
     "loading": "E-Mail wird verifiziert...",
     "title": "E-Mail bestätigen"

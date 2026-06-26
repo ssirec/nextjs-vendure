@@ -220,6 +220,25 @@
     "continueShopping": "Nadaljuj z nakupovanjem",
     "viewOrders": "Poglej naročila"
   },
+  "Sort": {
+    "placeholder": "Razvrsti po",
+    "nameAsc": "Ime A–Ž",
+    "nameDesc": "Ime Ž–A",
+    "priceAsc": "Cena naraščajoče",
+    "priceDesc": "Cena padajoče"
+  },
+  "Filters": {
+    "title": "Filtri",
+    "clearAll": "Počisti vse",
+    "filtersButton": "Filtri"
+  },
+  "Search": {
+    "pageTitle": "Iskanje",
+    "resultsTitle": "Rezultati za \u0022{query}\u0022",
+    "resultsFor": "Rezultati za \u0022{query}\u0022",
+    "metaDescription": "Iskanje \u0022{query}\u0022 na {siteName}",
+    "metaCatalogDescription": "Vsi izdelki na {siteName}"
+  },
   "Errors": {
     "fieldsRequired": "Vsa polja so obvezna",
     "passwordsMismatch": "Gesli se ne ujemata",

@@ -226,6 +226,25 @@
     "unexpectedError": "Si è verificato un errore imprevisto. Riprova.",
     "invalidCredentials": "E-mail o password non validi"
   },
+  "Sort": {
+    "placeholder": "Ordina per",
+    "nameAsc": "Nome A–Z",
+    "nameDesc": "Nome Z–A",
+    "priceAsc": "Prezzo crescente",
+    "priceDesc": "Prezzo decrescente"
+  },
+  "Filters": {
+    "title": "Filtri",
+    "clearAll": "Cancella tutto",
+    "filtersButton": "Filtri"
+  },
+  "Search": {
+    "pageTitle": "Cerca",
+    "resultsTitle": "Risultati per \u0022{query}\u0022",
+    "resultsFor": "Risultati per \u0022{query}\u0022",
+    "metaDescription": "Cerca \u0022{query}\u0022 su {siteName}",
+    "metaCatalogDescription": "Sfoglia tutti i prodotti su {siteName}"
+  },
   "Verify": {
     "loading": "Verifica dell'email in corso...",
     "title": "Verifica la tua email"
