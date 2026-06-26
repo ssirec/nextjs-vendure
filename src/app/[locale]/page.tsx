@@ -44,11 +44,9 @@ export default async function Home() {
     return (
         <div className="min-h-screen">
             <HeroSection/>
-const locale = await getRouteLocale();
-...
-<Suspense>
-  <FeaturedProducts />
-</Suspense>
+            <Suspense>
+                <FeaturedProducts />
+            </Suspense>
 
             <section className="py-16 md:py-24 bg-muted/30">
                 <div className="container mx-auto px-4">
