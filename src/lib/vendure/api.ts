@@ -9,7 +9,7 @@ const VENDURE_API_URL =
 const VENDURE_CHANNEL_TOKEN =
   process.env.VENDURE_CHANNEL_TOKEN ||
   process.env.NEXT_PUBLIC_VENDURE_CHANNEL_TOKEN ||
-  '__default_channel__';
+  '';
 
 const VENDURE_AUTH_TOKEN_HEADER =
   process.env.VENDURE_AUTH_TOKEN_HEADER || 'vendure-auth-token';

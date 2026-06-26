@@ -9,12 +9,7 @@ import {ArrowRight} from "lucide-react";
 import {getTranslations} from 'next-intl/server';
 
 async function getFeaturedCollectionProducts(currencyCode: string) {
-    'use cache'
-    cacheLife('days')
-
     const locale = await getRouteLocale();
-    cacheTag(`featured-${locale}-${currencyCode}`);
-    cacheTag('products');
 
     // Fetch featured products from a specific collection
     // Replace 'featured' with your actual collection slug
