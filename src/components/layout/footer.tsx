@@ -17,7 +17,7 @@ async function Copyright() {
 
     return (
         <div>
-            &copy; {COPYRIGHT_YEAR} {t('copyright')}
+            {t('copyright', {year: COPYRIGHT_YEAR})}
         </div>
     )
 }
@@ -92,37 +92,31 @@ export async function Footer() {
                     </div>
 
                     <div>
-                        <p className="text-sm font-semibold mb-4">{t('vendure')}</p>
+                        <p className="text-sm font-semibold mb-4">{t('company')}</p>
                         <ul className="space-y-2 text-sm text-muted-foreground">
                             <li>
-                                <a
-                                    href="https://github.com/vendure-ecommerce"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                                <NavigationLink
+                                    href="/about"
                                     className="hover:text-foreground transition-colors"
                                 >
-                                    {t('github')}
-                                </a>
+                                    {t('aboutUs')}
+                                </NavigationLink>
                             </li>
                             <li>
-                                <a
-                                    href="https://docs.vendure.io"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                                <NavigationLink
+                                    href="/privacy-policy"
                                     className="hover:text-foreground transition-colors"
                                 >
-                                    {t('documentation')}
-                                </a>
+                                    {t('privacyPolicy')}
+                                </NavigationLink>
                             </li>
                             <li>
-                                <a
-                                    href="https://github.com/vendure-ecommerce/vendure"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                                <NavigationLink
+                                    href="/terms-and-conditions"
                                     className="hover:text-foreground transition-colors"
                                 >
-                                    {t('sourceCode')}
-                                </a>
+                                    {t('termsConditions')}
+                                </NavigationLink>
                             </li>
                         </ul>
                     </div>
@@ -132,26 +126,6 @@ export async function Footer() {
                 <div
                     className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
                     <Copyright/>
-                    <div className="flex items-center gap-2">
-                        <span>{t('poweredBy')}</span>
-                        <a
-                            href="https://vendure.io"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="hover:text-foreground transition-colors"
-                        >
-                            <Image src="/vendure.svg" alt="Vendure" width={40} height={27} className="h-4 w-auto dark:invert" />
-                        </a>
-                        <span>&</span>
-                        <a
-                            href="https://nextjs.org"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="hover:text-foreground transition-colors"
-                        >
-                            <Image src="/next.svg" alt="Next.js" width={16} height={16} className="h-5 w-auto dark:invert" />
-                        </a>
-                    </div>
                 </div>
             </div>
         </footer>
