@@ -226,6 +226,25 @@
     "unexpectedError": "An unexpected error occurred. Please try again.",
     "invalidCredentials": "Invalid email or password"
   },
+  "Sort": {
+    "placeholder": "Sort by",
+    "nameAsc": "Name A–Z",
+    "nameDesc": "Name Z–A",
+    "priceAsc": "Price low to high",
+    "priceDesc": "Price high to low"
+  },
+  "Filters": {
+    "title": "Filters",
+    "clearAll": "Clear all",
+    "filtersButton": "Filters"
+  },
+  "Search": {
+    "pageTitle": "Search",
+    "resultsTitle": "Results for \u0022{query}\u0022",
+    "resultsFor": "Results for \u0022{query}\u0022",
+    "metaDescription": "Search for \u0022{query}\u0022 on {siteName}",
+    "metaCatalogDescription": "Browse all products at {siteName}"
+  },
   "Verify": {
     "loading": "Verifying your email...",
     "title": "Verify your email"
