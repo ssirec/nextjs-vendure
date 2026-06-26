@@ -214,6 +214,10 @@
     "shopAll": "Shop all",
     "orders": "Orders",
     "account": "Account",
+    "company": "Company",
+    "aboutUs": "About us",
+    "privacyPolicy": "Privacy policy",
+    "termsConditions": "Terms & conditions",
     "copyright": "© {year} Sirsa d.o.o. All rights reserved."
   },
   "Errors": {
