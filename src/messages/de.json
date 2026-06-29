@@ -7,6 +7,9 @@
     "login": "Anmelden",
     "logout": "Abmelden",
     "search": "Suche",
-    "products": "Produkte"
+    "products": "Produkte",
+    "filters": "Filter",
+    "category": "Kategorie",
+    "brand": "Marke"
   }
 }

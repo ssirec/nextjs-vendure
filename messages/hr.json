@@ -1,324 +1,254 @@
 {
-    "common": {
-        "continue": "Nastavi",
-        "cancel": "Odustani",
-        "save": "Spremi",
-        "edit": "Uredi",
-        "delete": "Obriši",
-        "apply": "Primijeni",
-        "remove": "Ukloni",
-        "loading": "Učitavanje...",
-        "free": "BESPLATNO",
-        "each": "po komadu",
-        "sku": "ŠIFRA ARTIKLA",
-        "subtotal": "Međuzbroj",
-        "shipping": "Dostava",
-        "total": "Ukupno",
-        "calculatedAtCheckout": "Izračunava se pri naplati",
-        "toBeCalculated": "Bit će izračunato",
-        "qty": "Kol.",
-        "backToHome": "Idi na početnu",
-        "continueShopping": "Nastavi kupovinu",
-        "noImage": "Nema slike",
-        "from": "od"
-    },
-    "nav": {
-        "searchPlaceholder": "Pretraži proizvode...",
-        "shoppingCart": "Košarica",
-        "profile": "Profil",
-        "orders": "Narudžbe",
-        "signIn": "Prijavi se",
-        "signOut": "Odjavi se",
-        "hi": "Bok, {name}"
-    },
-    "theme": {
-        "light": "Svijetla",
-        "dark": "Tamna",
-        "system": "Sustav",
-        "toggle": "Prebaci temu"
-    },
-    "home": {
-        "title": "Vaša trgovina na jednom mjestu",
-        "description": "Otkrijte visokokvalitetne proizvode po konkurentnim cijenama. Kupujte sada za najbolje ponude na elektronici, modi, kućnim potrepštinama i još mnogo toga.",
-        "hero": {
-            "title": "Početni predložak e-trgovine",
-            "subtitle": "Pokrenuto od strane Vendure i Next.js",
-            "shopNow": "Kupujte sada",
-            "viewOnGitHub": "Pogledajte na GitHubu"
-        },
-        "features": {
-            "highQuality": "Visoka kvaliteta",
-            "highQualityDesc": "Premium proizvodi pažljivo odabrani za vas",
-            "bestPrices": "Najbolje cijene",
-            "bestPricesDesc": "Konkurentne cijene na svim našim proizvodima",
-            "fastDelivery": "Brza dostava",
-            "fastDeliveryDesc": "Brza i pouzdana dostava diljem svijeta"
-        }
-    },
-    "products": {
-        "featuredProducts": "Istaknuti proizvodi",
-        "relatedProducts": "Srodni proizvodi",
-        "noProductsFound": "Nema pronađenih proizvoda",
-        "product": "proizvod",
-        "products": "proizvodi",
-        "inStock": "Na stanju",
-        "outOfStock": "Nema na stanju",
-        "addToCart": "Dodaj u košaricu",
-        "addedToCart": "Dodano u košaricu",
-        "adding": "Dodavanje...",
-        "selectOptions": "Odaberite opcije",
-        "addedToCartToast": "Dodano u košaricu",
-        "addedToCartDesc": "{name} je dodan u vašu košaricu",
-        "error": "Greška",
-        "failedToAddToCart": "Neuspješno dodavanje u košaricu"
-    },
-    "sort": {
-        "sortBy": "Sortiraj po",
-        "nameAsc": "Ime: A do Ž",
-        "nameDesc": "Ime: Ž do A",
-        "priceAsc": "Cijena: Od najniže",
-        "priceDesc": "Cijena: Od najviše"
-    },
-    "filters": {
-        "title": "Filteri",
-        "clearAll": "Očisti sve"
-    },
-    "cart": {
-        "title": "Košarica",
-        "empty": "Vaša košarica je prazna",
-        "emptyDesc": "Dodajte neke artikle u košaricu da biste započeli",
-        "orderSummary": "Sažetak narudžbe",
-        "proceedToCheckout": "Nastavi na plaćanje",
-        "promotionCode": "Promotivni kod",
-        "promotionDesc": "Unesite svoj kod za popust u nastavku",
-        "enterCode": "Unesite kod"
-    },
-    "checkout": {
-        "title": "Plaćanje",
-        "contactInformation": "Kontakt informacije",
-        "shippingAddress": "Adresa za dostavu",
-        "deliveryMethod": "Način dostave",
-        "paymentMethod": "Način plaćanja",
-        "reviewAndPlaceOrder": "Pregledaj i naruci",
-        "alreadyHaveAccount": "Već imate račun?",
-        "signInToContinue": "Prijavite se za nastavak.",
-        "guestCheckoutDisabled": "Gostujuća naplata nije omogućena. Molimo prijavite se ili stvorite račun.",
-        "yourCartIsEmpty": "Vaša košarica je prazna.",
-        "continueShopping": "Nastavi kupovinu",
-        "selectSavedAddress": "Odaberite spremljenu adresu",
-        "continueWithSelected": "Nastavi s odabranom adresom",
-        "addNewAddress": "Dodaj novu adresu",
-        "addShippingAddress": "Dodaj adresu za dostavu",
-        "fillForm": "Ispunite obrazac u nastavku za dodavanje adrese za dostavu",
-        "saveAddress": "Spremi adresu",
-        "useSameForBilling": "Koristi istu adresu za naplatu",
-        "selectShippingMethod": "Odaberite način dostave",
-        "noShippingMethods": "Nema dostupnih načina dostave. Molimo provjerite svoju adresu.",
-        "continueToPayment": "Nastavi na plaćanje",
-        "selectPaymentMethod": "Odaberite način plaćanja",
-        "noPaymentMethods": "Nema dostupnih načina plaćanja.",
-        "continueToReview": "Nastavi na pregled",
-        "reviewYourOrder": "Pregledajte svoju narudžbu",
-        "contact": "Kontakt",
-        "deliveryMethod": "Način dostave",
-        "paymentMethod": "Način plaćanja",
-        "noShippingAddress": "Adresa za dostavu nije postavljena",
-        "noDeliveryMethod": "Način dostave nije odabran",
-        "noPaymentMethod": "Način plaćanja nije odabran",
-        "placeOrder": "Naruci",
-        "completeAllSteps": "Molimo dovršite sve prethodne korake prije narudžbe"
-    },
-    "address": {
-        "fullName": "Puno ime",
-        "company": "Tvrtka",
-        "streetAddress": "Ulica i kućni broj",
-        "apartment": "Stan, kat, itd.",
-        "city": "Grad",
-        "stateProvince": "Županija/Regija",
-        "postalCode": "Poštanski broj",
-        "country": "Država",
-        "phoneNumber": "Broj telefona",
-        "phoneOptional": "Broj telefona (neobavezno)"
-    },
-    "auth": {
-        "signIn": {
-            "title": "Prijava",
-            "description": "Unesite svoje podatke za pristup vašem računu",
-            "email": "E-pošta",
-            "password": "Lozinka",
-            "forgotPassword": "Zaboravili ste lozinku?",
-            "signInButton": "Prijavi se",
-            "signingIn": "Prijavljivanje...",
-            "noAccount": "Nemate račun?",
-            "register": "Registrirajte se"
-        },
-        "register": {
-            "title": "Stvorite račun",
-            "description": "Prijavite se da biste počeli kupovati s nama",
-            "emailAddress": "Adresa e-pošte",
-            "firstName": "Ime",
-            "lastName": "Prezime",
-            "createButton": "Stvori račun",
-            "creatingAccount": "Stvaranje računa...",
-            "alreadyHaveAccount": "Već imate račun?",
-            "signIn": "Prijavite se"
-        },
-        "forgotPassword": {
-            "title": "Zaboravili ste lozinku?",
-            "emailLabel": "E-pošta",
-            "emailPlaceholder": "Unesite svoju adresu e-pošte...",
-            "sendButton": "Pošalji vezu za resetiranje",
-            "sending": "Slanje...",
-            "checkEmail": "Provjerite svoju e-poštu",
-            "emailSent": "Ako račun postoji s tom e-poštom, poslali smo vezu za resetiranje lozinke.",
-            "backToSignIn": "Natrag na prijavu"
-        },
-        "resetPassword": {
-            "invalidLink": "Nevažeća veza za resetiranje",
-            "invalidLinkDesc": "Veza za resetiranje lozinke je nevažeća ili je istekla.",
-            "requestNewLink": "Zatražite novu vezu za resetiranje",
-            "title": "Resetirajte svoju lozinku",
-            "description": "Unesite svoju novu lozinku u nastavku.",
-            "newPassword": "Nova lozinka",
-            "confirmPassword": "Potvrdite lozinku",
-            "resetButton": "Resetiraj lozinku",
-            "resetting": "Resetiranje lozinke...",
-            "backToSignIn": "Natrag na prijavu"
-        },
-        "verify": {
-            "title": "Potvrđivanje vašeg računa",
-            "pleaseWait": "Molimo pričekajte dok potvrđujemo vaš račun...",
-            "invalidLink": "Nevažeća veza za potvrdu",
-            "invalidLinkDesc": "Veza za potvrdu je nevažeća ili je istekla.",
-            "createNewAccount": "Stvorite novi račun",
-            "verified": "Račun potvrđen!",
-            "verifiedDesc": "Vaša e-pošta je uspješno potvrđena. Sada se možete prijaviti na svoj račun.",
-            "signIn": "Prijavite se",
-            "verificationFailed": "Potvrda nije uspjela",
-            "verificationFailedDesc": "Nije moguće potvrditi vaš račun. Molimo pokušajte ponovo ili kontaktirajte podršku.",
-            "checkEmail": "Provjerite svoju e-poštu",
-            "emailSent": "Poslali smo vezu za potvrdu na vašu adresu e-pošte. Molimo provjerite svoj sandučić i kliknite vezu za potvrdu računa.",
-            "noEmail": "Ne vidite e-poštu? Provjerite svoju mapu za neželjenu poštu ili",
-            "tryAgain": "pokušajte ponovo",
-            "goToSignIn": "Idite na prijavu"
-        }
-    },
-    "orderConfirmation": {
-        "title": "Narudžba potvrđena!",
-        "thankYou": "Hvala vam na narudžbi. Uskoro ćemo vam poslati potvrdnu e-poštu.",
-        "orderSummary": "Sažetak narudžbe",
-        "orderItems": "Artikli narudžbe",
-        "shippingAddress": "Adresa za dostavu",
-        "billingAddress": "Adresa za naplatu",
-        "payment": "Plaćanje",
-        "method": "Način",
-        "amount": "Iznos",
-        "status": "Status",
-        "transactionId": "ID transakcije",
-        "shippingMethod": "Način dostave"
-    },
-    "account": {
-        "orders": "Narudžbe",
-        "addresses": "Adrese",
-        "profile": "Profil",
-        "myOrders": "Moje narudžbe",
-        "noOrders": "Još niste napravili nijednu narudžbu.",
-        "orderNumber": "Broj narudžbe",
-        "date": "Datum",
-        "status": "Status",
-        "items": "Artikli",
-        "item": "artikl",
-        "itemsCount": "artikala",
-        "backToOrders": "Natrag na narudžbe",
-        "orderPlacedOn": "Naručeno {date}",
-        "profilePage": {
-            "title": "Profil",
-            "description": "Upravljajte informacijama svog računa",
-            "personalInfo": "Osobni podaci",
-            "personalInfoDesc": "Ažurirajte svoje osobne podatke.",
-            "profileUpdated": "Profil je uspješno ažuriran!",
-            "updating": "Ažuriranje...",
-            "updateProfile": "Ažuriraj profil",
-            "emailAddress": "Adresa e-pošte",
-            "updateEmailDesc": "Ažurirajte svoju adresu e-pošte. Potvrdna e-pošta bit će poslana za potvrdu promjene.",
-            "currentEmail": "Trenutna e-pošta",
-            "newEmail": "Nova adresa e-pošte",
-            "currentPassword": "Trenutna lozinka",
-            "enterPassword": "Unesite svoju lozinku za potvrdu promjene.",
-            "verificationEmailSent": "Potvrdna e-pošta poslana! Molimo provjerite svoj novi sandučić e-pošte za potvrdu promjene.",
-            "updateEmail": "Ažuriraj e-poštu",
-            "changePassword": "Promijeni lozinku",
-            "changePasswordDesc": "Ažurirajte svoju lozinku. Pazite da koristite snažnu, jedinstvenu lozinku.",
-            "newPassword": "Nova lozinka",
-            "confirmNewPassword": "Potvrdite novu lozinku",
-            "passwordUpdated": "Lozinka je uspješno ažurirana!",
-            "updatePassword": "Ažuriraj lozinku"
-        },
-        "addressesPage": {
-            "title": "Adrese",
-            "description": "Upravljajte svojim spremljenim adresama za dostavu i naplatu",
-            "addNew": "Dodaj novu adresu",
-            "noAddresses": "Još nema spremljenih adresa",
-            "addFirst": "Dodajte svoju prvu adresu",
-            "defaultShipping": "Zadana adresa za dostavu",
-            "defaultBilling": "Zadana adresa za naplatu",
-            "setAsShipping": "Postavi kao adresu za dostavu",
-            "setAsBilling": "Postavi kao adresu za naplatu",
-            "editAddress": "Uredi adresu",
-            "updateDetails": "Ažurirajte detalje za ovu adresu.",
-            "fillForm": "Ispunite obrazac u nastavku za dodavanje nove adrese.",
-            "areYouSure": "Jeste li sigurni?",
-            "deleteConfirm": "Ova radnja se ne može poništiti. Ovo će trajno izbrisati ovu adresu.",
-            "deleting": "Brisanje..."
-        },
-        "verifyEmail": {
-            "invalidLink": "Nevažeća veza za potvrdu",
-            "invalidLinkDesc": "Veza za potvrdu nedostaje ili je nevažeća.",
-            "goToProfile": "Idite na profil",
-            "verified": "E-pošta potvrđena!",
-            "verifiedDesc": "Vaša adresa e-pošte je uspješno ažurirana.",
-            "verificationFailed": "Potvrda nije uspjela",
-            "verificationError": "Greška pri potvrdi",
-            "verifying": "Potvrđivanje e-pošte..."
-        }
-    },
-    "notFound": {
-        "title": "Stranica nije pronađena",
-        "description": "Stranica koju tražite ne postoji ili je premještena."
-    },
-    "footer": {
-        "storeName": "Vendure trgovina",
-        "categories": "Kategorije",
-        "vendure": "Vendure",
-        "github": "GitHub",
-        "documentation": "Dokumentacija",
-        "sourceCode": "Izvorni kod",
-        "copyright": "© {year} Vendure trgovina. Sva prava pridržana."
-    },
-    "productPage": {
-        "whyChooseUs": "Zašto odabrati nas",
-        "premiumQuality": "Premium kvaliteta",
-        "premiumQualityDesc": "Izrađeno s pažnjom i posvećenošću detaljima",
-        "ecoFriendly": "Ekološki prihvatljivo",
-        "ecoFriendlyDesc": "Održivo nabavljeno i okolišno osviješteno",
-        "satisfactionGuaranteed": "Zadovoljstvo zajamčeno",
-        "satisfactionGuaranteedDesc": "100% zadovoljstvo zajamčeno ili povrat novca",
-        "faq": "Često postavljana pitanja"
-    },
-    "orderStatus": {
-        "AddingItems": "Dodavanje artikala",
-        "ArrangingPayment": "Organizacija plaćanja",
-        "PaymentAuthorized": "Plaćanje odobreno",
-        "PaymentSettled": "Plaćanje izvršeno",
-        "PartiallyShipped": "Djelomično poslano",
-        "Shipped": "Poslano",
-        "PartiallyDelivered": "Djelomično isporučeno",
-        "Delivered": "Isporučeno",
-        "Cancelled": "Otkazano"
-    },
-    "countrySelect": {
-        "selectCountry": "Odaberite državu",
-        "searchCountry": "Pretraži državu",
-        "noCountryFound": "Država nije pronađena"
+  "Navigation": {
+    "openMenu": "Otvori izbornik",
+    "menu": "Izbornik",
+    "searchProducts": "Pretraži proizvode...",
+    "shopAll": "Pogledaj sve",
+    "collections": "Kolekcije",
+    "account": "Račun",
+    "profile": "Profil",
+    "orders": "Narudžbe",
+    "addresses": "Adrese",
+    "signIn": "Prijavi se",
+    "signOut": "Odjavi se",
+    "greeting": "Bok, {name}",
+    "shoppingCart": "Košarica",
+    "switchLanguage": "Promijeni jezik",
+    "switchCurrency": "Promijeni valutu"
+  },
+  "Hero": {
+    "title": "Otkrijte kvalitetu",
+    "titleHighlight": "proizvode",
+    "subtitle": "Premium proizvodi po iznimnim cijenama. Besplatna dostava za narudžbe iznad 50 €.",
+    "shopNow": "Kupujte sada",
+    "viewCollections": "Pogledaj kolekcije"
+  },
+  "Home": {
+    "pageTitle": "Vaša trgovina na jednom mjestu",
+    "description": "Otkrijte visokokvalitetne proizvode po konkurentnim cijenama. Kupujte sada za najbolje ponude na elektronici, modi, kućnim potrepštinama i još mnogo toga.",
+    "ogDescription": "Otkrijte visokokvalitetne proizvode po konkurentnim cijenama.",
+    "whyShopWithUs": "Zašto kupovati kod nas",
+    "features": {
+      "highQuality": {
+        "title": "Visoka kvaliteta",
+        "description": "Premium proizvodi pažljivo odabrani za vas"
+      },
+      "bestPrices": {
+        "title": "Najbolje cijene",
+        "description": "Konkurentne cijene na svim našim proizvodima"
+      },
+      "fastDelivery": {
+        "title": "Brza dostava",
+        "description": "Pouzdana dostava diljem svijeta"
+      }
     }
+  },
+  "Product": {
+    "inStock": "Na stanju",
+    "outOfStock": "Nema na stanju",
+    "addToCart": "Dodaj u košaricu",
+    "addedToCart": "Dodano u košaricu",
+    "adding": "Dodavanje...",
+    "selectOptions": "Odaberite opcije",
+    "addedToCartMessage": "Dodano u košaricu",
+    "addedToCartDescription": "{name} je dodan u vašu košaricu",
+    "errorTitle": "Greška",
+    "errorAddToCart": "Neuspješno dodavanje u košaricu",
+    "sku": "Šifra: {sku}",
+    "from": "Od",
+    "noImage": "Nema slike",
+    "featuredProducts": "Istaknuti proizvodi",
+    "relatedProducts": "Srodni proizvodi",
+    "viewAllProducts": "Pogledaj sve proizvode",
+    "notFound": "Proizvod nije pronađen",
+    "home": "Početna",
+    "noProductsFound": "Nema pronađenih proizvoda",
+    "shopProductAt": "Kupite {name} na {siteName}",
+    "collectionNotFound": "Kolekcija nije pronađena",
+    "browseCollectionAt": "Istražite našu kolekciju {name} na {siteName}",
+    "productCount": "{count, plural, one {# proizvod} other {# proizvoda}}",
+    "trustBadges": {
+      "fastShipping": "Brza dostava",
+      "freeReturns": "Besplatni povrati",
+      "secureCheckout": "Sigurna naplata",
+      "guarantee": "30-dnevno jamstvo"
+    },
+    "faq": {
+      "title": "Često postavljana pitanja",
+      "shipping": {
+        "question": "Koje su vaše mogućnosti dostave?",
+        "answer": "Nudimo standardnu dostavu (5-7 radnih dana), ekspresnu dostavu (2-3 radna dana) i dostavu sljedeći dan za odabrana područja. Besplatna standardna dostava dostupna je za narudžbe iznad 50 €."
+      },
+      "returns": {
+        "question": "Kakva je vaša politika povrata?",
+        "answer": "Prihvaćamo povrate unutar 30 dana od kupnje. Artikli moraju biti nekorišteni i u originalnoj ambalaži. Kontaktirajte našu podršku za pokretanje povrata i primanje prepaid naljepnice za dostavu."
+      },
+      "tracking": {
+        "question": "Kako mogu pratiti svoju narudžbu?",
+        "answer": "Kada vaša narudžba bude poslana, primit ćete e-poštu s brojem za praćenje. Također možete pratiti svoju narudžbu u svom računu."
+      },
+      "international": {
+        "question": "Nudite li međunarodnu dostavu?",
+        "answer": "Da! Šaljemo u više od 50 zemalja diljem svijeta. Cijene dostave i vremena isporuke variraju ovisno o lokaciji i prikazuju se pri plaćanju."
+      }
+    }
+  },
+  "Cart": {
+    "title": "Košarica",
+    "empty": "Vaša košarica je prazna",
+    "emptyMessage": "Dodajte neke artikle za početak",
+    "continueShopping": "Nastavi kupovinu",
+    "each": "po komadu",
+    "orderSummary": "Sažetak narudžbe",
+    "subtotal": "Međuzbroj",
+    "shipping": "Dostava",
+    "calculatedAtCheckout": "Izračunava se pri naplati",
+    "total": "Ukupno",
+    "proceedToCheckout": "Nastavi na plaćanje",
+    "secureCheckout": "Sigurna naplata",
+    "promotionCode": "Promotivni kod",
+    "enterDiscountCode": "Unesite svoj kod za popust",
+    "remove": "Ukloni",
+    "enterCode": "Unesite kod",
+    "apply": "Primijeni",
+    "sku": "Šifra: {sku}"
+  },
+  "Checkout": {
+    "pageTitle": "Plaćanje",
+    "steps": {
+      "contact": "Kontakt",
+      "address": "Adresa",
+      "delivery": "Dostava",
+      "payment": "Plaćanje",
+      "review": "Pregled"
+    },
+    "contactInformation": "Kontakt informacije",
+    "shippingAddress": "Adresa za dostavu",
+    "deliveryMethod": "Način dostave",
+    "paymentMethod": "Način plaćanja",
+    "reviewAndPlaceOrder": "Pregledaj i naruci",
+    "continue": "Nastavi",
+    "placeOrder": "Naruci",
+    "completeAllSteps": "Molimo dovršite sve korake prije narudžbe"
+  },
+  "OrderConfirmation": {
+    "pageTitle": "Potvrda narudžbe",
+    "orderConfirmed": "Narudžba potvrđena!",
+    "thankYou": "Hvala vam na narudžbi. Vaš broj narudžbe je {orderNumber}.",
+    "emailConfirmation": "Primit ćete e-poštu s detaljima narudžbe i informacijama za praćenje.",
+    "orderSummary": "Sažetak narudžbe",
+    "qty": "Kol: {quantity}",
+    "total": "Ukupno",
+    "shippingAddress": "Adresa za dostavu",
+    "continueShopping": "Nastavi kupovinu",
+    "viewOrders": "Pogledaj narudžbe"
+  },
+  "NotFound": {
+    "title": "Stranica nije pronađena",
+    "message": "Stranica koju tražite ne postoji ili je premještena.",
+    "goHome": "Idi na početnu",
+    "browseProducts": "Pregledaj proizvode",
+    "popularCollections": "Popularne kolekcije"
+  },
+  "Common": {
+    "loading": "Učitavanje...",
+    "sending": "Slanje...",
+    "sku": "Šifra",
+    "siteDescription": "Kupujte najbolje proizvode na {siteName}. Kvalitetni proizvodi, konkurentne cijene i brza dostava."
+  },
+  "Auth": {
+    "pageTitle": "Prijava",
+    "signIn": "Prijavi se",
+    "signingIn": "Prijavljivanje...",
+    "email": "E-pošta",
+    "password": "Lozinka",
+    "forgotPassword": "Zaboravili ste lozinku?",
+    "noAccount": "Nemate račun?",
+    "register": "Registrirajte se",
+    "createAccount": "Stvorite račun",
+    "joinUs": "Pridružite se danas",
+    "featureFast": "Brza i pouzdana dostava",
+    "featureCheckout": "Jednostavan postupak plaćanja",
+    "featureSecure": "Sigurno iskustvo kupovine",
+    "featurePayments": "Više načina plaćanja",
+    "featureEasy": "Jednostavno praćenje narudžbi",
+    "featureReturns": "Bezproblemni povrati",
+    "signUpMessage": "Stvorite račun za praćenje narudžbi, spremanje adresa i brže plaćanje.",
+    "welcomeBack": "Dobrodošli natrag",
+    "enterCredentials": "Unesite svoje podatke za nastavak",
+    "forgotPasswordPageTitle": "Zaboravljena lozinka",
+    "emailValidation": "Unesite valjanu adresu e-pošte",
+    "forgotPasswordTitle": "Zaboravili ste lozinku?",
+    "forgotPasswordDescription": "Unesite svoju adresu e-pošte i poslat ćemo vam vezu za resetiranje lozinke.",
+    "sendResetLink": "Pošalji vezu za resetiranje",
+    "backToSignIn": "Natrag na prijavu"
+  },
+  "Account": {
+    "title": "Moj račun",
+    "addresses": "Adrese",
+    "orders": "Narudžbe",
+    "noOrders": "Još niste napravili nijednu narudžbu.",
+    "noAddresses": "Još niste spremili nijednu adresu.",
+    "defaultAddress": "Zadana adresa",
+    "addAddress": "Dodaj adresu",
+    "editAddress": "Uredi adresu",
+    "deleteAddress": "Obriši adresu",
+    "orderNumber": "Narudžba #{code}",
+    "orderDate": "Naručeno {date}",
+    "orderTotal": "Ukupno",
+    "orderStatus": "Status",
+    "addressesPageTitle": "Moje adrese",
+    "manageAddresses": "Upravljajte svojim adresama za dostavu i naplatu",
+    "order": "Narudžba",
+    "ordersPageTitle": "Moje narudžbe",
+    "profile": "Profil",
+    "verifyEmail": {
+      "verifying": "Potvrđivanje e-pošte...",
+      "verifyingDesc": "Molimo pričekajte dok potvrđujemo vašu adresu e-pošte."
+    }
+  },
+  "Footer": {
+    "description": "Suvremena e-trgovina izgrađena s Vendure i Next.js.",
+    "categories": "Kategorije",
+    "customer": "Kupac",
+    "shopAll": "Pogledaj sve",
+    "orders": "Narudžbe",
+    "account": "Račun",
+    "company": "Tvrtka",
+    "aboutUs": "O nama",
+    "privacyPolicy": "Pravila privatnosti",
+    "termsConditions": "Uvjeti poslovanja",
+    "copyright": "© {year} Sirsa d.o.o. Sva prava pridržana."
+  },
+  "Errors": {
+    "fieldsRequired": "Sva polja su obavezna",
+    "passwordsMismatch": "Lozinke se ne podudaraju",
+    "unexpectedError": "Došlo je do neočekivane greške. Molimo pokušajte ponovo.",
+    "invalidCredentials": "Nevaljana e-pošta ili lozinka"
+  },
+  "Sort": {
+    "placeholder": "Sortiraj po",
+    "nameAsc": "Ime A–Ž",
+    "nameDesc": "Ime Ž–A",
+    "priceAsc": "Cijena: od najniže",
+    "priceDesc": "Cijena: od najviše"
+  },
+  "Filters": {
+    "title": "Filteri",
+    "clearAll": "Očisti sve",
+    "filtersButton": "Filteri",
+    "category": "Kategorija",
+    "brand": "Brend"
+  },
+  "Search": {
+    "pageTitle": "Pretraga",
+    "resultsTitle": "Rezultati za \"{query}\"",
+    "resultsFor": "Rezultati za \"{query}\"",
+    "metaDescription": "Pretraži \"{query}\" na {siteName}",
+    "metaCatalogDescription": "Pregledaj sve proizvode na {siteName}"
+  },
+  "Verify": {
+    "loading": "Potvrđivanje e-pošte...",
+    "title": "Potvrdite svoju e-poštu"
+  }
 }

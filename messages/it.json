@@ -236,7 +236,9 @@
   "Filters": {
     "title": "Filtri",
     "clearAll": "Cancella tutto",
-    "filtersButton": "Filtri"
+    "filtersButton": "Filtri",
+    "category": "Categoria",
+    "brand": "Marchio"
   },
   "Search": {
     "pageTitle": "Cerca",

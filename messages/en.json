@@ -236,7 +236,9 @@
   "Filters": {
     "title": "Filters",
     "clearAll": "Clear all",
-    "filtersButton": "Filters"
+    "filtersButton": "Filters",
+    "category": "Category",
+    "brand": "Brand"
   },
   "Search": {
     "pageTitle": "Search",

@@ -245,7 +245,9 @@
   "Filters": {
     "title": "Filter",
     "clearAll": "Alle löschen",
-    "filtersButton": "Filter"
+    "filtersButton": "Filter",
+    "category": "Kategorie",
+    "brand": "Marke"
   },
   "Search": {
     "pageTitle": "Suche",

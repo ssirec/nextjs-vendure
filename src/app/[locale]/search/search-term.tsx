@@ -13,10 +13,14 @@ export async function SearchTerm({searchParams}: SearchTermProps) {
     const locale = await getRouteLocale();
     const t = await getTranslations({locale, namespace: 'Search'});
 
+    if (!searchTerm) {
+        return null;
+    }
+
     return (
         <div className="mb-6">
             <h1 className="text-3xl font-bold">
-                {searchTerm ? t('resultsFor', {query: searchTerm}) : t('title')}
+                {t('resultsFor', {query: searchTerm})}
             </h1>
         </div>
     )

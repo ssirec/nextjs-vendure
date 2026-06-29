@@ -7,6 +7,9 @@
     "login": "Prijava",
     "logout": "Odjava",
     "search": "Iskanje",
-    "products": "Izdelki"
+    "products": "Izdelki",
+    "filters": "Filtri",
+    "category": "Kategorija",
+    "brand": "Blagovna znamka"
   }
 }

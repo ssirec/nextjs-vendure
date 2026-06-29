@@ -7,6 +7,9 @@
     "login": "Login",
     "logout": "Logout",
     "search": "Cerca",
-    "products": "Prodotti"
+    "products": "Prodotti",
+    "filters": "Filtri",
+    "category": "Categoria",
+    "brand": "Marchio"
   }
 }

@@ -7,6 +7,9 @@
     "login": "Login",
     "logout": "Logout",
     "search": "Search",
-    "products": "Products"
+    "products": "Products",
+    "filters": "Filters",
+    "category": "Category",
+    "brand": "Brand"
   }
 }

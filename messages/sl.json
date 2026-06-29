@@ -230,7 +230,9 @@
   "Filters": {
     "title": "Filtri",
     "clearAll": "Počisti vse",
-    "filtersButton": "Filtri"
+    "filtersButton": "Filtri",
+    "category": "Kategorija",
+    "brand": "Blagovna znamka"
   },
   "Search": {
     "pageTitle": "Iskanje",
