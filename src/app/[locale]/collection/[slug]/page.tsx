@@ -25,12 +25,10 @@ import {
 } from '@/lib/metadata';
 import {toOgLocale} from '@/i18n/locale-utils';
 import {getActiveCurrencyCode} from '@/lib/currency-server';
-import {getRouteLocale} from '@/i18n/server';
-import {getTranslations} from 'next-intl/server';
+import {getLocaleFromParams, getTranslationsSafe} from '@/i18n/server';
+import {setRequestLocale} from 'next-intl/server';
 
-async function getCollectionProducts(slug: string, searchParams: { [key: string]: string | string[] | undefined }, currencyCode: string) {
-    const locale = await getRouteLocale();
-
+async function getCollectionProducts(slug: string, searchParams: { [key: string]: string | string[] | undefined }, currencyCode: string, locale: string) {
     return query(SearchProductsQuery, {
         input: buildSearchInput({
             searchParams,
@@ -39,9 +37,7 @@ async function getCollectionProducts(slug: string, searchParams: { [key: string]
     }, {languageCode: locale, currencyCode});
 }
 
-async function getCollectionMetadata(slug: string) {
-    const locale = await getRouteLocale();
-
+async function getCollectionMetadata(slug: string, locale: string) {
     return query(GetCollectionProductsQuery, {
         slug,
         input: { take: 0, collectionSlug: slug, groupByProduct: true },
@@ -52,11 +48,11 @@ export async function generateMetadata({
     params,
 }: PageProps<'/[locale]/collection/[slug]'>): Promise<Metadata> {
     const { slug } = await params;
-    const locale = await getRouteLocale();
-    const result = await getCollectionMetadata(slug);
+    const locale = await getLocaleFromParams(params);
+    const result = await getCollectionMetadata(slug, locale);
     const collection = result.data.collection;
 
-    const t = await getTranslations({locale, namespace: 'Product'});
+    const t = await getTranslationsSafe({locale, namespace: 'Product'});
 
     if (!collection) {
         return {
@@ -101,13 +97,14 @@ export async function generateMetadata({
 export default async function CollectionPage({params, searchParams}: PageProps<'/[locale]/collection/[slug]'>) {
     const { slug } = await params;
     const searchParamsResolved = await searchParams;
-    const locale = await getRouteLocale();
+    const locale = await getLocaleFromParams(params);
+    setRequestLocale(locale);
     const currencyCode = await getActiveCurrencyCode();
-    const t = await getTranslations({locale, namespace: 'Product'});
+    const t = await getTranslationsSafe({locale, namespace: 'Product'});
     const page = getCurrentPage(searchParamsResolved);
 
-    const productDataPromise = getCollectionProducts(slug, searchParamsResolved, currencyCode);
-    const collectionResult = await getCollectionMetadata(slug);
+    const productDataPromise = getCollectionProducts(slug, searchParamsResolved, currencyCode, locale);
+    const collectionResult = await getCollectionMetadata(slug, locale);
     const collectionName = collectionResult.data.collection?.name ?? slug;
 
     return (

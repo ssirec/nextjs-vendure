@@ -2,10 +2,12 @@
 
 import {mutate} from '@/lib/vendure/api';
 import {RequestPasswordResetMutation} from '@/lib/vendure/mutations';
-import {getTranslations} from 'next-intl/server';
+import {getLocale} from 'next-intl/server';
+import {getTranslationsSafe} from '@/i18n/server';
 
 export async function requestPasswordResetAction(prevState: { error?: string; success?: boolean } | undefined, formData: FormData) {
-    const t = await getTranslations('Errors');
+    const locale = await getLocale();
+    const t = await getTranslationsSafe({locale, namespace: 'Errors'});
     const emailAddress = formData.get('emailAddress') as string;
 
     if (!emailAddress) {

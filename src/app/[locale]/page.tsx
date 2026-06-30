@@ -1,16 +1,16 @@
 import type {Metadata} from "next";
 import {Suspense} from "react";
-import {getRouteLocale} from "@/i18n/server";
+import {getLocaleFromParams, getTranslationsSafe} from "@/i18n/server";
 import {HeroSection} from "@/components/layout/hero-section";
 import {FeaturedProducts} from "@/components/commerce/featured-products";
 import {SITE_NAME, SITE_URL, buildCanonicalUrl} from "@/lib/metadata";
 import {BadgeCheck, Tag, Zap} from "lucide-react";
-import {getTranslations} from 'next-intl/server';
+import {setRequestLocale} from 'next-intl/server';
 import {toOgLocale} from '@/i18n/locale-utils';
 
-export async function generateMetadata(): Promise<Metadata> {
-    const locale = await getRouteLocale();
-    const t = await getTranslations({locale, namespace: 'Home'});
+export async function generateMetadata({params}: {params: Promise<{locale: string}>}): Promise<Metadata> {
+    const locale = await getLocaleFromParams(params);
+    const t = await getTranslationsSafe({locale, namespace: 'Home'});
     const ogLocale = toOgLocale(locale);
 
     return {
@@ -37,9 +37,10 @@ const featureKeys = [
     {icon: Zap, key: 'fastDelivery'},
 ] as const;
 
-export default async function Home() {
-    const locale = await getRouteLocale();
-    const t = await getTranslations({locale, namespace: 'Home'});
+export default async function Home({params}: {params: Promise<{locale: string}>}) {
+    const locale = await getLocaleFromParams(params);
+    setRequestLocale(locale);
+    const t = await getTranslationsSafe({locale, namespace: 'Home'});
 
     return (
         <div className="min-h-screen">

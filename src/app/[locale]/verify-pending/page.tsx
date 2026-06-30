@@ -4,8 +4,8 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { CheckCircle } from "lucide-react";
-import { getRouteLocale } from "@/i18n/server";
-import { getTranslations } from "next-intl/server";
+import { getLocaleFromParams, getTranslationsSafe } from "@/i18n/server";
+import { setRequestLocale } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: "Verification Pending",
@@ -14,11 +14,12 @@ export const metadata: Metadata = {
 
 async function VerifyPendingContent({
   searchParams,
+  locale,
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
+  locale: string;
 }) {
-  const locale = await getRouteLocale();
-  const t = await getTranslations({ locale, namespace: "Verify" });
+  const t = await getTranslationsSafe({ locale, namespace: "Verify" });
   const resolvedParams = await searchParams;
   const redirectTo = resolvedParams?.redirectTo as string | undefined;
 
@@ -53,13 +54,15 @@ async function VerifyPendingContent({
 
 export default async function VerifyPendingPage({
   searchParams,
+  params,
 }: PageProps<"/[locale]/verify-pending">) {
-  const locale = await getRouteLocale();
-  const t = await getTranslations({ locale, namespace: "Verify" });
+  const locale = await getLocaleFromParams(params);
+  setRequestLocale(locale);
+  const t = await getTranslationsSafe({ locale, namespace: "Verify" });
 
   return (
     <Suspense fallback={<>{t("loading")}</>}>
-      <VerifyPendingContent searchParams={searchParams} />
+      <VerifyPendingContent searchParams={searchParams} locale={locale} />
     </Suspense>
   );
 }

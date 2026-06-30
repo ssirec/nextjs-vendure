@@ -1,12 +1,11 @@
 import type {Metadata, Viewport} from "next";
-import {locale as rootLocale} from "next/root-params";
 import {hasLocale, NextIntlClientProvider} from "next-intl";
 import {Geist, Geist_Mono} from "next/font/google";
-import {getMessages, getTranslations, setRequestLocale} from "next-intl/server";
+import {getMessages, setRequestLocale} from "next-intl/server";
 import {notFound} from "next/navigation";
 import {routing} from "@/i18n/routing";
 import {toOgLocale} from "@/i18n/locale-utils";
-import {getRouteLocale} from "@/i18n/server";
+import {getLocaleFromParams, getTranslationsSafe} from "@/i18n/server";
 import {Toaster} from "@/components/ui/sonner";
 import {Navbar} from "@/components/layout/navbar";
 import {Footer} from "@/components/layout/footer";
@@ -29,10 +28,10 @@ export function generateStaticParams() {
     return routing.locales.map((locale) => ({locale}));
 }
 
-export async function generateMetadata(): Promise<Metadata> {
-    const locale = await getRouteLocale();
+export async function generateMetadata({params}: {params: Promise<{locale: string}>}): Promise<Metadata> {
+    const locale = await getLocaleFromParams(params);
     const ogLocale = toOgLocale(locale);
-    const t = await getTranslations({locale, namespace: 'Common'});
+    const t = await getTranslationsSafe({locale, namespace: 'Common'});
 
     return {
         metadataBase: new URL(SITE_URL),
@@ -78,8 +77,8 @@ export const viewport: Viewport = {
     ],
 };
 
-export default async function LocaleLayout({children}: {children: React.ReactNode}) {
-    const locale = await rootLocale();
+export default async function LocaleLayout({children, params}: {children: React.ReactNode; params: Promise<{locale: string}>}) {
+    const locale = await getLocaleFromParams(params);
 
     if (!hasLocale(routing.locales, locale)) {
         notFound();

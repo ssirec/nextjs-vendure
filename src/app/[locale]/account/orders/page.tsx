@@ -1,26 +1,29 @@
 import type { Metadata } from 'next';
-import { getRouteLocale } from '@/i18n/server';
+import { getLocaleFromParams, getTranslationsSafe } from '@/i18n/server';
 import { query } from '@/lib/vendure/api';
 import { GetCustomerOrdersQuery } from '@/lib/vendure/queries';
 import { OrderListClient } from './order-list-client';
-import { getTranslations } from 'next-intl/server';
+import { setRequestLocale } from 'next-intl/server';
 import { formatDate } from '@/lib/format';
 import { Price } from '@/components/commerce/price';
 import { connection } from 'next/server';
 
-export async function generateMetadata(): Promise<Metadata> {
-  const locale = await getRouteLocale();
-  const t = await getTranslations({ locale, namespace: 'Account' });
+export async function generateMetadata({
+    params,
+}: PageProps<'/[locale]/account/orders'>): Promise<Metadata> {
+  const locale = await getLocaleFromParams(params);
+  const t = await getTranslationsSafe({ locale, namespace: 'Account' });
 
   return {
     title: t('ordersPageTitle'),
   };
 }
 
-export default async function OrdersPage() {
+export default async function OrdersPage({ params }: PageProps<'/[locale]/account/orders'>) {
   await connection();
-  const locale = await getRouteLocale();
-  const t = await getTranslations({ locale, namespace: 'Account' });
+  const locale = await getLocaleFromParams(params);
+  setRequestLocale(locale);
+  const t = await getTranslationsSafe({ locale, namespace: 'Account' });
 
   const result = await query(GetCustomerOrdersQuery, {}, { useAuthToken: true, languageCode: locale });
   const orders = result?.data?.activeCustomer?.orders?.items || [];

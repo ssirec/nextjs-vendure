@@ -1,13 +1,12 @@
-import { getRouteLocale } from '@/i18n/server';
+import { getRouteLocale, getTranslationsSafe } from '@/i18n/server';
 import { Button } from '@/components/ui/button';
 import { SearchX, Home, ShoppingBag } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
-import { getTranslations } from 'next-intl/server';
 import { getTopCollections } from '@/lib/vendure/cached';
 
 export default async function NotFound() {
     const locale = await getRouteLocale();
-    const t = await getTranslations({locale, namespace: 'NotFound'});
+    const t = await getTranslationsSafe({locale, namespace: 'NotFound'});
     let collections: { id: string; name: string; slug: string }[] = [];
     try {
         collections = await getTopCollections(locale);

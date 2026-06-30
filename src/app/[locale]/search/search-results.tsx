@@ -1,5 +1,4 @@
 import {Suspense} from "react";
-import {getRouteLocale} from "@/i18n/server";
 import {getActiveCurrencyCode} from '@/lib/currency-server';
 import {FacetFilters} from "@/components/commerce/facet-filters";
 import {ProductGridSkeleton} from "@/components/shared/product-grid-skeleton";
@@ -11,12 +10,12 @@ import {SearchProductsQuery} from "@/lib/vendure/queries";
 interface SearchResultsProps {
     searchParams: Promise<{
         page?: string
-    }>
+    }>;
+    locale: string;
 }
 
-export async function SearchResults({searchParams}: SearchResultsProps) {
+export async function SearchResults({searchParams, locale}: SearchResultsProps) {
     const searchParamsResolved = await searchParams;
-    const locale = await getRouteLocale();
     const currencyCode = await getActiveCurrencyCode();
     const page = getCurrentPage(searchParamsResolved);
 

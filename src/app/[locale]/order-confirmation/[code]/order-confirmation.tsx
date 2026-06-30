@@ -6,8 +6,7 @@ import Image from 'next/image';
 import {Separator} from '@/components/ui/separator';
 import {Price} from '@/components/commerce/price';
 import {notFound} from 'next/navigation';
-import {getRouteLocale} from '@/i18n/server';
-import {getTranslations} from 'next-intl/server';
+import {getTranslationsSafe} from '@/i18n/server';
 import {query} from '@/lib/vendure/api';
 import {graphql} from '@/graphql';
 
@@ -55,9 +54,8 @@ interface OrderConfirmationProps {
 }
 
 export async function OrderConfirmation({paramsPromise}: OrderConfirmationProps) {
-    const {code} = await paramsPromise;
-    const locale = await getRouteLocale();
-    const t = await getTranslations({locale, namespace: 'OrderConfirmation'});
+    const {code, locale} = await paramsPromise;
+    const t = await getTranslationsSafe({locale, namespace: 'OrderConfirmation'});
 
     const result = await query(GetOrderByCodeQuery, {code}, {useAuthToken: true});
 

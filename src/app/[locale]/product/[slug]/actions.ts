@@ -5,12 +5,13 @@ import { AddToCartMutation } from '@/lib/vendure/mutations';
 import { updateTag } from 'next/cache';
 import { setAuthToken } from '@/lib/auth';
 import { getActiveCurrencyCode } from '@/lib/currency-server';
-import { getLocale, getTranslations } from 'next-intl/server';
+import { getLocale } from 'next-intl/server';
+import { getTranslationsSafe } from '@/i18n/server';
 
 export async function addToCart(variantId: string, quantity: number = 1) {
   const locale = await getLocale();
   const currencyCode = await getActiveCurrencyCode();
-  const t = await getTranslations({locale, namespace: 'Errors'});
+  const t = await getTranslationsSafe({locale, namespace: 'Errors'});
 
   try {
     const result = await mutate(AddToCartMutation, { variantId, quantity }, { useAuthToken: true, currencyCode });

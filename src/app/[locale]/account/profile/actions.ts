@@ -7,10 +7,12 @@ import {
     RequestUpdateCustomerEmailAddressMutation,
 } from '@/lib/vendure/mutations';
 import {revalidatePath} from 'next/cache';
-import {getLocale, getTranslations} from 'next-intl/server';
+import {getLocale} from 'next-intl/server';
+import {getTranslationsSafe} from '@/i18n/server';
 
 export async function updatePasswordAction(prevState: { error?: string; success?: boolean } | undefined, formData: FormData) {
-    const t = await getTranslations('Errors');
+    const locale = await getLocale();
+    const t = await getTranslationsSafe({locale, namespace: 'Errors'});
     const currentPassword = formData.get('currentPassword') as string;
     const newPassword = formData.get('newPassword') as string;
     const confirmPassword = formData.get('confirmPassword') as string;
@@ -46,7 +48,8 @@ export async function updatePasswordAction(prevState: { error?: string; success?
 }
 
 export async function updateCustomerAction(prevState: { error?: string; success?: boolean } | undefined, formData: FormData) {
-    const t = await getTranslations('Errors');
+    const locale = await getLocale();
+    const t = await getTranslationsSafe({locale, namespace: 'Errors'});
     const firstName = formData.get('firstName') as string;
     const lastName = formData.get('lastName') as string;
 
@@ -68,7 +71,6 @@ export async function updateCustomerAction(prevState: { error?: string; success?
             return {error: t('failedUpdateCustomer')};
         }
 
-        const locale = await getLocale();
         revalidatePath(`/${locale}/account/profile`);
         return {success: true};
     } catch {
@@ -77,7 +79,8 @@ export async function updateCustomerAction(prevState: { error?: string; success?
 }
 
 export async function requestEmailUpdateAction(prevState: { error?: string; success?: boolean } | undefined, formData: FormData) {
-    const t = await getTranslations('Errors');
+    const locale = await getLocale();
+    const t = await getTranslationsSafe({locale, namespace: 'Errors'});
     const password = formData.get('password') as string;
     const newEmailAddress = formData.get('newEmailAddress') as string;
 

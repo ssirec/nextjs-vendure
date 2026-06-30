@@ -1,12 +1,11 @@
 import { ProductCarousel } from "@/components/commerce/product-carousel";
-import { getRouteLocale } from "@/i18n/server";
+import { getRouteLocale, getTranslationsSafe } from "@/i18n/server";
 import { cacheLife, cacheTag } from "next/cache";
 import { getActiveCurrencyCode } from "@/lib/currency-server";
 import { query } from "@/lib/vendure/api";
 import { GetCollectionProductsQuery } from "@/lib/vendure/queries";
 import { readFragment } from "@/graphql";
 import { ProductCardFragment } from "@/lib/vendure/fragments";
-import { getTranslations } from "next-intl/server";
 
 interface RelatedProductsProps {
   collectionSlug: string;
@@ -46,7 +45,7 @@ export async function RelatedProducts({
 }: RelatedProductsProps) {
   const locale = await getRouteLocale();
   const currencyCode = await getActiveCurrencyCode();
-  const t = await getTranslations({ locale, namespace: "Product" });
+  const t = await getTranslationsSafe({ locale, namespace: "Product" });
 
   const products = await getRelatedProducts(
     collectionSlug,

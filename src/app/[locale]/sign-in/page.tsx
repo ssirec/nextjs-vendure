@@ -1,15 +1,15 @@
 import type {Metadata} from 'next';
 import {Suspense} from 'react';
-import {getRouteLocale} from '@/i18n/server';
-import {getTranslations} from 'next-intl/server';
+import {getLocaleFromParams, getTranslationsSafe} from '@/i18n/server';
+import {setRequestLocale} from 'next-intl/server';
 import {LoginForm} from "./login-form";
 import {Card, CardContent, CardFooter} from "@/components/ui/card";
 import {Skeleton} from "@/components/ui/skeleton";
 import {SITE_NAME} from "@/lib/metadata";
 
-export async function generateMetadata(): Promise<Metadata> {
-    const locale = await getRouteLocale();
-    const t = await getTranslations({locale, namespace: 'Auth'});
+export async function generateMetadata({params}: {params: Promise<{locale: string}>}): Promise<Metadata> {
+    const locale = await getLocaleFromParams(params);
+    const t = await getTranslationsSafe({locale, namespace: 'Auth'});
     return {
         title: t('pageTitle'),
     };
@@ -51,9 +51,10 @@ async function SignInContent({
     return <LoginForm redirectTo={redirectTo} locale={locale} />;
 }
 
-export default async function SignInPage({searchParams}: PageProps<'/[locale]/sign-in'>) {
-    const locale = await getRouteLocale();
-    const t = await getTranslations({locale, namespace: 'Auth'});
+export default async function SignInPage({searchParams, params}: PageProps<'/[locale]/sign-in'>) {
+    const locale = await getLocaleFromParams(params);
+    setRequestLocale(locale);
+    const t = await getTranslationsSafe({locale, namespace: 'Auth'});
 
     return (
         <div className="flex min-h-[calc(100vh-4rem)] mt-16">

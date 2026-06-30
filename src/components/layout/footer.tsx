@@ -1,16 +1,14 @@
-import {getRouteLocale} from '@/i18n/server';
+import {getRouteLocale, getTranslationsSafe} from '@/i18n/server';
 import {cacheLife, cacheTag} from 'next/cache';
 import {getTopCollections} from '@/lib/vendure/cached';
 import Image from "next/image";
 import {NavigationLink} from '@/components/shared/navigation-link';
-import {getTranslations} from 'next-intl/server';
-
 
 const COPYRIGHT_YEAR = 2026;
 
 async function Copyright() {
     const locale = await getRouteLocale();
-    const t = await getTranslations({locale, namespace: 'Footer'});
+    const t = await getTranslationsSafe({locale, namespace: 'Footer'});
 
     return (
         <div>
@@ -22,7 +20,7 @@ async function Copyright() {
 export async function Footer() {
     const locale = await getRouteLocale();
 
-    const t = await getTranslations({locale, namespace: 'Footer'});
+    const t = await getTranslationsSafe({locale, namespace: 'Footer'});
     const collections = await getTopCollections(locale);
 
     return (

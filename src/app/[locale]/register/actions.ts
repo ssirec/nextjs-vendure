@@ -3,10 +3,12 @@
 import {mutate} from '@/lib/vendure/api';
 import {RegisterCustomerAccountMutation} from '@/lib/vendure/mutations';
 import {redirect} from '@/i18n/navigation';
-import {getLocale, getTranslations} from 'next-intl/server';
+import {getLocale} from 'next-intl/server';
+import {getTranslationsSafe} from '@/i18n/server';
 
 export async function registerAction(prevState: { error?: string } | undefined, formData: FormData) {
-    const t = await getTranslations('Errors');
+    const locale = await getLocale();
+    const t = await getTranslationsSafe({locale, namespace: 'Errors'});
     const emailAddress = formData.get('emailAddress') as string;
     const firstName = formData.get('firstName') as string;
     const lastName = formData.get('lastName') as string;
@@ -43,7 +45,6 @@ export async function registerAction(prevState: { error?: string } | undefined, 
         ? `/verify-pending?redirectTo=${encodeURIComponent(redirectTo)}`
         : '/verify-pending';
 
-    const locale = await getLocale();
     redirect({href: verifyUrl, locale});
 
 }

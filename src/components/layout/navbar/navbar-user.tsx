@@ -1,4 +1,4 @@
-import {getRouteLocale} from '@/i18n/server';
+import {getRouteLocale, getTranslationsSafe} from '@/i18n/server';
 import {User} from 'lucide-react';
 import {Button} from '@/components/ui/button';
 import {
@@ -11,12 +11,11 @@ import {
 import { Link } from '@/i18n/navigation';
 import {LoginButton} from "@/components/layout/navbar/login-button";
 import {getActiveCustomer} from "@/lib/vendure/actions";
-import {getTranslations} from 'next-intl/server';
 
 
 export async function NavbarUser() {
     const locale = await getRouteLocale();
-    const t = await getTranslations({locale, namespace: 'Navigation'});
+    const t = await getTranslationsSafe({locale, namespace: 'Navigation'});
     const customer = await getActiveCustomer()
 
     if (!customer) {

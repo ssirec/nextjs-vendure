@@ -1,0 +1,23 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/_global-error/page": "/_global-error",
+  "/api/revalidate/route": "/api/revalidate",
+  "/[locale]/cart/page": "/[locale]/cart",
+  "/[locale]/checkout/page": "/[locale]/checkout",
+  "/[locale]/collection/[slug]/page": "/[locale]/collection/[slug]",
+  "/[locale]/forgot-password/page": "/[locale]/forgot-password",
+  "/[locale]/order-confirmation/[code]/page": "/[locale]/order-confirmation/[code]",
+  "/[locale]/page": "/[locale]",
+  "/[locale]/product/[slug]/page": "/[locale]/product/[slug]",
+  "/[locale]/register/page": "/[locale]/register",
+  "/[locale]/search/page": "/[locale]/search",
+  "/[locale]/sign-in/page": "/[locale]/sign-in",
+  "/[locale]/reset-password/page": "/[locale]/reset-password",
+  "/[locale]/verify/page": "/[locale]/verify",
+  "/[locale]/verify-pending/page": "/[locale]/verify-pending",
+  "/[locale]/account/addresses/page": "/[locale]/account/addresses",
+  "/[locale]/account/orders/[code]/page": "/[locale]/account/orders/[code]",
+  "/[locale]/account/orders/page": "/[locale]/account/orders",
+  "/[locale]/account/profile/page": "/[locale]/account/profile",
+  "/[locale]/account/verify-email/page": "/[locale]/account/verify-email"
+}

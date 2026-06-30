@@ -3,8 +3,7 @@ import {ProductCard} from './product-card';
 import {Pagination} from '@/components/shared/pagination';
 import {SortDropdown} from './sort-dropdown';
 import {SearchProductsQuery} from "@/lib/vendure/queries";
-import {getRouteLocale} from '@/i18n/server';
-import {getTranslations} from 'next-intl/server';
+import {getRouteLocale, getTranslationsSafe} from '@/i18n/server';
 
 interface ProductGridProps {
     productDataPromise: Promise<{
@@ -17,7 +16,7 @@ interface ProductGridProps {
 
 export async function ProductGrid({productDataPromise, currentPage, take}: ProductGridProps) {
     const locale = await getRouteLocale();
-    const t = await getTranslations({locale, namespace: 'Product'});
+    const t = await getTranslationsSafe({locale, namespace: 'Product'});
     const result = await productDataPromise;
 
     const searchResult = result.data.search;

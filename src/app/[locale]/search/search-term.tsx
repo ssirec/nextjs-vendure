@@ -1,17 +1,16 @@
-import {getRouteLocale} from '@/i18n/server';
-import {getTranslations} from 'next-intl/server';
+import {getTranslationsSafe} from '@/i18n/server';
 
 interface SearchTermProps {
     searchParams: Promise<{
         q?: string
     }>;
+    locale: string;
 }
 
-export async function SearchTerm({searchParams}: SearchTermProps) {
+export async function SearchTerm({searchParams, locale}: SearchTermProps) {
     const searchParamsResolved = await searchParams;
     const searchTerm = (searchParamsResolved.q as string) || '';
-    const locale = await getRouteLocale();
-    const t = await getTranslations({locale, namespace: 'Search'});
+    const t = await getTranslationsSafe({locale, namespace: 'Search'});
 
     if (!searchTerm) {
         return null;

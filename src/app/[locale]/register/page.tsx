@@ -1,16 +1,16 @@
 import type {Metadata} from 'next';
 import {Suspense} from 'react';
 import { cookies } from 'next/headers';
-import {getRouteLocale} from '@/i18n/server';
-import {getTranslations} from 'next-intl/server';
+import {getLocaleFromParams, getTranslationsSafe} from '@/i18n/server';
+import {setRequestLocale} from 'next-intl/server';
 import { RegistrationForm } from "./registration-form";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {SITE_NAME} from "@/lib/metadata";
 
-export async function generateMetadata(): Promise<Metadata> {
-    const locale = await getRouteLocale();
-    const t = await getTranslations({locale, namespace: 'Auth'});
+export async function generateMetadata({params}: {params: Promise<{locale: string}>}): Promise<Metadata> {
+    const locale = await getLocaleFromParams(params);
+    const t = await getTranslationsSafe({locale, namespace: 'Auth'});
     return {
         title: t('createAccount'),
     };
@@ -68,10 +68,11 @@ async function RegisterContent({
     return <RegistrationForm redirectTo={redirectTo} locale={locale} />;
 }
 
-export default async function RegisterPage({searchParams}: PageProps<'/[locale]/register'>) {
+export default async function RegisterPage({searchParams, params}: PageProps<'/[locale]/register'>) {
     cookies(); // Forces dynamic rendering
-    const locale = await getRouteLocale();
-    const t = await getTranslations({locale, namespace: 'Auth'});
+    const locale = await getLocaleFromParams(params);
+    setRequestLocale(locale);
+    const t = await getTranslationsSafe({locale, namespace: 'Auth'});
 
     return (
         <div className="flex min-h-[calc(100vh-4rem)] mt-16">

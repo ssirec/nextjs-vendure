@@ -1,0 +1,23 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/_global-error/page": "app/_global-error/page.js",
+  "/api/revalidate/route": "app/api/revalidate/route.js",
+  "/[locale]/cart/page": "app/[locale]/cart/page.js",
+  "/[locale]/checkout/page": "app/[locale]/checkout/page.js",
+  "/[locale]/collection/[slug]/page": "app/[locale]/collection/[slug]/page.js",
+  "/[locale]/forgot-password/page": "app/[locale]/forgot-password/page.js",
+  "/[locale]/order-confirmation/[code]/page": "app/[locale]/order-confirmation/[code]/page.js",
+  "/[locale]/page": "app/[locale]/page.js",
+  "/[locale]/product/[slug]/page": "app/[locale]/product/[slug]/page.js",
+  "/[locale]/register/page": "app/[locale]/register/page.js",
+  "/[locale]/search/page": "app/[locale]/search/page.js",
+  "/[locale]/sign-in/page": "app/[locale]/sign-in/page.js",
+  "/[locale]/reset-password/page": "app/[locale]/reset-password/page.js",
+  "/[locale]/verify/page": "app/[locale]/verify/page.js",
+  "/[locale]/verify-pending/page": "app/[locale]/verify-pending/page.js",
+  "/[locale]/account/addresses/page": "app/[locale]/account/addresses/page.js",
+  "/[locale]/account/orders/[code]/page": "app/[locale]/account/orders/[code]/page.js",
+  "/[locale]/account/orders/page": "app/[locale]/account/orders/page.js",
+  "/[locale]/account/profile/page": "app/[locale]/account/profile/page.js",
+  "/[locale]/account/verify-email/page": "app/[locale]/account/verify-email/page.js"
+}

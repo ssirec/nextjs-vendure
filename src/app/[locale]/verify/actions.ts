@@ -3,10 +3,12 @@
 import {mutate} from '@/lib/vendure/api';
 import {VerifyCustomerAccountMutation} from '@/lib/vendure/mutations';
 import {setAuthToken} from '@/lib/auth';
-import {getTranslations} from 'next-intl/server';
+import {getLocale} from 'next-intl/server';
+import {getTranslationsSafe} from '@/i18n/server';
 
 export async function verifyAccountAction(token: string, password?: string) {
-    const t = await getTranslations('Errors');
+    const locale = await getLocale();
+    const t = await getTranslationsSafe({locale, namespace: 'Errors'});
 
     if (!token) {
         return {error: t('verificationTokenRequired')};

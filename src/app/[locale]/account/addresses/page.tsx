@@ -1,26 +1,29 @@
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
-import { getRouteLocale } from '@/i18n/server';
+import { getLocaleFromParams, getTranslationsSafe } from '@/i18n/server';
 import { query } from '@/lib/vendure/api';
 import { GetCustomerAddressesQuery, GetAvailableCountriesQuery } from '@/lib/vendure/queries';
 import { AddressesClient } from './addresses-client';
-import { getTranslations } from 'next-intl/server';
+import { setRequestLocale } from 'next-intl/server';
 import { connection } from 'next/server';
 
-export async function generateMetadata(): Promise<Metadata> {
-  const locale = await getRouteLocale();
-  const t = await getTranslations({ locale, namespace: 'Account' });
+export async function generateMetadata({
+    params,
+}: PageProps<'/[locale]/account/addresses'>): Promise<Metadata> {
+  const locale = await getLocaleFromParams(params);
+  const t = await getTranslationsSafe({ locale, namespace: 'Account' });
 
   return {
     title: t('addressesPageTitle'),
   };
 }
 
-export default async function AddressesPage() {
+export default async function AddressesPage({ params }: PageProps<'/[locale]/account/addresses'>) {
   await connection();
   cookies(); // Forces dynamic rendering
-  const locale = await getRouteLocale();
-  const t = await getTranslations({ locale, namespace: 'Account' });
+  const locale = await getLocaleFromParams(params);
+  setRequestLocale(locale);
+  const t = await getTranslationsSafe({ locale, namespace: 'Account' });
 
   const [addressesResult, countriesResult] = await Promise.all([
     query(GetCustomerAddressesQuery, {}, { useAuthToken: true, languageCode: locale }),

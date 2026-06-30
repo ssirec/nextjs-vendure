@@ -2,7 +2,7 @@ import { Link } from '@/i18n/navigation';
 import {Button} from '@/components/ui/button';
 import {Lock} from 'lucide-react';
 import {Price} from '@/components/commerce/price';
-import {getTranslations} from 'next-intl/server';
+import {getTranslationsSafe, getRouteLocale} from '@/i18n/server';
 
 type ActiveOrder = {
     id: string;
@@ -17,7 +17,8 @@ type ActiveOrder = {
 };
 
 export async function OrderSummary({activeOrder}: { activeOrder: ActiveOrder }) {
-    const t = await getTranslations('Cart');
+    const locale = await getRouteLocale();
+    const t = await getTranslationsSafe({locale, namespace: 'Cart'});
     return (
         <div className="border rounded-xl p-6 bg-card sticky top-24 shadow-sm">
             <h2 className="text-xl font-bold mb-4">{t('orderSummary')}</h2>

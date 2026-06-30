@@ -3,7 +3,7 @@ import {Input} from '@/components/ui/input';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import {Tag} from 'lucide-react';
 import {applyPromotionCode, removePromotionCode} from './actions';
-import {getTranslations} from 'next-intl/server';
+import {getTranslationsSafe, getRouteLocale} from '@/i18n/server';
 
 type ActiveOrder = {
     id: string;
@@ -11,7 +11,8 @@ type ActiveOrder = {
 };
 
 export async function PromotionCode({activeOrder}: { activeOrder: ActiveOrder }) {
-    const t = await getTranslations('Cart');
+    const locale = await getRouteLocale();
+    const t = await getTranslationsSafe({locale, namespace: 'Cart'});
     return (
         <Card className="mt-4">
             <CardHeader>

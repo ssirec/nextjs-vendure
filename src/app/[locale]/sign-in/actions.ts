@@ -5,10 +5,12 @@ import {LoginMutation, LogoutMutation} from '@/lib/vendure/mutations';
 import {removeAuthToken, setAuthToken} from '@/lib/auth';
 import {redirect} from '@/i18n/navigation';
 import {revalidatePath} from "next/cache";
-import {getLocale, getTranslations} from 'next-intl/server';
+import {getLocale} from 'next-intl/server';
+import {getTranslationsSafe} from '@/i18n/server';
 
 export async function loginAction(prevState: { error?: string } | undefined, formData: FormData) {
-    const t = await getTranslations('Errors');
+    const locale = await getLocale();
+    const t = await getTranslationsSafe({locale, namespace: 'Errors'});
     const username = formData.get('username') as string;
     const password = formData.get('password') as string;
     const redirectTo = formData.get('redirectTo') as string | null;
@@ -36,7 +38,6 @@ export async function loginAction(prevState: { error?: string } | undefined, for
         await setAuthToken(result.token);
     }
 
-    const locale = await getLocale();
     revalidatePath(`/${locale}`, 'layout');
 
     // Validate redirectTo is a safe internal path

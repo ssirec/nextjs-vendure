@@ -20,9 +20,8 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-import { notFound } from 'next/navigation';
-import { cacheLife, cacheTag } from 'next/cache';
-import { Truck, RotateCcw, ShieldCheck, Clock } from 'lucide-react';
+import {notFound} from 'next/navigation';
+import {Truck, RotateCcw, ShieldCheck, Clock} from 'lucide-react';
 import { routing } from '@/i18n/routing';
 import {
     SITE_NAME,
@@ -30,18 +29,12 @@ import {
     buildCanonicalUrl,
     buildOgImages,
 } from '@/lib/metadata';
-import { getTranslations } from 'next-intl/server';
+import { setRequestLocale } from 'next-intl/server';
 import { toOgLocale } from '@/i18n/locale-utils';
 import { getActiveCurrencyCode } from '@/lib/currency-server';
-import { getRouteLocale } from '@/i18n/server';
+import { getLocaleFromParams, getTranslationsSafe } from '@/i18n/server';
 
 async function getProductData(slug: string, currencyCode: string, locale: string) {
-    'use cache';
-    cacheLife('hours');
-
-    cacheTag(`product-${slug}-${locale}-${currencyCode}`);
-    cacheTag('products');
-
     return await query(GetProductDetailQuery, { slug }, { languageCode: locale, currencyCode });
 }
 
@@ -49,12 +42,12 @@ export async function generateMetadata({
     params,
 }: PageProps<'/[locale]/product/[slug]'>): Promise<Metadata> {
     const { slug } = await params;
-    const locale = await getRouteLocale();
+    const locale = await getLocaleFromParams(params);
     const currencyCode = await getActiveCurrencyCode();
     const result = await getProductData(slug, currencyCode, locale);
     const product = result?.data?.product;
 
-    const t = await getTranslations({ locale, namespace: 'Product' });
+    const t = await getTranslationsSafe({ locale, namespace: 'Product' });
 
     if (!product) {
         return {
@@ -100,9 +93,10 @@ export async function generateMetadata({
 export default async function ProductDetailPage({ params, searchParams }: PageProps<'/[locale]/product/[slug]'>) {
     const { slug } = await params;
     const searchParamsResolved = await searchParams;
-    const locale = await getRouteLocale();
+    const locale = await getLocaleFromParams(params);
+    setRequestLocale(locale);
     const currencyCode = await getActiveCurrencyCode();
-    const t = await getTranslations({ locale, namespace: 'Product' });
+    const t = await getTranslationsSafe({ locale, namespace: 'Product' });
 
     const result = await getProductData(slug, currencyCode, locale);
 
